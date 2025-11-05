@@ -10,6 +10,7 @@ import {
   faUserTag,
   faBriefcase,
   faHandshake,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -18,7 +19,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
   const [userRole, setUserRole] = useState("admin");
 
-  // Load user role from localStorage
   useEffect(() => {
     const role = localStorage.getItem("userRole") || "admin";
     setUserRole(role);
@@ -35,58 +35,193 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const allMenus = {
     admin: [
       {
-        name: "Admin Dashboard",
+        name: "Overview",
         icon: faUserGear,
         path: "/admin-dashboard",
       },
+      {
+        name: "Daily Logs",
+        icon: faBriefcase,
+        path: "/daily-logs",
+      },
+      {
+        name: "RFIs",
+        icon: faUsers,
+        path: "/rfis",
+        hasDropdown: true,
+      },
+      {
+        name: "Change Orders",
+        icon: faUserGear,
+        path: "/change-orders",
+      },
+      {
+        name: "Change Orders",
+        icon: faUserGear,
+        path: "/change-orders",
+      },
+      
+
     ],
     bookkeeper: [
       {
-        name: "Bookkeeper Dashboard",
+        name: "Overview",
         icon: faCalculator,
         path: "/bookkeeper-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
     ceo: [
       {
-        name: "CEO Dashboard",
+        name: "Overview",
         icon: faUserTie,
         path: "/ceo-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
     client: [
       {
-        name: "Client Dashboard",
+        name: "Overview",
         icon: faUsers,
         path: "/client-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
     owner: [
       {
-        name: "Owner Dashboard",
+        name: "Overview",
         icon: faUserTag,
         path: "/owner-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
     projectmanager: [
       {
-        name: "Project Manager Dashboard",
+        name: "Overview",
         icon: faBriefcase,
         path: "/project-manager-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
     salesmanager: [
       {
-        name: "Sales Manager Dashboard",
+        name: "Overview",
         icon: faChartBar,
         path: "/sales-manager-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
     subcontractor: [
       {
-        name: "Sub Contractor Dashboard",
+        name: "Overview",
         icon: faHandshake,
         path: "/subcontractor-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
       },
     ],
   };
@@ -104,8 +239,17 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 onClick={() => handleNavigate(menu.path)}
                 style={{ cursor: "pointer" }}
               >
-                <FontAwesomeIcon icon={menu.icon} className="menu-icon" />
+                <FontAwesomeIcon
+                  icon={menu.icon}
+                  className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
+                />
                 {!collapsed && <span className="menu-text">{menu.name}</span>}
+                {menu.hasDropdown && !collapsed && (
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    className="dropdown-arrow"
+                  />
+                )}
               </div>
             </li>
           ))}
