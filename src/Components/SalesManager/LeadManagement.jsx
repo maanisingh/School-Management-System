@@ -1,346 +1,710 @@
-import React, { useState } from 'react';
-import { FaPhone, FaEnvelope, FaSms, FaDownload, FaChartLine, FaUsers, FaFileAlt, FaDollarSign, FaCheckCircle, FaArrowUp, FaSearch, FaFilter, FaEllipsisV, FaStar, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
-import { Container, Row, Col, Card, Button, Table, Badge, Form, InputGroup } from 'react-bootstrap';
+import React from 'react';
+import { Container, Row, Col, Card, Button, Form, Badge, Table, Navbar, Nav, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FaUser, FaChartLine, FaDollarSign, FaCheck, FaRocket, FaFileAlt, FaPhone, FaEnvelope, FaSms, FaEye, FaEdit, FaSearch, FaDownload, FaPlus, FaChevronDown } from 'react-icons/fa';
 
 const LeadManagement = () => {
-  // Data for the stats cards
-  const stats = [
-    { title: 'Total Leads', value: '156', change: '+11.01%', icon: <FaUsers />, bgColor: '#4e73df' },
-    { title: 'Active Proposals', value: '23', change: '+11.01%', icon: <FaFileAlt />, bgColor: '#1cc88a' },
-    { title: 'Conversion Rate', value: '68%', change: '+11.01%', icon: <FaChartLine />, bgColor: '#36b9cc' },
-    { title: 'Average Deal Size', value: '$485K', change: '+11.01%', icon: <FaDollarSign />, bgColor: '#f6c23e' },
-    { title: 'Closed Deals', value: '12', change: '+11.01%', icon: <FaCheckCircle />, bgColor: '#e74a3b' },
-    { title: 'Revenue', value: '$850K', change: '+11.01%', icon: <FaDollarSign />, bgColor: '#858796' }
-  ];
-
-  // Data for the AI Insights
-  const aiInsights = [
-    "Robert & Maria Chen have shown high interest in waterfront properties. Consider showing them premium listings with water views.",
-    "Their budget is confirmed at $675,000. Focus on properties within 5% of this range.",
-    "Schedule the site visit within the next 3 days to maintain momentum.",
-    "Prepare a custom proposal highlighting waterfront features and customization options."
-  ];
-
   return (
-    <div style={{ 
-      backgroundColor: '#f8f9fc', 
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      color: '#5a5c69',
-      minHeight: '100vh',
-      padding: '0'
-    }}>
-      <Container fluid className="p-0">
-        {/* Header Section */}
+    <div style={{ fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+      {/* Top Navigation Bar */}
+      <Navbar bg="light" expand="lg" style={{ padding: '0.5rem 1rem', borderBottom: '1px solid #dee2e6' }}>
+        <Container fluid>
+          <Navbar.Brand href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ 
+              width: '30px', 
+              height: '30px', 
+              borderRadius: '6px', 
+              backgroundColor: '#7C4DFF', 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center',
+              color: 'white',
+              fontSize: '16px'
+            }}>
+              i
+            </div>
+            <span style={{ fontWeight: '500', fontSize: '14px' }}>Sales Management</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="light" style={{ border: '1px solid #dee2e6', borderRadius: '4px' }}>
+                  <FaChevronDown style={{ fontSize: '12px' }} />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#action1">Action</Dropdown.Item>
+                  <Dropdown.Item href="#action2">Another action</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item href="#action3">Something else</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+      {/* Dashboard Stats */}
+      <Container fluid style={{ padding: '1rem' }}>
+        <Row className="g-3">
+          <Col xs={12} sm={6} md={4} lg={2}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '50%', 
+                backgroundColor: '#E3F2FD', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                margin: '0 auto 0.5rem',
+                color: '#1976D2'
+              }}>
+                <FaUser />
+              </div>
+              <h6 style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Total Leads</h6>
+              <h4 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '0.25rem' }}>156</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                <span style={{ color: '#28a745', fontSize: '12px' }}>+11.01%</span>
+                <FaChartLine style={{ color: '#28a745', fontSize: '10px' }} />
+              </div>
+            </Card>
+          </Col>
+          <Col xs={12} sm={6} md={4} lg={2}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '50%', 
+                backgroundColor: '#F3E5F5', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                margin: '0 auto 0.5rem',
+                color: '#9C27B0'
+              }}>
+                <FaFileAlt />
+              </div>
+              <h6 style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Active Proposals</h6>
+              <h4 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '0.25rem' }}>23</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                <span style={{ color: '#28a745', fontSize: '12px' }}>+11.01%</span>
+                <FaChartLine style={{ color: '#28a745', fontSize: '10px' }} />
+              </div>
+            </Card>
+          </Col>
+          <Col xs={12} sm={6} md={4} lg={2}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '50%', 
+                backgroundColor: '#E8F5E9', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                margin: '0 auto 0.5rem',
+                color: '#4CAF50'
+              }}>
+                <FaRocket />
+              </div>
+              <h6 style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Conversion Rate</h6>
+              <h4 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '0.25rem' }}>68%</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                <span style={{ color: '#28a745', fontSize: '12px' }}>+11.01%</span>
+                <FaChartLine style={{ color: '#28a745', fontSize: '10px' }} />
+              </div>
+            </Card>
+          </Col>
+          <Col xs={12} sm={6} md={4} lg={2}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '50%', 
+                backgroundColor: '#FFF3E0', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                margin: '0 auto 0.5rem',
+                color: '#FF9800'
+              }}>
+                <FaDollarSign />
+              </div>
+              <h6 style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Average Deal Size</h6>
+              <h4 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '0.25rem' }}>$485K</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                <span style={{ color: '#28a745', fontSize: '12px' }}>+11.01%</span>
+                <FaChartLine style={{ color: '#28a745', fontSize: '10px' }} />
+              </div>
+            </Card>
+          </Col>
+          <Col xs={12} sm={6} md={4} lg={2}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '50%', 
+                backgroundColor: '#ECEFF1', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                margin: '0 auto 0.5rem',
+                color: '#607D8B'
+              }}>
+                <FaCheck />
+              </div>
+              <h6 style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Closed Deals</h6>
+              <h4 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '0.25rem' }}>12</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                <span style={{ color: '#28a745', fontSize: '12px' }}>+11.01%</span>
+                <FaChartLine style={{ color: '#28a745', fontSize: '10px' }} />
+              </div>
+            </Card>
+          </Col>
+          <Col xs={12} sm={6} md={4} lg={2}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              textAlign: 'center'
+            }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '50%', 
+                backgroundColor: '#FFEBEE', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                margin: '0 auto 0.5rem',
+                color: '#F44336'
+              }}>
+                <FaChartLine />
+              </div>
+              <h6 style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Revenue</h6>
+              <h4 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '0.25rem' }}>$850K</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+                <span style={{ color: '#28a745', fontSize: '12px' }}>+11.01%</span>
+                <FaChartLine style={{ color: '#28a745', fontSize: '10px' }} />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+
+      {/* Lead Management Section */}
+      <Container fluid style={{ padding: '1rem' }}>
         <div style={{ 
-          backgroundColor: '#fff', 
-          padding: '1.5rem', 
-          borderBottom: '1px solid #e3e6f0',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap'
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '1rem',
+          flexWrap: 'wrap',
+          gap: '0.5rem'
         }}>
-          <h1 style={{ 
-            fontSize: '1.75rem', 
-            fontWeight: '700', 
-            color: '#5a5c69',
-            margin: '0'
-          }}>
-            Sales Management
-          </h1>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <InputGroup style={{ width: '250px', marginRight: '1rem' }}>
-              <InputGroup.Text style={{ backgroundColor: '#f8f9fc', border: '1px solid #d1d3e2', color: '#858796' }}>
-                <FaSearch />
-              </InputGroup.Text>
-              <Form.Control 
-                placeholder="Search..." 
-                style={{ borderLeft: 'none', backgroundColor: '#f8f9fc', borderColor: '#d1d3e2', color: '#5a5c69' }}
-              />
-            </InputGroup>
-            <Button variant="outline-secondary" style={{ borderColor: '#d1d3e2', color: '#858796', backgroundColor: '#f8f9fc', marginRight: '0.5rem' }}>
-              <FaFilter style={{ marginRight: '0.25rem' }} /> Filter
+          <h5 style={{ fontWeight: '600', marginBottom: '0' }}>Lead Management</h5>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <Form.Control 
+              type="text" 
+              placeholder="Search" 
+              style={{ 
+                width: '200px', 
+                borderRadius: '4px', 
+                border: '1px solid #dee2e6',
+                padding: '0.5rem 0.75rem'
+              }}
+            />
+            <Button 
+              variant="warning" 
+              style={{ 
+                backgroundColor: '#FFC107', 
+                borderColor: '#FFC107', 
+                color: 'black',
+                fontWeight: '600',
+                padding: '0.5rem 1rem',
+                borderRadius: '4px'
+              }}
+            >
+              <FaPlus style={{ marginRight: '0.5rem' }} /> Add Lead
+            </Button>
+            <Button 
+              variant="outline-secondary" 
+              style={{ 
+                borderRadius: '4px',
+                padding: '0.5rem 1rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              <FaDownload /> Export
             </Button>
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div style={{ padding: '1.5rem' }}>
-          <Row>
-            {stats.map((stat, index) => (
-              <Col key={index} xs={12} sm={6} md={6} lg={2} className="mb-4">
-                <Card style={{ 
-                  border: 'none', 
-                  borderRadius: '0.35rem', 
-                  boxShadow: '0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)',
-                  borderLeft: `0.25rem solid ${stat.bgColor}`
+        {/* Lead Cards */}
+        <Row className="g-3">
+          <Col xs={12}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              marginBottom: '1rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                <div style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  borderRadius: '50%', 
+                  backgroundColor: '#9C27B0', 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: '16px'
                 }}>
-                  <Card.Body className="p-3">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '400' }}>
-                          {stat.title}
-                        </div>
-                        <div style={{ fontSize: '1.1rem', fontWeight: '700', color: '#5a5c69' }}>
-                          {stat.value}
-                        </div>
-                      </div>
-                      <div style={{ 
-                        fontSize: '1.5rem', 
-                        color: stat.bgColor,
-                        opacity: 0.8
-                      }}>
-                        {stat.icon}
-                      </div>
-                    </div>
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      color: '#1cc88a',
-                      fontSize: '0.75rem',
-                      fontWeight: '600',
-                      marginTop: '0.5rem'
-                    }}>
-                      <FaArrowUp style={{ marginRight: '0.2rem' }} />
-                      {stat.change}
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </div>
-
-        {/* Main Content Area */}
-        <Row noGutters style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}>
-          {/* Left Column - Lead Management Table */}
-          <Col lg={8} className="pr-lg-3">
-            <Card style={{ 
-              border: 'none', 
-              borderRadius: '0.35rem', 
-              boxShadow: '0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)'
-            }}>
-              <Card.Header style={{ 
-                backgroundColor: '#f8f9fc', 
-                borderBottom: '1px solid #e3e6f0',
-                padding: '1rem 1.25rem',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <h5 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: '#5a5c69' }}>
-                  Lead Management
-                </h5>
-                <Button variant="outline-secondary" size="sm" style={{ borderColor: '#d1d3e2', color: '#858796', backgroundColor: '#f8f9fc' }}>
-                  <FaDownload style={{ marginRight: '0.25rem' }} /> Export
-                </Button>
-              </Card.Header>
-              <Card.Body className="p-0">
-                <div className="table-responsive">
-                  <Table hover className="mb-0" style={{ color: '#5a5c69' }}>
-                    <thead style={{ backgroundColor: '#f8f9fc' }}>
-                      <tr>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Name</th>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Contact</th>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Value</th>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Source</th>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Assigned</th>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Next Action</th>
-                        <th style={{ padding: '0.75rem 1.25rem', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', color: '#858796', borderTop: 'none' }}>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Lead Row 1 */}
-                      <tr>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <div style={{ fontWeight: '600', color: '#5a5c69' }}>Robert & Maria Chen</div>
-                          <div style={{ fontSize: '0.85rem', color: '#858796' }}>Looking for custom waterfront home. Budget confirmed.</div>
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <div style={{ fontSize: '0.9rem' }}>robert.maria@example.com</div>
-                          <div style={{ fontSize: '0.9rem', color: '#858796' }}>(555) 123-4567</div>
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle', fontWeight: '600' }}>
-                          $675,000
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          Website
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          Sarah Johnson
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <Badge bg="primary" style={{ fontSize: '0.7rem', backgroundColor: '#4e73df' }}>
-                            Site Visit Scheduled
-                          </Badge>
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <div style={{ display: 'flex' }}>
-                            <Button variant="light" size="sm" style={{ marginRight: '0.25rem', padding: '0.25rem 0.5rem', backgroundColor: '#f8f9fc', borderColor: '#e3e6f0' }}>
-                              <FaPhone style={{ color: '#4e73df', fontSize: '0.8rem' }} />
-                            </Button>
-                            <Button variant="light" size="sm" style={{ marginRight: '0.25rem', padding: '0.25rem 0.5rem', backgroundColor: '#f8f9fc', borderColor: '#e3e6f0' }}>
-                              <FaEnvelope style={{ color: '#4e73df', fontSize: '0.8rem' }} />
-                            </Button>
-                            <Button variant="light" size="sm" style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f8f9fc', borderColor: '#e3e6f0' }}>
-                              <FaSms style={{ color: '#4e73df', fontSize: '0.8rem' }} />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                      {/* Lead Row 2 */}
-                      <tr>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <div style={{ fontWeight: '600', color: '#5a5c69' }}>Robert & Maria Chen</div>
-                          <div style={{ fontSize: '0.85rem', color: '#858796' }}>Looking for custom waterfront home. Budget confirmed.</div>
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <div style={{ fontSize: '0.9rem' }}>robert.maria@example.com</div>
-                          <div style={{ fontSize: '0.9rem', color: '#858796' }}>(555) 123-4567</div>
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle', fontWeight: '600' }}>
-                          $675,000
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          Website
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          Sarah Johnson
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <Badge bg="primary" style={{ fontSize: '0.7rem', backgroundColor: '#4e73df' }}>
-                            Site Visit Scheduled
-                          </Badge>
-                        </td>
-                        <td style={{ padding: '1rem 1.25rem', verticalAlign: 'middle' }}>
-                          <div style={{ display: 'flex' }}>
-                            <Button variant="light" size="sm" style={{ marginRight: '0.25rem', padding: '0.25rem 0.5rem', backgroundColor: '#f8f9fc', borderColor: '#e3e6f0' }}>
-                              <FaPhone style={{ color: '#4e73df', fontSize: '0.8rem' }} />
-                            </Button>
-                            <Button variant="light" size="sm" style={{ marginRight: '0.25rem', padding: '0.25rem 0.5rem', backgroundColor: '#f8f9fc', borderColor: '#e3e6f0' }}>
-                              <FaEnvelope style={{ color: '#4e73df', fontSize: '0.8rem' }} />
-                            </Button>
-                            <Button variant="light" size="sm" style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f8f9fc', borderColor: '#e3e6f0' }}>
-                              <FaSms style={{ color: '#4e73df', fontSize: '0.8rem' }} />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                  R
                 </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          {/* Right Column - Customer Details & AI Insights */}
-          <Col lg={4}>
-            {/* Customer Details Card */}
-            <Card style={{ 
-              border: 'none', 
-              borderRadius: '0.35rem', 
-              boxShadow: '0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)',
-              marginBottom: '1.5rem'
-            }}>
-              <Card.Body className="p-4">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1.5rem' }}>
-                  <h5 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: '#5a5c69' }}>
-                    Robert & Maria Chen
-                  </h5>
-                  <div>
-                    <FaStar style={{ color: '#f6c23e' }} />
-                  </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: '600', fontSize: '14px' }}>Robert & Maria Chen</div>
+                  <div style={{ fontSize: '12px', color: '#6c757d' }}>robert.chen@mail.com | (604) 55-0123</div>
                 </div>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.25rem' }}>Email</div>
-                  <div style={{ fontSize: '0.9rem', color: '#5a5c69' }}>robert.maria@example.com</div>
-                </div>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.25rem' }}>Phone</div>
-                  <div style={{ fontSize: '0.9rem', color: '#5a5c69' }}>(555) 123-4567</div>
-                </div>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.25rem' }}>Estimated Value</div>
-                  <div style={{ fontSize: '1.1rem', fontWeight: '700', color: '#5a5c69' }}>$675,000</div>
-                </div>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.25rem' }}>Source</div>
-                  <div style={{ fontSize: '0.9rem', color: '#5a5c69' }}>Website</div>
-                </div>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.25rem' }}>Assigned To</div>
-                  <div style={{ fontSize: '0.9rem', color: '#5a5c69' }}>Sarah Johnson</div>
-                </div>
-                
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.5rem' }}>Next Action</div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <FaCalendarAlt style={{ color: '#4e73df', marginRight: '0.5rem' }} />
-                    <Badge bg="primary" style={{ fontSize: '0.75rem', backgroundColor: '#4e73df' }}>
-                      Site Visit Scheduled
-                    </Badge>
-                  </div>
-                </div>
-                
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#858796', textTransform: 'uppercase', fontWeight: '600', marginBottom: '0.5rem' }}>Notes</div>
-                  <div style={{ fontSize: '0.9rem', color: '#5a5c69', fontStyle: 'italic', backgroundColor: '#f8f9fc', padding: '0.75rem', borderRadius: '0.25rem', borderLeft: '3px solid #4e73df' }}>
-                    "Looking for custom waterfront home. Budget confirmed."
-                  </div>
-                </div>
-                
-                <div style={{ display: 'flex', marginBottom: '1.5rem' }}>
-                  <Badge bg="danger" style={{ fontSize: '0.7rem', marginRight: '0.5rem', backgroundColor: '#e74a3b' }}>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Badge bg="warning" style={{ 
+                    fontSize: '12px', 
+                    fontWeight: '600', 
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px'
+                  }}>
                     Hot Lead
                   </Badge>
-                  <Badge bg="info" style={{ fontSize: '0.7rem', backgroundColor: '#36b9cc' }}>
+                  <Badge bg="light" style={{ 
+                    fontSize: '12px', 
+                    fontWeight: '600', 
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px',
+                    color: '#673AB7',
+                    border: '1px solid #673AB7'
+                  }}>
                     Proposal
                   </Badge>
                 </div>
-                
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Button variant="primary" style={{ flex: 1, marginRight: '0.5rem', backgroundColor: '#4e73df', border: 'none', fontWeight: '600' }}>
-                    <FaPhone style={{ marginRight: '0.25rem' }} /> Call
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Estimated Value</div>
+                  <div style={{ fontWeight: '600', fontSize: '14px' }}>$675,000</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Source</div>
+                  <div style={{ fontSize: '14px' }}>Website</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Assigned</div>
+                  <div style={{ fontSize: '14px' }}>Sarah Johnson</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Next Action</div>
+                  <div style={{ fontSize: '14px' }}>Site Visit Scheduled</div>
+                </div>
+              </div>
+
+              <div style={{ 
+                backgroundColor: '#FFF3E0', 
+                padding: '0.75rem', 
+                borderRadius: '4px', 
+                marginBottom: '1rem'
+              }}>
+                <div style={{ fontWeight: '600', fontSize: '14px', marginBottom: '0.25rem' }}>
+                  Next Action: Site Visit Scheduled
+                </div>
+                <div style={{ fontSize: '14px' }}>
+                  Notes: Looking for custom waterfront home. Budget confirmed.
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Button variant="outline-secondary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    fontSize: '12px'
+                  }}>
+                    <FaPhone /> Call
                   </Button>
-                  <Button variant="info" style={{ flex: 1, marginLeft: '0.5rem', backgroundColor: '#36b9cc', border: 'none', fontWeight: '600' }}>
-                    <FaEnvelope style={{ marginRight: '0.25rem' }} /> Email
+                  <Button variant="outline-primary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    fontSize: '12px'
+                  }}>
+                    <FaEnvelope /> Email
                   </Button>
-                  <Button variant="success" style={{ flex: 1, marginLeft: '0.5rem', backgroundColor: '#1cc88a', border: 'none', fontWeight: '600' }}>
-                    <FaSms style={{ marginRight: '0.25rem' }} /> SMS
+                  <Button variant="outline-dark" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    fontSize: '12px'
+                  }}>
+                    <FaSms /> SMS
                   </Button>
                 </div>
-              </Card.Body>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Button variant="outline-secondary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}>
+                    <FaEye />
+                  </Button>
+                  <Button variant="outline-secondary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}>
+                    <FaEdit />
+                  </Button>
+                </div>
+              </div>
             </Card>
-            
-            {/* AI Insights Card */}
+          </Col>
+
+          <Col xs={12}>
             <Card style={{ 
-              border: 'none', 
-              borderRadius: '0.35rem', 
-              boxShadow: '0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15)'
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              marginBottom: '1rem'
             }}>
-              <Card.Header style={{ 
-                backgroundColor: '#f8f9fc', 
-                borderBottom: '1px solid #e3e6f0',
-                padding: '1rem 1.25rem'
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                <div style={{ 
+                  width: '40px', 
+                  height: '40px', 
+                  borderRadius: '50%', 
+                  backgroundColor: '#9C27B0', 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: '16px'
+                }}>
+                  R
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: '600', fontSize: '14px' }}>Robert & Maria Chen</div>
+                  <div style={{ fontSize: '12px', color: '#6c757d' }}>robert.chen@mail.com | (604) 55-0123</div>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Badge bg="warning" style={{ 
+                    fontSize: '12px', 
+                    fontWeight: '600', 
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px'
+                  }}>
+                    Hot Lead
+                  </Badge>
+                  <Badge bg="light" style={{ 
+                    fontSize: '12px', 
+                    fontWeight: '600', 
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px',
+                    color: '#673AB7',
+                    border: '1px solid #673AB7'
+                  }}>
+                    Proposal
+                  </Badge>
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Estimated Value</div>
+                  <div style={{ fontWeight: '600', fontSize: '14px' }}>$675,000</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Source</div>
+                  <div style={{ fontSize: '14px' }}>Website</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Assigned</div>
+                  <div style={{ fontSize: '14px' }}>Sarah Johnson</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '0.25rem' }}>Next Action</div>
+                  <div style={{ fontSize: '14px' }}>Site Visit Scheduled</div>
+                </div>
+              </div>
+
+              <div style={{ 
+                backgroundColor: '#FFF3E0', 
+                padding: '0.75rem', 
+                borderRadius: '4px', 
+                marginBottom: '1rem'
               }}>
-                <h5 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: '#5a5c69' }}>
-                  AI Insights & Recommendations
-                </h5>
-              </Card.Header>
-              <Card.Body style={{ padding: '1.25rem' }}>
-                <ul style={{ paddingLeft: '1.25rem', marginBottom: '0', color: '#5a5c69' }}>
-                  {aiInsights.map((insight, index) => (
-                    <li key={index} style={{ marginBottom: '1rem', fontSize: '0.9rem', lineHeight: '1.5' }}>
-                      {insight}
-                    </li>
-                  ))}
-                </ul>
-              </Card.Body>
+                <div style={{ fontWeight: '600', fontSize: '14px', marginBottom: '0.25rem' }}>
+                  Next Action: Site Visit Scheduled
+                </div>
+                <div style={{ fontSize: '14px' }}>
+                  Notes: Looking for custom waterfront home. Budget confirmed.
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Button variant="outline-secondary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    fontSize: '12px'
+                  }}>
+                    <FaPhone /> Call
+                  </Button>
+                  <Button variant="outline-primary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    fontSize: '12px'
+                  }}>
+                    <FaEnvelope /> Email
+                  </Button>
+                  <Button variant="outline-dark" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem',
+                    fontSize: '12px'
+                  }}>
+                    <FaSms /> SMS
+                  </Button>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Button variant="outline-secondary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}>
+                    <FaEye />
+                  </Button>
+                  <Button variant="outline-secondary" size="sm" style={{ 
+                    borderRadius: '4px',
+                    padding: '0.25rem 0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25rem'
+                  }}>
+                    <FaEdit />
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+
+      {/* AI Insights & Recommendations */}
+      <Container fluid style={{ padding: '1rem' }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '1rem'
+        }}>
+          <h5 style={{ fontWeight: '600', marginBottom: '0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <FaChartLine style={{ color: '#1976D2' }} />
+            AI Insights & Recommendations
+          </h5>
+          <Button variant="link" style={{ 
+            color: '#6c757d', 
+            fontWeight: '600',
+            textDecoration: 'none',
+            fontSize: '14px'
+          }}>
+            View All
+          </Button>
+        </div>
+
+        <Row className="g-3">
+          <Col xs={12} md={6} lg={4}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              borderLeft: '4px solid #dc3545'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <div style={{ 
+                  width: '12px', 
+                  height: '12px', 
+                  borderRadius: '50%', 
+                  backgroundColor: '#dc3545',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}></div>
+                <div style={{ fontSize: '12px', fontWeight: '600', color: '#dc3545' }}>Quality Risk</div>
+                <Badge bg="danger" style={{ 
+                  fontSize: '12px', 
+                  fontWeight: '600', 
+                  padding: '0.15rem 0.3rem',
+                  borderRadius: '4px'
+                }}>
+                  HIGH
+                </Badge>
+              </div>
+              <div style={{ fontSize: '14px', marginBottom: '0.5rem' }}>
+                Weather conditions may impact concrete
+              </div>
+              <Button variant="link" style={{ 
+                color: '#1976D2', 
+                fontWeight: '600',
+                textDecoration: 'none',
+                fontSize: '12px',
+                padding: '0',
+                marginTop: '0.25rem'
+              }}>
+                View Details
+              </Button>
+            </Card>
+          </Col>
+          <Col xs={12} md={6} lg={4}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              borderLeft: '4px solid #4caf50'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <div style={{ 
+                  width: '12px', 
+                  height: '12px', 
+                  borderRadius: '50%', 
+                  backgroundColor: '#4caf50',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}></div>
+                <div style={{ fontSize: '12px', fontWeight: '600', color: '#4caf50' }}>Deposits</div>
+                <Badge bg="success" style={{ 
+                  fontSize: '12px', 
+                  fontWeight: '600', 
+                  padding: '0.15rem 0.3rem',
+                  borderRadius: '4px'
+                }}>
+                  MEDIUM
+                </Badge>
+              </div>
+              <div style={{ fontSize: '14px', marginBottom: '0.5rem' }}>
+                $245k in client deposits expected
+              </div>
+              <Button variant="link" style={{ 
+                color: '#1976D2', 
+                fontWeight: '600',
+                textDecoration: 'none',
+                fontSize: '12px',
+                padding: '0',
+                marginTop: '0.25rem'
+              }}>
+                Process
+              </Button>
+            </Card>
+          </Col>
+          <Col xs={12} md={6} lg={4}>
+            <Card style={{ 
+              backgroundColor: 'white', 
+              borderRadius: '8px', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)', 
+              padding: '1rem',
+              borderLeft: '4px solid #9c27b0'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <div style={{ 
+                  width: '12px', 
+                  height: '12px', 
+                  borderRadius: '50%', 
+                  backgroundColor: '#9c27b0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}></div>
+                <div style={{ fontSize: '12px', fontWeight: '600', color: '#9c27b0' }}>Documents</div>
+                <Badge bg="secondary" style={{ 
+                  fontSize: '12px', 
+                  fontWeight: '600', 
+                  padding: '0.15rem 0.3rem',
+                  borderRadius: '4px'
+                }}>
+                  NEW
+                </Badge>
+              </div>
+              <div style={{ fontSize: '14px', marginBottom: '0.5rem' }}>
+                Contract signatures require review
+              </div>
+              <Button variant="link" style={{ 
+                color: '#1976D2', 
+                fontWeight: '600',
+                textDecoration: 'none',
+                fontSize: '12px',
+                padding: '0',
+                marginTop: '0.25rem'
+              }}>
+                Review
+              </Button>
             </Card>
           </Col>
         </Row>

@@ -1,546 +1,688 @@
-import React, { useState } from 'react';
-import { FaPhone, FaEnvelope, FaCalendarAlt, FaCheck, FaExclamationTriangle, FaChartBar, FaUser, FaTasks, FaDollarSign, FaPercentage, FaHandshake, FaArrowUp, FaArrowDown, FaEllipsisV, FaSearch, FaBell, FaCog, FaUserCircle, FaMapMarkerAlt, FaFileAlt, FaMoneyBillWave, FaExclamationCircle } from 'react-icons/fa';
-import { Container, Row, Col, Card, Button, ProgressBar, Table, Badge, Alert, Form, InputGroup } from 'react-bootstrap';
+import React from 'react';
+import { Container, Row, Col, Card, Button, Form, Table, Badge, ProgressBar } from 'react-bootstrap';
+import { FaPhone, FaCheck, FaUser, FaCalendar, FaSearch, FaPlus, FaChevronLeft, FaChevronRight, FaEye, FaEnvelope, FaPhoneAlt, FaVideo } from 'react-icons/fa';
+import { FiTrendingUp, FiDollarSign, FiFileText, FiUsers, FiTarget, FiCheckCircle, FiAlertTriangle, FiClock, FiMapPin, FiMail, FiVideo } from 'react-icons/fi';
+import { MdOutlineCalendarToday, MdArrowForwardIos, MdArrowBackIos } from 'react-icons/md';
+import { BsGraphUp, BsPersonFill, BsBuilding, BsBoxSeam, BsCheckLg, BsExclamationTriangle } from 'react-icons/bs';
 
 const SalesManagerOverview = () => {
-  // State for the dashboard data
-  const [stats] = useState({
-    totalLeads: { value: 156, change: 11.01 },
-    activeProposals: { value: 23, change: 11.01 },
-    conversionRate: { value: 68, change: 0 },
-    averageDealSize: { value: 485, change: 11.01 },
-    closedDeals: { value: 12, change: 11.01 },
-    revenue: { value: 850, change: -11.01 }
-  });
-
-  const [pipelineData] = useState([
-    { stage: 'Initial Contact', leads: 45 },
-    { stage: 'Qualification', leads: 32 },
-    { stage: 'Proposal', leads: 23 },
-    { stage: 'Negotiation', leads: 12 },
-    { stage: 'Closed Won', leads: 8 }
-  ]);
-
-  const [hotLeads] = useState([
-    {
-      name: 'Robert & Maria Chen',
-      email: 'robert.chen@mail.com',
-      phone: '[604] 55-0123',
-      value: 675000,
-      source: 'Website',
-      assigned: 'Sarah Johnson',
-      nextAction: 'Site Visit Scheduled',
-      lastContact: '25/08/2025',
-      status: ['Hot Lead', 'Proposal']
-    }
-  ]);
-
-  const [recentActivities] = useState([
-    { id: 1, description: 'Meeting with potential client', time: '2 hours ago' },
-    { id: 2, description: 'Updated proposal for Johnson project', time: '5 hours ago' },
-    { id: 3, description: 'Site visit completed', time: '1 day ago' }
-  ]);
-
-  const [todoList] = useState([
-    { id: 1, task: 'Foundation Inspection', priority: 'Normal' },
-    { id: 2, task: 'Material Delivery', priority: 'HIGH' }
-  ]);
-
-  const [aiInsights] = useState([
-    { id: 1, category: 'Quality Risk', status: 'Medium', description: 'Check building materials quality' },
-    { id: 2, category: 'Deposit', status: 'Pending', description: 'Awaiting initial deposit' },
-    { id: 3, category: 'Documentation', status: 'Complete', description: 'All documents verified' }
-  ]);
-
-  // Function to format currency
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-
-  // Function to render change indicator
-  const renderChange = (change) => {
-    if (change === 0) return null;
-    
-    const isPositive = change > 0;
-    return (
-      <span style={{ color: isPositive ? '#28a745' : '#dc3545', fontSize: '0.85rem' }}>
-        {isPositive ? <FaArrowUp /> : <FaArrowDown />} {Math.abs(change)}%
-      </span>
-    );
-  };
+  const currentMonth = "September 2025";
+  const daysInMonth = [31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 
   return (
-    <Container fluid style={{ padding: '0', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
-      {/* Top Navigation Bar */}
-      <Row style={{ backgroundColor: '#fff', borderBottom: '1px solid #e9ecef', padding: '15px 20px', margin: '0' }}>
-        <Col md={6} style={{ display: 'flex', alignItems: 'center' }}>
-          <h1 style={{ margin: '0', fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>Sales Management</h1>
-        </Col>
-        <Col md={6} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <InputGroup style={{ width: '250px', marginRight: '15px' }}>
-            <InputGroup.Text style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}>
-              <FaSearch />
-            </InputGroup.Text>
-            <Form.Control
-              placeholder="Search..."
-              style={{ borderLeft: 'none' }}
-            />
-          </InputGroup>
-          {/* <Button variant="light" style={{ marginRight: '15px', position: 'relative' }}>
-            <FaBell />
-            <span style={{ position: 'absolute', top: '0', right: '0', width: '8px', height: '8px', backgroundColor: '#dc3545', borderRadius: '50%' }}></span>
-          </Button>
-          <Button variant="light" style={{ marginRight: '15px' }}>
-            <FaCog />
-          </Button>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ marginRight: '10px', fontSize: '0.9rem' }}>Admin</span>
-            <FaUserCircle style={{ fontSize: '1.5rem', color: '#6c757d' }} />
-          </div> */}
-        </Col>
-      </Row>
-      
-      {/* Stats Cards */}
-      <Row style={{ padding: '20px', margin: '0' }}>
-        {Object.entries(stats).map(([key, stat]) => (
-          <Col key={key} xs={12} sm={6} md={4} lg={2} style={{ marginBottom: '20px', paddingLeft: '10px', paddingRight: '10px' }}>
-            <Card style={{ 
-              height: '100%', 
-              borderRadius: '8px', 
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              border: 'none'
-            }}>
-              <Card.Body style={{ padding: '15px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <Card.Title style={{ 
-                      fontSize: '0.9rem', 
-                      color: '#6c757d', 
-                      marginBottom: '5px',
-                      fontWeight: 'normal'
-                    }}>
-                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                    </Card.Title>
-                    <Card.Text style={{ 
-                      fontSize: '1.5rem', 
-                      fontWeight: 'bold', 
-                      marginBottom: '0',
-                      color: '#333'
-                    }}>
-                      {key === 'averageDealSize' || key === 'revenue' 
-                        ? formatCurrency(stat.value) 
-                        : key === 'conversionRate' 
-                          ? `${stat.value}%` 
-                          : stat.value}
-                    </Card.Text>
-                  </div>
-                  <div style={{ 
-                    width: '40px', 
-                    height: '40px', 
-                    borderRadius: '50%', 
-                    backgroundColor: '#e9ecef',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
+    <div style={{ fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif', backgroundColor: '#f8f9fa', padding: '20px', minHeight: '100vh' }}>
+      {/* Header */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginBottom: '20px', 
+        padding: '12px 20px', 
+        backgroundColor: '#fff9db', 
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ 
+            width: '24px', 
+            height: '24px', 
+            backgroundColor: '#6c5ce7', 
+            borderRadius: '4px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            color: 'white', 
+            fontSize: '14px', 
+            fontWeight: 'bold'
+          }}>S</div>
+          <span style={{ fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>Sales Management</span>
+        </div>
+        <div style={{ 
+          width: '32px', 
+          height: '32px', 
+          borderRadius: '4px', 
+          backgroundColor: '#e9ecef', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          cursor: 'pointer'
+        }}>
+          <FaChevronLeft size={12} color="#6c757d" />
+        </div>
+      </div>
+
+      {/* Metrics Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '20px' }}>
+        {[
+          { icon: <FiUsers size={24} color="#6c5ce7" />, title: 'Total Leads', value: '156', change: '+11.01%', trend: 'up' },
+          { icon: <FiFileText size={24} color="#6c5ce7" />, title: 'Active Proposals', value: '23', change: '+11.01%', trend: 'up' },
+          { icon: <FiTarget size={24} color="#6c5ce7" />, title: 'Conversion Rate', value: '68%', change: '+11.01%', trend: 'up' },
+          { icon: <FiDollarSign size={24} color="#6c5ce7" />, title: 'Average Deal Size', value: '$485K', change: '+11.01%', trend: 'up' },
+          { icon: <FiCheckCircle size={24} color="#6c5ce7" />, title: 'Closed Deals', value: '12', change: '+11.01%', trend: 'up' },
+          { icon: <FiTrendingUp size={24} color="#6c5ce7" />, title: 'Revenue', value: '$850K', change: '+11.01%', trend: 'up' }
+        ].map((item, index) => (
+          <Card key={index} style={{ 
+            backgroundColor: '#fff', 
+            borderRadius: '12px', 
+            border: '1px solid #e9ecef', 
+            padding: '16px', 
+            boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+              <div style={{ 
+                width: '40px', 
+                height: '40px', 
+                borderRadius: '8px', 
+                backgroundColor: '#f0f0ff', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
+                {item.icon}
+              </div>
+              <div style={{ marginLeft: '12px' }}>
+                <div style={{ fontSize: '14px', color: '#6c757d', fontWeight: '500' }}>{item.title}</div>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '4px', 
+                  marginTop: '4px'
+                }}>
+                  <span style={{ fontSize: '24px', fontWeight: '700', color: '#2d3436' }}>{item.value}</span>
+                  <span style={{ 
+                    fontSize: '12px', 
+                    color: item.trend === 'up' ? '#2ecc71' : '#e74c3c', 
+                    fontWeight: '600'
                   }}>
-                    {key === 'totalLeads' && <FaUser style={{ color: '#6c757d' }} />}
-                    {key === 'activeProposals' && <FaTasks style={{ color: '#6c757d' }} />}
-                    {key === 'conversionRate' && <FaPercentage style={{ color: '#6c757d' }} />}
-                    {key === 'averageDealSize' && <FaDollarSign style={{ color: '#6c757d' }} />}
-                    {key === 'closedDeals' && <FaHandshake style={{ color: '#6c757d' }} />}
-                    {key === 'revenue' && <FaDollarSign style={{ color: '#6c757d' }} />}
-                  </div>
+                    {item.change}
+                  </span>
+                  <FaChevronLeft size={10} color={item.trend === 'up' ? '#2ecc71' : '#e74c3c'} style={{ transform: 'rotate(-45deg)' }} />
                 </div>
-                {renderChange(stat.change)}
-              </Card.Body>
-            </Card>
-          </Col>
+              </div>
+            </div>
+          </Card>
         ))}
-      </Row>
+      </div>
 
-      <Row style={{ padding: '0 20px 20px', margin: '0' }}>
-        {/* Left Column - Sales Pipeline */}
-        <Col md={6} style={{ marginBottom: '20px', paddingLeft: '10px', paddingRight: '10px' }}>
-          <Card style={{ 
-            height: '100%', 
-            borderRadius: '8px', 
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            border: 'none'
-          }}>
-            <Card.Header style={{ 
-              backgroundColor: '#fff', 
-              borderBottom: '1px solid #e9ecef',
-              fontWeight: 'bold',
-              padding: '15px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <FaChartBar style={{ marginRight: '10px', color: '#6c757d' }} />
-                Sales Pipeline
-              </div>
-              <Button variant="light" size="sm">
-                <FaEllipsisV />
-              </Button>
-            </Card.Header>
-            <Card.Body style={{ padding: '20px' }}>
-              {pipelineData.map((stage, index) => (
-                <div key={index} style={{ marginBottom: '20px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                    <span style={{ fontWeight: '500' }}>{stage.stage}</span>
-                    <span>{stage.leads} Leads</span>
-                  </div>
-                  <ProgressBar 
-                    now={(stage.leads / 45) * 100} 
-                    style={{ height: '10px' }}
-                    variant={index % 2 === 0 ? 'warning' : 'info'}
-                  />
+      {/* Main Content Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+        {/* Recent Activities */}
+        <Card style={{ 
+          backgroundColor: '#fff', 
+          borderRadius: '12px', 
+          border: '1px solid #e9ecef', 
+          padding: '20px', 
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+          height: 'fit-content'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <h5 style={{ margin: '0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>Recent Activities</h5>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {[
+              { 
+                icon: <FaPhone size={16} color="#6c5ce7" />, 
+                title: 'Follow-up call with Chen Family', 
+                description: 'Positive response, site visit scheduled', 
+                time: '2 hours ago' 
+              },
+              { 
+                icon: <FaCheck size={16} color="#2ecc71" />, 
+                title: 'Proposal sent to Wilson Estate', 
+                description: 'Delivered and opened', 
+                time: '4 hours ago' 
+              },
+              { 
+                icon: <FaUser size={16} color="#6c5ce7" />, 
+                title: 'Initial consultation with Thompson', 
+                description: 'Budget confirmed, needs qualified', 
+                time: '1 day ago' 
+              }
+            ].map((activity, index) => (
+              <div key={index} style={{ 
+                padding: '12px', 
+                borderRadius: '8px', 
+                border: '1px solid #e9ecef', 
+                backgroundColor: '#fafafa',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px'
+              }}>
+                <div style={{ 
+                  width: '24px', 
+                  height: '24px', 
+                  borderRadius: '4px', 
+                  backgroundColor: activity.icon.props.color === '#6c5ce7' ? '#f0f0ff' : '#e8f5e8',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center'
+                }}>
+                  {activity.icon}
                 </div>
-              ))}
-              
-              <div style={{ marginTop: '30px' }}>
-                <h5 style={{ marginBottom: '15px', color: '#dc3545', fontSize: '1rem' }}>
-                  <FaExclamationTriangle style={{ marginRight: '10px' }} />
-                  Hot Leads - Immediate Action Required
-                </h5>
-                {hotLeads.map((lead, index) => (
-                  <div key={index} style={{ 
-                    padding: '15px', 
-                    backgroundColor: '#f8f9fa', 
-                    borderRadius: '8px',
-                    marginBottom: '15px',
-                    borderLeft: '4px solid #dc3545'
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <h6 style={{ marginBottom: '5px', fontWeight: 'bold' }}>{lead.name}</h6>
-                      <div>
-                        {lead.status.map((status, idx) => (
-                          <Badge 
-                            key={idx} 
-                            bg={status === 'Hot Lead' ? 'danger' : 'primary'} 
-                            style={{ marginRight: '5px' }}
-                          >
-                            {status}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <p style={{ marginBottom: '5px', fontSize: '0.9rem' }}>
-                      {lead.email} | {lead.phone}
-                    </p>
-                    <p style={{ marginBottom: '0', fontSize: '0.9rem' }}>
-                      Value: {formatCurrency(lead.value)}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        {/* Right Column - Recent Activities, To Do List, Calendar */}
-        <Col md={6} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
-          <Row>
-            {/* Recent Activities */}
-            <Col md={12} style={{ marginBottom: '20px' }}>
-              <Card style={{ 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                border: 'none'
-              }}>
-                <Card.Header style={{ 
-                  backgroundColor: '#fff', 
-                  borderBottom: '1px solid #e9ecef',
-                  fontWeight: 'bold',
-                  padding: '15px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}>
-                  <div>Recent Activities</div>
-                  <Button variant="light" size="sm">
-                    <FaEllipsisV />
-                  </Button>
-                </Card.Header>
-                <Card.Body style={{ padding: '15px' }}>
-                  {recentActivities.map(activity => (
-                    <div key={activity.id} style={{ 
-                      padding: '10px 0', 
-                      borderBottom: '1px solid #e9ecef',
-                      display: 'flex',
-                      alignItems: 'flex-start'
-                    }}>
-                      <div style={{ 
-                        width: '32px', 
-                        height: '32px', 
-                        borderRadius: '50%', 
-                        backgroundColor: '#e9ecef',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: '10px'
-                      }}>
-                        <FaUser style={{ color: '#6c757d', fontSize: '0.9rem' }} />
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div>{activity.description}</div>
-                        <div style={{ fontSize: '0.8rem', color: '#6c757d' }}>
-                          {activity.time}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </Card.Body>
-              </Card>
-            </Col>
-
-            {/* To Do List */}
-            <Col md={6} style={{ marginBottom: '20px' }}>
-              <Card style={{ 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                border: 'none'
-              }}>
-                <Card.Header style={{ 
-                  backgroundColor: '#fff', 
-                  borderBottom: '1px solid #e9ecef',
-                  fontWeight: 'bold',
-                  padding: '15px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}>
-                  <div>To Do List</div>
-                  <Button variant="light" size="sm">
-                    <FaEllipsisV />
-                  </Button>
-                </Card.Header>
-                <Card.Body style={{ padding: '15px' }}>
-                  {todoList.map(todo => (
-                    <div key={todo.id} style={{ 
-                      padding: '10px 0', 
-                      borderBottom: '1px solid #e9ecef',
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}>
-                      <div style={{ 
-                        width: '20px', 
-                        height: '20px', 
-                        border: '1px solid #ced4da', 
-                        borderRadius: '4px',
-                        marginRight: '10px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                      }}>
-                        <FaCheck style={{ fontSize: '0.7rem', color: '#fff' }} />
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div>{todo.task}</div>
-                        {todo.priority === 'HIGH' && (
-                          <Badge bg="danger" style={{ fontSize: '0.7rem' }}>
-                            {todo.priority}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </Card.Body>
-              </Card>
-            </Col>
-
-            {/* Calendar */}
-            <Col md={6} style={{ marginBottom: '20px' }}>
-              <Card style={{ 
-                borderRadius: '8px', 
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                border: 'none'
-              }}>
-                <Card.Header style={{ 
-                  backgroundColor: '#fff', 
-                  borderBottom: '1px solid #e9ecef',
-                  fontWeight: 'bold',
-                  padding: '15px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <FaCalendarAlt style={{ marginRight: '10px', color: '#6c757d' }} />
-                    September 2025
-                  </div>
-                  <Button variant="light" size="sm">
-                    <FaEllipsisV />
-                  </Button>
-                </Card.Header>
-                <Card.Body style={{ padding: '15px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '5px' }}>
-                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                      <div key={index} style={{ 
-                        textAlign: 'center', 
-                        fontWeight: 'bold', 
-                        fontSize: '0.8rem',
-                        color: '#6c757d'
-                      }}>
-                        {day}
-                      </div>
-                    ))}
-                    
-                    {Array.from({ length: 35 }, (_, i) => {
-                      const day = i - 1; // Start from 0
-                      const isCurrentMonth = day >= 0 && day < 30;
-                      const isHighlighted = day === 22; // 23rd day (0-indexed)
-                      
-                      return (
-                        <div 
-                          key={i} 
-                          style={{ 
-                            textAlign: 'center', 
-                            padding: '5px',
-                            borderRadius: '4px',
-                            backgroundColor: isHighlighted ? '#007bff' : 'transparent',
-                            color: isHighlighted ? '#fff' : isCurrentMonth ? '#333' : '#ced4da',
-                            fontWeight: isHighlighted ? 'bold' : 'normal'
-                          }}
-                        >
-                          {isCurrentMonth ? day + 1 : ''}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-
-      {/* Hot Leads Detail - Full Width */}
-      <Row style={{ padding: '0 20px 20px', margin: '0' }}>
-        <Col md={12} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
-          <Card style={{ 
-            borderRadius: '8px', 
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            border: 'none'
-          }}>
-            <Card.Header style={{ 
-              backgroundColor: '#fff', 
-              borderBottom: '1px solid #e9ecef',
-              fontWeight: 'bold',
-              padding: '15px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <FaExclamationTriangle style={{ marginRight: '10px', color: '#dc3545' }} />
-                Leads - Immediate Action Required
-              </div>
-              <Badge bg="danger">Hot Lead</Badge>
-            </Card.Header>
-            <Card.Body style={{ padding: '20px' }}>
-              {hotLeads.map((lead, index) => (
-                <div key={index}>
-                  <Row>
-                    {/* Left Column - Lead Details */}
-                    <Col md={8}>
-                      <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>{lead.name}</h4>
-                      <p style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-                        <FaEnvelope style={{ marginRight: '10px', color: '#6c757d' }} />
-                        {lead.email} | <FaPhone style={{ marginRight: '5px', marginLeft: '10px', color: '#6c757d' }} />
-                        {lead.phone}
-                      </p>
-                      
-                      <Table striped bordered hover style={{ marginBottom: '20px' }}>
-                        <tbody>
-                          <tr>
-                            <td style={{ width: '150px', fontWeight: 'bold' }}>Value</td>
-                            <td>{formatCurrency(lead.value)}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: 'bold' }}>Source</td>
-                            <td>{lead.source}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: 'bold' }}>Assigned</td>
-                            <td>{lead.assigned}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: 'bold' }}>Next Action</td>
-                            <td>{lead.nextAction}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ fontWeight: 'bold' }}>Last Contact</td>
-                            <td>{lead.lastContact}</td>
-                          </tr>
-                        </tbody>
-                      </Table>
-                      
-                      <div style={{ marginBottom: '20px' }}>
-                        <Button variant="primary" style={{ marginRight: '10px', marginBottom: '10px' }}>
-                          <FaPhone style={{ marginRight: '5px' }} />
-                          Call
-                        </Button>
-                        <Button variant="outline-primary" style={{ marginRight: '10px', marginBottom: '10px' }}>
-                          <FaEnvelope style={{ marginRight: '5px' }} />
-                          Email
-                        </Button>
-                        <Button variant="outline-secondary" style={{ marginBottom: '10px' }}>
-                          <FaCalendarAlt style={{ marginRight: '5px' }} />
-                          Schedule
-                        </Button>
-                      </div>
-                    </Col>
-                    
-                    {/* Right Column - Client Information and AI Insights */}
-                    <Col md={4}>
-                      <h5 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Client Information</h5>
-                      <Card style={{ marginBottom: '20px', border: '1px solid #e9ecef' }}>
-                        <Card.Body style={{ padding: '15px' }}>
-                          <p style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
-                            <FaMapMarkerAlt style={{ marginRight: '10px', color: '#6c757d' }} />
-                            <strong>Address:</strong> 123 Main Street, Vancouver, BC
-                          </p>
-                          <p style={{ marginBottom: '10px' }}>
-                            <strong>Project Type:</strong> Custom Home
-                          </p>
-                          <p style={{ marginBottom: '0' }}>
-                            <strong>Budget Range:</strong> $600K - $700K
-                          </p>
-                        </Card.Body>
-                      </Card>
-                      
-                      <h5 style={{ marginBottom: '15px', fontWeight: 'bold' }}>AI Insights & Recommendations</h5>
-                      {aiInsights.map(insight => (
-                        <Alert 
-                          key={insight.id} 
-                          variant={insight.status === 'Complete' ? 'success' : insight.status === 'Medium' ? 'warning' : 'info'}
-                          style={{ marginBottom: '10px', padding: '10px' }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
-                            {insight.category === 'Quality Risk' && <FaExclamationCircle style={{ marginRight: '10px' }} />}
-                            {insight.category === 'Deposit' && <FaMoneyBillWave style={{ marginRight: '10px' }} />}
-                            {insight.category === 'Documentation' && <FaFileAlt style={{ marginRight: '10px' }} />}
-                            <div style={{ fontWeight: 'bold' }}>{insight.category}</div>
-                          </div>
-                          <div style={{ fontSize: '0.9rem', marginLeft: '25px' }}>{insight.description}</div>
-                        </Alert>
-                      ))}
-                    </Col>
-                  </Row>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#2d3436', marginBottom: '4px' }}>{activity.title}</div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '4px' }}>{activity.description}</div>
+                  <div style={{ fontSize: '12px', color: '#888', fontWeight: '500' }}>{activity.time}</div>
                 </div>
-              ))}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* To Do List */}
+        <Card style={{ 
+          backgroundColor: '#fff', 
+          borderRadius: '12px', 
+          border: '1px solid #e9ecef', 
+          padding: '20px', 
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+          height: 'fit-content'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ 
+                width: '24px', 
+                height: '24px', 
+                borderRadius: '4px', 
+                backgroundColor: '#fff0f0', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
+                <FaCalendar size={14} color="#e74c3c" />
+              </div>
+              <h5 style={{ margin: '0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>To Do List</h5>
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <Button variant="outline-secondary" size="sm" style={{ 
+                fontSize: '12px', 
+                padding: '4px 12px', 
+                borderRadius: '6px',
+                borderColor: '#dee2e6',
+                color: '#6c757d'
+              }}>View All</Button>
+              <Button variant="warning" size="sm" style={{ 
+                fontSize: '12px', 
+                padding: '4px 12px', 
+                borderRadius: '6px',
+                backgroundColor: '#ffc107',
+                borderColor: '#ffc107',
+                color: '#212529'
+              }}>Add New</Button>
+            </div>
+          </div>
+          <Form.Control 
+            type="text" 
+            placeholder="Search" 
+            style={{ 
+              marginBottom: '16px', 
+              padding: '8px 12px', 
+              borderRadius: '6px', 
+              border: '1px solid #dee2e6',
+              fontSize: '14px'
+            }}
+          />
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+            <Button variant="light" size="sm" style={{ 
+              flex: 1,
+              fontSize: '12px', 
+              padding: '6px 12px', 
+              borderRadius: '6px',
+              backgroundColor: '#fff',
+              borderColor: '#dee2e6',
+              color: '#2d3436'
+            }}>Today</Button>
+            <Button variant="light" size="sm" style={{ 
+              flex: 1,
+              fontSize: '12px', 
+              padding: '6px 12px', 
+              borderRadius: '6px',
+              backgroundColor: '#fff9db',
+              borderColor: '#dee2e6',
+              color: '#2d3436'
+            }}>Week</Button>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {[
+              { title: 'Foundation Inspection', time: '10:32 AM', description: 'Scheduled inspection for Sunview project site A', assignee: 'John Davis', priority: 'HIGH' },
+              { title: 'Material Delivery', time: '9:15 AM', description: 'Lumber shipment arrival for Aspen Living project', assignee: 'Sarah Mitchell', priority: 'HIGH' }
+            ].map((task, index) => (
+              <div key={index} style={{ 
+                padding: '12px', 
+                borderRadius: '8px', 
+                border: '1px solid #e9ecef', 
+                backgroundColor: '#fafafa',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px'
+              }}>
+                <div style={{ 
+                  width: '24px', 
+                  height: '24px', 
+                  borderRadius: '4px', 
+                  backgroundColor: '#e8f5e8',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center'
+                }}>
+                  <BsCheckLg size={14} color="#2ecc71" />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#2d3436' }}>{task.title}</div>
+                    <div style={{ fontSize: '12px', color: '#888', fontWeight: '500' }}>{task.time}</div>
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>{task.description}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ 
+                      width: '24px', 
+                      height: '24px', 
+                      borderRadius: '12px', 
+                      backgroundColor: '#e8f5e8',
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center'
+                    }}>
+                      <FaUser size={12} color="#2ecc71" />
+                    </div>
+                    <span style={{ fontSize: '12px', color: '#6c757d' }}>{task.assignee}</span>
+                    {task.priority && (
+                      <Badge bg="danger" style={{ 
+                        fontSize: '10px', 
+                        padding: '2px 6px', 
+                        borderRadius: '12px',
+                        fontWeight: '600'
+                      }}>{task.priority}</Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Calendar */}
+        <Card style={{ 
+          backgroundColor: '#fff', 
+          borderRadius: '12px', 
+          border: '1px solid #e9ecef', 
+          padding: '20px', 
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+          height: 'fit-content'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ 
+                width: '24px', 
+                height: '24px', 
+                borderRadius: '4px', 
+                backgroundColor: '#fff0f0', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
+                <MdOutlineCalendarToday size={16} color="#e74c3c" />
+              </div>
+              <h5 style={{ margin: '0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>{currentMonth}</h5>
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ 
+                width: '24px', 
+                height: '24px', 
+                borderRadius: '4px', 
+                backgroundColor: '#e9ecef', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                cursor: 'pointer'
+              }}>
+                <FaChevronLeft size={12} color="#6c757d" />
+              </div>
+              <div style={{ 
+                width: '24px', 
+                height: '24px', 
+                borderRadius: '4px', 
+                backgroundColor: '#e9ecef', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                cursor: 'pointer'
+              }}>
+                <FaChevronRight size={12} color="#6c757d" />
+              </div>
+            </div>
+          </div>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(7, 1fr)', 
+            gap: '4px', 
+            marginBottom: '8px'
+          }}>
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+              <div key={day} style={{ 
+                textAlign: 'center', 
+                fontSize: '12px', 
+                fontWeight: '600', 
+                color: '#6c757d',
+                padding: '4px'
+              }}>{day}</div>
+            ))}
+          </div>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(7, 1fr)', 
+            gap: '4px'
+          }}>
+            {daysInMonth.map((day, index) => (
+              <div key={index} style={{ 
+                textAlign: 'center', 
+                fontSize: '12px', 
+                padding: '8px', 
+                borderRadius: '4px',
+                backgroundColor: index === 22 ? '#6c5ce7' : 'transparent',
+                color: index === 22 ? 'white' : '#2d3436',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s'
+              }}>
+                {day}
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+
+      {/* Sales Pipeline */}
+      <Card style={{ 
+        backgroundColor: '#fff', 
+        borderRadius: '12px', 
+        border: '1px solid #e9ecef', 
+        padding: '20px', 
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        marginTop: '20px',
+        marginBottom: '20px'
+      }}>
+        <h5 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>Sales Pipeline</h5>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {[
+            { stage: 'Initial Contact', leads: 45, progress: 60 },
+            { stage: 'Qualification', leads: 32, progress: 50 },
+            { stage: 'Proposal', leads: 23, progress: 40 },
+            { stage: 'Negotiation', leads: 12, progress: 30 },
+            { stage: 'Closed Won', leads: 8, progress: 20 }
+          ].map((pipeline, index) => (
+            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                fontSize: '14px', 
+                fontWeight: '500', 
+                color: '#2d3436', 
+                minWidth: '120px'
+              }}>{pipeline.stage}</div>
+              <div style={{ 
+                flex: 1, 
+                height: '8px', 
+                borderRadius: '4px', 
+                backgroundColor: '#e9ecef',
+                overflow: 'hidden'
+              }}>
+                <div style={{ 
+                  width: `${pipeline.progress}%`, 
+                  height: '100%', 
+                  backgroundColor: '#ffc107',
+                  borderRadius: '4px 0 0 4px'
+                }}></div>
+                <div style={{ 
+                  width: `${100 - pipeline.progress}%`, 
+                  height: '100%', 
+                  backgroundColor: '#6c5ce7',
+                  borderRadius: '0 4px 4px 0'
+                }}></div>
+              </div>
+              <div style={{ 
+                fontSize: '14px', 
+                fontWeight: '600', 
+                color: '#2d3436'
+              }}>{pipeline.leads} Leads</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* Hot Leads */}
+      <Card style={{ 
+        backgroundColor: '#fff', 
+        borderRadius: '12px', 
+        border: '1px solid #e9ecef', 
+        padding: '20px', 
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        marginBottom: '20px'
+      }}>
+        <h5 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>Hot Leads - Immediate Action Required</h5>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          padding: '16px', 
+          borderRadius: '8px', 
+          border: '1px solid #e9ecef', 
+          backgroundColor: '#fafafa',
+          gap: '16px'
+        }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '14px', fontWeight: '600', color: '#2d3436', marginBottom: '4px' }}>Robert & Maria Chen</div>
+            <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>robert.chen@mail.com | (604) 55-0123</div>
+            <div style={{ display: 'flex', gap: '16px', marginBottom: '8px' }}>
+              <div style={{ fontSize: '12px', color: '#6c757d' }}>
+                <strong>Value:</strong> $675,000
+              </div>
+              <div style={{ fontSize: '12px', color: '#6c757d' }}>
+                <strong>Source:</strong> Website
+              </div>
+            </div>
+            <div style={{ fontSize: '12px', color: '#6c757d' }}>
+              <strong>Last Contact:</strong> 25/08/2025
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <Button variant="warning" size="sm" style={{ 
+              fontSize: '12px', 
+              padding: '4px 12px', 
+              borderRadius: '6px',
+              backgroundColor: '#ffc107',
+              borderColor: '#ffc107',
+              color: '#212529'
+            }}>Hot Lead</Button>
+            <Button variant="outline-primary" size="sm" style={{ 
+              fontSize: '12px', 
+              padding: '4px 12px', 
+              borderRadius: '6px',
+              borderColor: '#6c5ce7',
+              color: '#6c5ce7'
+            }}>Proposal</Button>
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ 
+              padding: '8px', 
+              borderRadius: '6px', 
+              backgroundColor: '#e9ecef',
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '4px'
+            }}>
+              <FaPhoneAlt size={14} color="#6c757d" />
+              <span style={{ fontSize: '12px', color: '#6c757d' }}>Call</span>
+            </div>
+            <div style={{ 
+              padding: '8px', 
+              borderRadius: '6px', 
+              backgroundColor: '#e9ecef',
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '4px'
+            }}>
+              <FaEnvelope size={14} color="#6c757d" />
+              <span style={{ fontSize: '12px', color: '#6c757d' }}>Email</span>
+            </div>
+            <div style={{ 
+              padding: '8px', 
+              borderRadius: '6px', 
+              backgroundColor: '#e9ecef',
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '4px'
+            }}>
+              <FaVideo size={14} color="#6c757d" />
+              <span style={{ fontSize: '12px', color: '#6c757d' }}>Video</span>
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      {/* Client Information */}
+      <Card style={{ 
+        backgroundColor: '#fff', 
+        borderRadius: '12px', 
+        border: '1px solid #e9ecef', 
+        padding: '20px', 
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        marginBottom: '20px'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ 
+              width: '24px', 
+              height: '24px', 
+              borderRadius: '4px', 
+              backgroundColor: '#fff0f0', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center'
+            }}>
+              <FaUser size={14} color="#e74c3c" />
+            </div>
+            <h5 style={{ margin: '0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>Client Information</h5>
+          </div>
+          <Button variant="link" size="sm" style={{ 
+            fontSize: '12px', 
+            padding: '0', 
+            color: '#6c5ce7',
+            textDecoration: 'none'
+          }}>View All</Button>
+        </div>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {['Sales Deposit', 'Client Name', 'Procurement', 'Title 4', 'Title 5', 'Title 6'].map((title, index) => (
+            <Button key={index} variant="outline-secondary" size="sm" style={{ 
+              fontSize: '12px', 
+              padding: '6px 12px', 
+              borderRadius: '6px',
+              borderColor: '#dee2e6',
+              color: '#6c757d',
+              minWidth: '120px',
+              textAlign: 'center'
+            }}>{title}</Button>
+          ))}
+        </div>
+      </Card>
+
+      {/* AI Insights & Recommendations */}
+      <Card style={{ 
+        backgroundColor: '#fff', 
+        borderRadius: '12px', 
+        border: '1px solid #e9ecef', 
+        padding: '20px', 
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ 
+              width: '24px', 
+              height: '24px', 
+              borderRadius: '4px', 
+              backgroundColor: '#fff0f0', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center'
+            }}>
+              <FaUser size={14} color="#e74c3c" />
+            </div>
+            <h5 style={{ margin: '0', fontSize: '16px', fontWeight: '600', color: '#2d3436' }}>AI Insights & Recommendations</h5>
+          </div>
+          <Button variant="link" size="sm" style={{ 
+            fontSize: '12px', 
+            padding: '0', 
+            color: '#6c5ce7',
+            textDecoration: 'none'
+          }}>View All</Button>
+        </div>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+          {[
+            { 
+              icon: <BsExclamationTriangle size={16} color="#e74c3c" />, 
+              title: 'Quality Risk', 
+              status: 'HIGH', 
+              description: 'Weather conditions may impact concrete', 
+              action: 'View Details' 
+            },
+            { 
+              icon: <BsBoxSeam size={16} color="#2ecc71" />, 
+              title: 'Deposits', 
+              status: 'MEDIUM', 
+              description: '$245k in client deposits expected', 
+              action: 'Process' 
+            },
+            { 
+              icon: <BsBuilding size={16} color="#6c5ce7" />, 
+              title: 'Documents', 
+              status: 'NEW', 
+              description: '3 permit applications require', 
+              action: 'Review' 
+            }
+          ].map((insight, index) => (
+            <div key={index} style={{ 
+              flex: 1, 
+              minWidth: '280px',
+              padding: '12px', 
+              borderRadius: '8px', 
+              border: '1px solid #e9ecef', 
+              backgroundColor: '#fafafa',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '12px'
+            }}>
+              <div style={{ 
+                width: '24px', 
+                height: '24px', 
+                borderRadius: '4px', 
+                backgroundColor: insight.icon.props.color === '#e74c3c' ? '#fff0f0' : 
+                                insight.icon.props.color === '#2ecc71' ? '#e8f5e8' : '#f0f0ff',
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
+                {insight.icon}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: '#2d3436' }}>{insight.title}</div>
+                  <Badge bg={insight.status === 'HIGH' ? 'danger' : insight.status === 'MEDIUM' ? 'success' : 'primary'} style={{ 
+                    fontSize: '10px', 
+                    padding: '2px 6px', 
+                    borderRadius: '12px',
+                    fontWeight: '600'
+                  }}>{insight.status}</Badge>
+                </div>
+                <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '8px' }}>{insight.description}</div>
+                <Button variant="link" size="sm" style={{ 
+                  fontSize: '12px', 
+                  padding: '0', 
+                  color: '#6c5ce7',
+                  textDecoration: 'none'
+                }}>{insight.action}</Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
   );
 };
 

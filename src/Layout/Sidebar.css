@@ -1,157 +1,162 @@
-/* src/components/Sidebar.css */
-
+/* ===== SIDEBAR MAIN CONTAINER ===== */
 .sidebar-container {
-  width: 260px;
+  position: fixed;
+  top: 58px; /* below the navbar */
+  left: 0;
+  height: calc(100vh - 58px);
+  width: 250px;
   background-color: #ffffff;
-  min-height: 100vh;
   color: #333;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  padding: 20px 0;
-  position: relative;
-  z-index: 100;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
+  padding: 15px 0;
+  transition: width 0.3s ease, left 0.3s ease;
+  overflow-y: auto;
+  z-index: 999;
 }
 
+/* ===== Collapsed State ===== */
 .sidebar-container.collapsed {
-  width: 70px;
+  width: 80px;
 }
 
 .sidebar {
   width: 100%;
-  padding: 0;
-  margin: 0;
+  height: 100%;
 }
 
+/* ===== MENU STYLING ===== */
 .menu {
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 100%;
 }
 
 .menu-item {
-  padding: 0 20px;
-  margin: 8px 0;
   width: 100%;
   display: flex;
   justify-content: center;
+  margin: 6px 0;
 }
 
+/* ===== MENU LINKS ===== */
 .menu-link {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  border-radius: 12px;
+  width: 90%;
+  padding: 12px 14px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 500;
   color: #333;
-  transition: all 0.3s ease;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  position: relative;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
   text-decoration: none;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .menu-link:hover {
-  background-color: #f5f5f5;
+  background-color: #f7f7f7;
 }
 
 .menu-link.active {
-  background-color: #ffc107; /* Yellow */
-  color: white;
+  background-color: #ffc107;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.4);
 }
 
 .menu-link.active .menu-icon {
-  color: #6200ea; /* Purple */
+  color: #fff;
 }
 
+/* ===== ICONS ===== */
 .menu-icon {
-  font-size: 16px;
+  font-size: 18px;
   margin-right: 12px;
   color: #333;
-  transition: color 0.3s ease;
-  min-width: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 18px;
+  transition: color 0.3s ease, margin 0.3s ease;
 }
 
-/* Optional: Alert icon ko thoda zyada distinguish karein */
+/* Special icon highlight (e.g. Alerts) */
 .menu-link[href="/alerts"] .menu-icon,
 .menu-link[href="/alerts"].active .menu-icon {
   color: #e74c3c;
 }
 
+/* ===== MENU TEXT ===== */
 .menu-text {
   flex-grow: 1;
-  font-weight: 500;
-  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease;
 }
 
+/* ===== Dropdown Arrow ===== */
 .dropdown-arrow {
   font-size: 12px;
-  color: #666;
+  color: #777;
   margin-left: auto;
-  transition: transform 0.3s ease;
-  min-width: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.menu-link.active .dropdown-arrow {
-  color: white;
-}
-
-/* ===== Collapsed State ===== */
+/* ===== COLLAPSED BEHAVIOR ===== */
 .sidebar-container.collapsed .menu-text,
 .sidebar-container.collapsed .dropdown-arrow {
   opacity: 0;
   visibility: hidden;
   width: 0;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
 }
 
 .sidebar-container.collapsed .menu-link {
   justify-content: center;
   padding: 12px 0;
-  width: 100%;
 }
 
 .sidebar-container.collapsed .menu-icon {
   margin-right: 0;
 }
 
-/* Prevent layout shift during collapse */
+/* Prevent layout shift during transition */
 .menu-item,
 .menu-link {
   transition: padding 0.3s ease, justify-content 0.3s ease;
 }
 
-/* Mobile responsiveness */
+/* ===== SCROLLBAR STYLE ===== */
+.sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 4px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}
+
+/* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
   .sidebar-container {
-    position: fixed;
-    top: 0;
+    top: 58px;
+    left: -250px;
+    height: calc(100vh - 58px);
+  }
+
+  .sidebar-container.active {
     left: 0;
-    height: 100vh;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   }
 
   .sidebar-container.collapsed {
-    width: 0;
-    overflow: hidden;
-    box-shadow: none;
+    width: 250px;
   }
 }

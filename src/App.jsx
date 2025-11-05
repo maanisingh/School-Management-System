@@ -1,34 +1,22 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { useState, useEffect } from "react";
-import * as echarts from "echarts";
-
 import Navbar from "./Layout/Navbar";
-import Login from "./Auth/Login";
-import Signup from "./Auth/Signup";
-
 import Sidebar from "./Layout/Sidebar";
-
-
-
-// ✅ 8 Clean Dashboards (only imports)
-import AdminDashboard from "./Components/AdminDashbaord/AdminDashboard";
-import BookkeeperDashboard from "./Components/BookkeeperDashboard/BookkeeperDashboard";
-import CeoDashboard from "./Components/CeoDashbaord/CeoDashaboard";
-import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
-import ProjectManager from "./Components/ProjectManager/ProjectManager";
-import SalesManager from "./Components/SalesManager/SalesManagerOverview";
-import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";
 import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
 import LeadManagement from "./Components/SalesManager/LeadManagement";
-
+import Proposals from "./Components/SalesManager/Proposals";
+import Activities from "./Components/SalesManager/Activities";
+import Reports from "./Components/SalesManager/Reports";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const checkIfMobile = () => window.innerWidth <= 768;
-    if (checkIfMobile()) setIsSidebarCollapsed(true);
+    if (checkIfMobile()) {
+      setIsSidebarCollapsed(true);
+    }
   }, []);
 
   const toggleSidebar = () => {
@@ -40,19 +28,15 @@ function App() {
   const hideLayout =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
-    location.pathname === "/login";
-  // location.pathname === "/forgot-password"
-
+    location.pathname === "/forgot-password";
 
   return (
     <>
       {hideLayout ? (
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Login />} />
-          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
-
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       ) : (
         <>
@@ -67,50 +51,12 @@ function App() {
                 }`}
             >
               <Routes>
-
-
-
-                {/* ✅ 8 Dashboards */}
-                <Route
-                  path="/admin-dashboard"
-                  element={<AdminDashboard />}
-                />
-                <Route
-                  path="/bookkeeper-dashboard"
-                  element={<BookkeeperDashboard />}
-                />
-                <Route
-                  path="/ceo-dashboard"
-                  element={<CeoDashboard />}
-                />
-                <Route
-                  path="/client-dashboard"
-                  element={<ClientDashboard />}
-                />
-                <Route
-                  path="/owner-dashboard"
-                  element={<OwnerDashboard />}
-                />
-                <Route
-                  path="/project-manager-dashboard"
-                  element={<ProjectManager />}
-                />
-                {/* <Route
-                  path="/sales-manager-dashboard"
-                  element={<SalesManager />}
-                /> */}
-                <Route
-                  path="/subcontractor-dashboard"
-                  element={<SubContractorDashboard />}
-                />
-                <Route
-                  path="/sales-manager-overview"
-                  element={<SalesManagerOverview />}
-                />
-                <Route
-                  path="/lead-management"
-                  element={<LeadManagement />}
-                />
+                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/sales-manager-overview" element={<SalesManagerOverview />} />
+                <Route path="/lead-management" element={<LeadManagement />} />
+                <Route path="/proposals" element={<Proposals />} />
+                <Route path="/activities" element={<Activities />} />
+                <Route path="/reports" element={<Reports />} />
               </Routes>
             </div>
           </div>

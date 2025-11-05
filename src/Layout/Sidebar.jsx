@@ -192,15 +192,20 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/lead-management",
       },
       {
-        name: "Manage Users",
+        name: "Proposals",
         icon: faUsers,
-        path: "/manage-users",
+        path: "/proposals",
         hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Activities",
         icon: faUserGear,
-        path: "/settings",
+        path: "/activities",
+      },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/reports",
       },
     ],
     subcontractor: [
