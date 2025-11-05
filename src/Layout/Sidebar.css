@@ -1,3 +1,5 @@
+/* src/components/Sidebar.css */
+
 .sidebar-container {
   width: 260px;
   background-color: #ffffff;
@@ -6,6 +8,10 @@
   transition: all 0.3s ease;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   padding: 20px 0;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-container.collapsed {
@@ -13,6 +19,7 @@
 }
 
 .sidebar {
+  width: 100%;
   padding: 0;
   margin: 0;
 }
@@ -21,11 +28,15 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
 .menu-item {
   padding: 0 20px;
   margin: 8px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .menu-link {
@@ -43,6 +54,7 @@
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 .menu-link:hover {
@@ -63,12 +75,25 @@
   margin-right: 12px;
   color: #333;
   transition: color 0.3s ease;
+  min-width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: Alert icon ko thoda zyada distinguish karein */
+.menu-link[href="/alerts"] .menu-icon,
+.menu-link[href="/alerts"].active .menu-icon {
+  color: #e74c3c;
 }
 
 .menu-text {
   flex-grow: 1;
   font-weight: 500;
   font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
@@ -77,13 +102,17 @@
   color: #666;
   margin-left: auto;
   transition: transform 0.3s ease;
+  min-width: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .menu-link.active .dropdown-arrow {
   color: white;
 }
 
-/* Collapsed State */
+/* ===== Collapsed State ===== */
 .sidebar-container.collapsed .menu-text,
 .sidebar-container.collapsed .dropdown-arrow {
   opacity: 0;
@@ -104,8 +133,25 @@
   margin-right: 0;
 }
 
-/* Ensure no layout shift */
-.menu-item {
-  display: flex;
-  width: 100%;
+/* Prevent layout shift during collapse */
+.menu-item,
+.menu-link {
+  transition: padding 0.3s ease, justify-content 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar-container.collapsed {
+    width: 0;
+    overflow: hidden;
+    box-shadow: none;
+  }
 }
