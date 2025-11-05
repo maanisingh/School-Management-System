@@ -7,27 +7,63 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // Define default credentials for each role
+  // ✅ 8 Role-based credentials (email, password, and redirect path)
   const roleCredentials = {
-    superadmin: {
+  
+    admin: {
       email: "admin@gmail.com",
-      password: "123",
+      password: "admin123",
       redirect: "/admin-dashboard",
     },
-    admin: {
-      email: "admin@fit.com",
-      password: "admin123",
-      redirect: "/admin/dashboard",
+    bookkeeper: {
+      email: "bookkeeper@gmail.com",
+      password: "book123",
+      redirect: "/bookkeeper-dashboard",
+    },
+    ceo: {
+      email: "ceo@gmail.com",
+      password: "ceo123",
+      redirect: "/ceo-dashboard",
+    },
+    client: {
+      email: "client@gmail.com",
+      password: "client123",
+      redirect: "/client-dashboard",
+    },
+    owner: {
+      email: "owner@gmail.com",
+      password: "owner123",
+      redirect: "/owner-dashboard",
+    },
+    projectmanager: {
+      email: "pm@gmail.com",
+      password: "pm123",
+      redirect: "/project-manager-dashboard",
+    },
+    salesmanager: {
+      email: "sales@gmail.com",
+      password: "sales123",
+      redirect: "/sales-manager-dashboard",
+    },
+    subcontractor: {
+      email: "subcontractor@gmail.com",
+      password: "sub123",
+      redirect: "/subcontractor-dashboard",
     },
   };
 
+  // ✅ Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     const matchedRole = Object.values(roleCredentials).find(
       (role) => role.email === email && role.password === password
     );
+
     if (matchedRole) {
-      localStorage.setItem("userRole", Object.keys(roleCredentials).find(key => roleCredentials[key].email === email));
+      const roleKey = Object.keys(roleCredentials).find(
+        (key) => roleCredentials[key].email === email
+      );
+      localStorage.setItem("userRole", roleKey);
       localStorage.setItem("userEmail", email);
       navigate(matchedRole.redirect);
     } else {
@@ -39,7 +75,7 @@ const Login = () => {
     <div
       className="d-flex align-items-center justify-content-center min-vh-100"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80')`,
+        backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -53,10 +89,8 @@ const Login = () => {
           backdropFilter: "blur(10px)",
           backgroundColor: "rgba(255, 255, 255, 0.9)",
           borderRadius: "1rem",
-          padding: "2rem",
         }}
       >
-        {/* Logo */}
         <div className="text-center mb-4">
           <h2
             style={{
@@ -64,7 +98,6 @@ const Login = () => {
               fontWeight: "700",
               color: "#FF6B00",
               fontSize: "2.2rem",
-              letterSpacing: "1px",
             }}
           >
             Sunbuild
@@ -131,13 +164,17 @@ const Login = () => {
             >
               Create Account
             </button>
-            <button type="submit" className="btn w-50" style={{ backgroundColor: "#FFC107", color: "#000" }}>
+            <button
+              type="submit"
+              className="btn w-50"
+              style={{ backgroundColor: "#FFC107", color: "#000" }}
+            >
               Login
             </button>
           </div>
         </form>
 
-        {/* Test Credentials Info (Optional - for demo only) */}
+        {/* ✅ Test Credentials */}
         <div className="mt-4 p-3 bg-light rounded small">
           <strong>Test Credentials:</strong>
           <ul className="mb-0">
