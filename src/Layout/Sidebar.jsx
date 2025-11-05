@@ -1,4 +1,3 @@
-// src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +19,9 @@ import {
        faPercent,
   faPlay,
   faCheckCircle,
+  faLock,
+  faCog,
+  faTachometerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -27,7 +29,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userRole, setUserRole] = useState("admin");
-  const [openSubmenu, setOpenSubmenu] = useState(null); // Track which menu is open
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
   useEffect(() => {
     const role = localStorage.getItem("userRole") || "admin";
@@ -47,33 +49,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   const allMenus = {
     admin: [
-      {
-        name: "Analytics",
-        icon: faChartPie,
-        path: "/analytics",
-      },
-      {
-        name: "Daily Logs",
-        icon: faBriefcase,
-        path: "/daily-logs",
-      },
-      {
-        name: "Alerts",
-        icon: faExclamationCircle,
-        path: "/alerts",
-      },
-      {
-        name: "RFIs",
-        icon: faUsers,
-        path: "/rfis",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/admin-settings",
-      },
+      { name: "Analytics", icon: faChartPie, path: "/analytics" },
+      { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
+      { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
+      { name: "RFIs", icon: faUsers, path: "/rfis", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/admin-settings" },
     ],
+ 
 bookkeeper: [
   {
     name: "Dashboard",
@@ -112,171 +94,54 @@ bookkeeper: [
   },
 ],
     ceo: [
-      {
-        name: "Overview",
-        icon: faUserTie,
-        path: "/ceo-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
+      { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
     client: [
-      {
-        name: "Overview",
-        icon: faUsers,
-        path: "/client-dashboard",
-      },
-      {
-        name: "Selections",
-        icon: faBriefcase,
-        path: "/client-selections",
-      },
-      {
-        name: "Schedules",
-        icon: faUsers,
-        path: "/client-schedules",
-        // hasDropdown: true,
-      },
-      {
-        name: "Calendar",
-        icon: faUserGear,
-        path: "/client-calendar",
-      },
-      {
-        name: "Payments",
-        icon: faUserGear,
-        path: "/client-payments",
-      },
+      { name: "Overview", icon: faUsers, path: "/client-dashboard" },
+      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
+      { name: "Schedules", icon: faUsers, path: "/client-schedules" },
+      // { name: "Calendar", icon: faUserGear, path: "/client-calendar" },
+      { name: "Payments", icon: faUserGear, path: "/client-payments" },
     ],
     owner: [
-      {
-        name: "Overview",
-        icon: faUserTag,
-        path: "/owner-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-     
-   
-      },
+      { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
       {
         name: "Manage Users",
         icon: faUsers,
         path: "/manage-users",
         hasDropdown: true,
         submenus: [
-          {
-            name: "List",
-            icon: faPlay,
-            path: "/manage-users/list",
-          },
-          {
-            name: "Permissions",
-            icon: faCheckCircle,
-            path: "/manage-users/permissions",
-          },
+          { name: "List", icon: faPlay, path: "/manage-users/list" },
+          { name: "Permissions", icon: faCheckCircle, path: "/manage-users/permissions" },
         ],
       },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/owner/settings",
-      },
+      { name: "Settings", icon: faUserGear, path: "/owner/settings" },
     ],
     projectmanager: [
-      {
-        name: "Selection",
-        icon: faUserGear,
-        path: "/selection",
-      },
-      {
-        name: "Overview",
-        icon: faBriefcase,
-        path: "/project-manager-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
+      { name: "Dashboard", icon: faTachometerAlt, path: "/project-manager" },
+      // { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
+      // { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
+      { name: "RFIs", icon: faExclamationCircle, path: "/rfis" },
+      { name: "Change Orders", icon: faLock, path: "/change-orders" },
+      { name: "Selection", icon: faCog, path: "/selection" },
+      // { name: "Schedule", icon: faCog, path: "/schedule" },
     ],
     salesmanager: [
-      {
-        name: "Overview",
-        icon: faChartPie,
-        path: "/sales-manager-overview",
-      },
-      {
-        name: "Lead Management",
-        icon: faBriefcase,
-        path: "/lead-management",
-      },
-      {
-        name: "Proposals",
-        icon: faUsers,
-        path: "/proposals",
-        hasDropdown: true,
-      },
-      {
-        name: "Activities",
-        icon: faUserGear,
-        path: "/activities",
-      },
-      {
-        name: "Reports",
-        icon: faUserGear,
-        path: "/reports",
-      },
+      { name: "Overview", icon: faChartPie, path: "/sales-manager-overview" },
+      { name: "Lead Management", icon: faBriefcase, path: "/lead-management" },
+      { name: "Proposals", icon: faUsers, path: "/proposals" },
+      { name: "Activities", icon: faUserGear, path: "/activities" },
+      { name: "Reports", icon: faUserGear, path: "/reports" },
     ],
     subcontractor: [
-      {
-        name: "Overview",
-        icon: faHandshake,
-        path: "/subcontractor-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
+      { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Schedule RFIs", icon: faUsers, path: "/schedule-rfis" },
+      { name: "To Do", icon: faUserGear, path: "/to-do" },
     ],
   };
 
@@ -288,16 +153,11 @@ bookkeeper: [
         <ul className="menu">
           {userMenus.map((menu, index) => (
             <React.Fragment key={index}>
-              {/* Main Menu Item */}
               <li className="menu-item">
                 <div
                   className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
                   onClick={() => {
-                    if (menu.hasDropdown) {
-                      toggleSubmenu(menu.name);
-                    } else {
-                      handleNavigate(menu.path);
-                    }
+                    menu.hasDropdown ? toggleSubmenu(menu.name) : handleNavigate(menu.path);
                   }}
                   style={{ cursor: "pointer", position: "relative" }}
                 >
@@ -315,7 +175,6 @@ bookkeeper: [
                 </div>
               </li>
 
-              {/* Inline Submenu (Below parent, inside same list) */}
               {!collapsed &&
                 menu.submenus &&
                 openSubmenu === menu.name &&
