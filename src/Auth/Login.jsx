@@ -6,38 +6,65 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
-  // Define default credentials for each role
-  const roleCredentials = {
 
-   superadmin: {
+  // ✅ 8 Role-based credentials (email, password, and redirect path)
+  const roleCredentials = {
+  
+    admin: {
       email: "admin@gmail.com",
-      password: "123",
+      password: "admin123",
       redirect: "/admin-dashboard",
     },
-
-    admin: {
-      email: "admin@fit.com",
-      password: "admin123",
-      redirect: "/admin/dashboard",
+    bookkeeper: {
+      email: "bookkeeper@gmail.com",
+      password: "book123",
+      redirect: "/bookkeeper-dashboard",
     },
-
-
+    ceo: {
+      email: "ceo@gmail.com",
+      password: "ceo123",
+      redirect: "/ceo-dashboard",
+    },
+    client: {
+      email: "client@gmail.com",
+      password: "client123",
+      redirect: "/client-dashboard",
+    },
+    owner: {
+      email: "owner@gmail.com",
+      password: "owner123",
+      redirect: "/owner-dashboard",
+    },
+    projectmanager: {
+      email: "pm@gmail.com",
+      password: "pm123",
+      redirect: "/project-manager-dashboard",
+    },
+    salesmanager: {
+      email: "sales@gmail.com",
+      password: "sales123",
+      redirect: "/sales-manager-dashboard",
+    },
+    subcontractor: {
+      email: "subcontractor@gmail.com",
+      password: "sub123",
+      redirect: "/subcontractor-dashboard",
+    },
   };
 
+  // ✅ Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Check which role matches
     const matchedRole = Object.values(roleCredentials).find(
       (role) => role.email === email && role.password === password
     );
+
     if (matchedRole) {
-      // Save role and email in localStorage or context if needed
-      localStorage.setItem("userRole", Object.keys(roleCredentials).find(
-        key => roleCredentials[key].email === email
-      ));
+      const roleKey = Object.keys(roleCredentials).find(
+        (key) => roleCredentials[key].email === email
+      );
+      localStorage.setItem("userRole", roleKey);
       localStorage.setItem("userEmail", email);
-      // Redirect based on role
       navigate(matchedRole.redirect);
     } else {
       alert("Invalid email or password. Please try again.");
@@ -45,87 +72,118 @@ const Login = () => {
   };
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light px-3">
-      <div className="card shadow w-100" style={{ maxWidth: "950px", borderRadius: "1.5rem" }}>
-        <div className="row g-0">
-          {/* Image Column */}
-          <div className="col-md-6 d-none d-md-block">
-            <img
-              src="https://hips.hearstapps.com/hmg-prod/images/muscular-man-doing-pushup-exercise-with-dumbbell-royalty-free-image-1728661212.jpg?crop=0.668xw:1.00xh;0.00680xw,0&resize=640:*"
-              alt="login"
-              className="img-fluid rounded-start"
-              style={{ height: "100%", objectFit: "cover" }}
+    <div
+      className="d-flex align-items-center justify-content-center min-vh-100"
+      style={{
+        backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Login Card */}
+      <div
+        className="card shadow p-4"
+        style={{
+          width: "400px",
+          backdropFilter: "blur(10px)",
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          borderRadius: "1rem",
+        }}
+      >
+        <div className="text-center mb-4">
+          <h2
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: "700",
+              color: "#FF6B00",
+              fontSize: "2.2rem",
+            }}
+          >
+            Sunbuild
+          </h2>
+        </div>
+
+        <h4 className="text-center mb-4">Login</h4>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Enter your email"
             />
           </div>
-          {/* Form Column */}
-          <div className="col-md-6 d-flex align-items-center p-5">
-            <div className="w-100">
-              <h2 className="fw-bold mb-3 text-center">Welcome Back!</h2>
-              <p className="text-muted text-center mb-4">Please login to your account</p>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label className="form-label">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="mb-3 position-relative">
-                  <label className="form-label">Password</label>
-                  <div className="input-group">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      className="form-control"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      style={{ paddingRight: "40px" }}
-                    />
-                    <span
-                      className="position-absolute top-50 end-0 translate-middle-y pe-3"
-                      style={{ cursor: "pointer", zIndex: 10 }}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <i className="bi bi-eye-slash-fill"></i>
-                      ) : (
-                        <i className="bi bi-eye-fill"></i>
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="remember" />
-                    <label className="form-check-label" htmlFor="remember">
-                      Remember me
-                    </label>
-                  </div>
-                  <a href="#" className="text-decoration-none small">
-                    Forgot Password?
-                  </a>
-                </div>
-                <button type="submit" className="btn  w-100 py-2"   style={{ backgroundColor: "#2f6a87" }}>
-                  Login
-                </button>
-              </form>
-              {/* Test Credentials Info (Optional - for demo only) */}
-              <div className="mt-4 p-3 bg-light rounded small">
-                <strong>Test Credentials:</strong>
-                <ul className="mb-0">
-                  {Object.entries(roleCredentials).map(([role, cred]) => (
-                    <li key={role}>
-                      <strong>{role}:</strong> {cred.email} / {cred.password}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
+
+          <div className="mb-3 position-relative">
+            <label className="form-label">Password</label>
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Enter your password"
+              />
+              <span
+                className="position-absolute top-50 end-0 translate-middle-y pe-3"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <i className="bi bi-eye-slash-fill"></i>
+                ) : (
+                  <i className="bi bi-eye-fill"></i>
+                )}
+              </span>
             </div>
           </div>
+
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" id="remember" />
+              <label className="form-check-label" htmlFor="remember">
+                Remember me
+              </label>
+            </div>
+            <a href="#" className="text-decoration-none small text-muted">
+              Forgot Password?
+            </a>
+          </div>
+
+          <div className="d-flex gap-2">
+            <button
+              type="button"
+              className="btn btn-outline-secondary w-50"
+              onClick={() => alert("Create Account clicked")}
+            >
+              Create Account
+            </button>
+            <button
+              type="submit"
+              className="btn w-50"
+              style={{ backgroundColor: "#FFC107", color: "#000" }}
+            >
+              Login
+            </button>
+          </div>
+        </form>
+
+        {/* ✅ Test Credentials */}
+        <div className="mt-4 p-3 bg-light rounded small">
+          <strong>Test Credentials:</strong>
+          <ul className="mb-0">
+            {Object.entries(roleCredentials).map(([role, cred]) => (
+              <li key={role}>
+                <strong>{role}:</strong> {cred.email} / {cred.password}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
