@@ -3,21 +3,26 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartPie,           // ✅ Pie Chart (Top icon from your image)
-  faBriefcase,          // ✅ Briefcase (Middle icon)
-  faExclamationCircle,  // ✅ Alert (Bottom icon)
+  faChartPie,
+  faBriefcase,
+  faExclamationCircle,
   faUserGear,
   faUserTie,
   faUsers,
   faUserTag,
   faHandshake,
   faChevronDown,
+<<<<<<< HEAD
    faFileInvoice,
     faFileInvoiceDollar,
      faCreditCard,
       faChartBar,
       faBuildingColumns,
        faPercent
+=======
+  faPlay,
+  faCheckCircle,
+>>>>>>> 6ba7e553582e530e9f7886d18f3c704e89138294
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -25,6 +30,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userRole, setUserRole] = useState("admin");
+  const [openSubmenu, setOpenSubmenu] = useState(null); // Track which menu is open
 
   useEffect(() => {
     const role = localStorage.getItem("userRole") || "admin";
@@ -38,9 +44,12 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     if (window.innerWidth <= 768) setCollapsed(true);
   };
 
+  const toggleSubmenu = (menuName) => {
+    setOpenSubmenu(openSubmenu === menuName ? null : menuName);
+  };
+
   const allMenus = {
     admin: [
-      // ✅ Yeh teeno icons aapki image ke exactly match karte hain
       {
         name: "Analytics",
         icon: faChartPie,
@@ -56,8 +65,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         icon: faExclamationCircle,
         path: "/alerts",
       },
-
-      // Baki ke options (as per your original design)
       {
         name: "RFIs",
         icon: faUsers,
@@ -168,22 +175,31 @@ bookkeeper: [
         name: "Jobs Management",
         icon: faBriefcase,
         path: "/jobs-management",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
+     
+   
       },
       {
         name: "Manage Users",
         icon: faUsers,
         path: "/manage-users",
         hasDropdown: true,
+        submenus: [
+          {
+            name: "List",
+            icon: faPlay,
+            path: "/manage-users/list",
+          },
+          {
+            name: "Permissions",
+            icon: faCheckCircle,
+            path: "/manage-users/permissions",
+          },
+        ],
       },
       {
         name: "Settings",
         icon: faUserGear,
-        path: "/settings",
+        path: "/owner/settings",
       },
     ],
     projectmanager: [
@@ -274,25 +290,58 @@ bookkeeper: [
       <div className="sidebar">
         <ul className="menu">
           {userMenus.map((menu, index) => (
-            <li key={index} className="menu-item">
-              <div
-                className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
-                onClick={() => handleNavigate(menu.path)}
-                style={{ cursor: "pointer" }}
-              >
-                <FontAwesomeIcon
-                  icon={menu.icon}
-                  className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
-                />
-                {!collapsed && <span className="menu-text">{menu.name}</span>}
-                {menu.hasDropdown && !collapsed && (
+            <React.Fragment key={index}>
+              {/* Main Menu Item */}
+              <li className="menu-item">
+                <div
+                  className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
+                  onClick={() => {
+                    if (menu.hasDropdown) {
+                      toggleSubmenu(menu.name);
+                    } else {
+                      handleNavigate(menu.path);
+                    }
+                  }}
+                  style={{ cursor: "pointer", position: "relative" }}
+                >
                   <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className="dropdown-arrow"
+                    icon={menu.icon}
+                    className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
                   />
-                )}
-              </div>
-            </li>
+                  {!collapsed && <span className="menu-text">{menu.name}</span>}
+                  {menu.hasDropdown && !collapsed && (
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className={`dropdown-arrow ${openSubmenu === menu.name ? "rotate" : ""}`}
+                    />
+                  )}
+                </div>
+              </li>
+
+              {/* Inline Submenu (Below parent, inside same list) */}
+              {!collapsed &&
+                menu.submenus &&
+                openSubmenu === menu.name &&
+                menu.submenus.map((sub, subIndex) => (
+                  <li key={`sub-${subIndex}`} className="menu-item submenu-item">
+                    <div
+                      className={`menu-link submenu-link ${isActive(sub.path) ? "active" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNavigate(sub.path);
+                      }}
+                      style={{ paddingLeft: "36px", cursor: "pointer" }}
+                    >
+                      <FontAwesomeIcon
+                        icon={sub.icon}
+                        className={`menu-icon ${isActive(sub.path) ? "active-icon" : ""}`}
+                        style={{ fontSize: "0.85em" }}
+                      />
+                      <span className="menu-text">{sub.name}</span>
+                    </div>
+                  </li>
+                ))}
+            </React.Fragment>
           ))}
         </ul>
       </div>

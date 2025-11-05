@@ -111,6 +111,17 @@ function App() {
                 <Route path="/bookkeeper-dashboard" element={<BookkeeperDashboard />} />
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
                 <Route path="/invoices" element={<BookkeeperInvoice />} />
+
+
+
+
+                {/* owner-dashboard */}
+                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/owner/settings" element={<SettingOwer />} />
+                <Route path="/jobs-management" element={<JobManagment />} />
+                <Route path="/manage-users/permissions" element={<Permissions />} />
+                <Route path="/manage-users/list" element={<ListOwer />} />
+
                 <Route path="/sales-manager-overview" element={<SalesManagerOverview />} />
                 <Route path="/lead-management" element={<LeadManagement />} />
                 <Route path="/proposals" element={<Proposals />} />

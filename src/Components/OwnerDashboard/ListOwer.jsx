@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const OwerList = () => {
+const ListOwer = () => {
   const [search, setSearch] = useState("");
 
   const users = [
