@@ -1,14 +1,16 @@
+// src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartBar,
-  faCalculator,
+  faChartPie,           // ✅ Pie Chart (Top icon from your image)
+  faBriefcase,          // ✅ Briefcase (Middle icon)
+  faExclamationCircle,  // ✅ Alert (Bottom icon)
   faUserGear,
+  faCalculator,
   faUserTie,
   faUsers,
   faUserTag,
-  faBriefcase,
   faHandshake,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
@@ -31,13 +33,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     if (window.innerWidth <= 768) setCollapsed(true);
   };
 
-  // ✅ Only 8 dashboards (clean version)
   const allMenus = {
     admin: [
+      // ✅ Yeh teeno icons aapki image ke exactly match karte hain
       {
-        name: "Overview",
-        icon: faUserGear,
-        path: "/admin-dashboard",
+        name: "Analytics",
+        icon: faChartPie,
+        path: "/analytics",
       },
       {
         name: "Daily Logs",
@@ -45,23 +47,23 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/daily-logs",
       },
       {
+        name: "Alerts",
+        icon: faExclamationCircle,
+        path: "/alerts",
+      },
+
+      // Baki ke options (as per your original design)
+      {
         name: "RFIs",
         icon: faUsers,
         path: "/rfis",
         hasDropdown: true,
       },
       {
-        name: "Change Orders",
+        name: "Settings",
         icon: faUserGear,
-        path: "/change-orders",
+        path: "/admin-settings",
       },
-      {
-        name: "Change Orders",
-        icon: faUserGear,
-        path: "/change-orders",
-      },
-      
-
     ],
     bookkeeper: [
       {
@@ -181,7 +183,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     salesmanager: [
       {
         name: "Overview",
-        icon: faChartBar,
+        icon: faChartPie,
         path: "/sales-manager-dashboard",
       },
       {
