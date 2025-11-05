@@ -3,16 +3,24 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCalculator,  
   faChartPie,
   faBriefcase,
   faExclamationCircle,
   faUserGear,
-  faCalculator,
   faUserTie,
   faUsers,
   faUserTag,
   faHandshake,
   faChevronDown,
+  faFileInvoice,
+  faFileInvoiceDollar,
+  faCreditCard,
+  faChartBar,
+  faBuildingColumns,
+  faPercent,
+  faPlay,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -21,6 +29,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
   const [userRole, setUserRole] = useState("admin");
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [openSubmenu, setOpenSubmenu] = useState(null); // Track which menu is open
 
   useEffect(() => {
     const role = localStorage.getItem("userRole") || "admin";
@@ -38,6 +47,10 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     setOpenDropdown(openDropdown === menuName ? null : menuName);
   };
 
+  const toggleSubmenu = (menuName) => {
+    setOpenSubmenu(openSubmenu === menuName ? null : menuName);
+  };
+
   const allMenus = {
     admin: [
       { name: "Analytics", icon: faChartPie, path: "/analytics" },
@@ -47,10 +60,41 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       { name: "Settings", icon: faUserGear, path: "/admin-settings" },
     ],
     bookkeeper: [
-      { name: "Overview", icon: faCalculator, path: "/bookkeeper-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      {
+        name: "Dashboard",
+        icon: faChartPie,
+        path: "/bookkeeper-dashboard",
+      },
+      {
+        name: "Invoices",
+        icon: faFileInvoice,
+        path: "/invoices",
+      },
+      {
+        name: "Bills",
+        icon: faFileInvoiceDollar,
+        path: "/bills",
+      },
+      {
+        name: "Payments",
+        icon: faCreditCard,
+        path: "/payments",
+      },
+      {
+        name: "Reports",
+        icon: faChartBar,
+        path: "/reports",
+      },
+      {
+        name: "Banking",
+        icon: faBuildingColumns,
+        path: "/banking",
+      },
+      {
+        name: "Tax/GST",
+        icon: faPercent,
+        path: "/tax-gst",
+      },
     ],
     ceo: [
       { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
@@ -67,7 +111,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       },
       { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
-    // ... other roles remain the same
     client: [
       { name: "Overview", icon: faUsers, path: "/client-dashboard" },
       { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
@@ -75,86 +118,199 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
     owner: [
-      { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      {
+        name: "Overview",
+        icon: faUserTag,
+        path: "/owner-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+        submenus: [
+          {
+            name: "List",
+            icon: faPlay,
+            path: "/manage-users/list",
+          },
+          {
+            name: "Permissions",
+            icon: faCheckCircle,
+            path: "/manage-users/permissions",
+          },
+        ],
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/owner/settings",
+      },
     ],
     projectmanager: [
-      { name: "Overview", icon: faBriefcase, path: "/project-manager-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      {
+        name: "Selection",
+        icon: faUserGear,
+        path: "/selection",
+      },
+      {
+        name: "Overview",
+        icon: faBriefcase,
+        path: "/project-manager-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+      },
+      {
+        name: "Settings",
+        icon: faUserGear,
+        path: "/settings",
+      },
     ],
     salesmanager: [
-      { name: "Overview", icon: faChartPie, path: "/sales-manager-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      {
+        name: "Overview",
+        icon: faChartPie,
+        path: "/sales-manager-overview",
+      },
+      {
+        name: "Lead Management",
+        icon: faBriefcase,
+        path: "/lead-management",
+      },
+      {
+        name: "Proposals",
+        icon: faUsers,
+        path: "/proposals",
+        hasDropdown: true,
+      },
+      {
+        name: "Activities",
+        icon: faUserGear,
+        path: "/activities",
+      },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/reports",
+      },
     ],
     subcontractor: [
-      { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      {
+        name: "Overview",
+        icon: faHandshake,
+        path: "/subcontractor-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
+        name: "Schedule RFIs",
+        icon: faUsers,
+        path: "/schedule-rfis",
+        hasDropdown: true,
+      },
+      {
+        name: "To Do",
+        icon: faUserGear,
+        path: "/to-do",
+      },
     ],
-  };
+  };    
 
   const userMenus = allMenus[userRole.toLowerCase()] || allMenus.admin;
 
   return (
     <div className={`sidebar-container ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar">
-        <ul className="menu">
+        <ul className="menu-list">
           {userMenus.map((menu, index) => (
-            <li key={index} className="menu-item">
-              <div
-                className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
-                onClick={() => {
-                  if (menu.hasDropdown) {
-                    toggleDropdown(menu.name);
-                  } else {
-                    handleNavigate(menu.path);
-                  }
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                <FontAwesomeIcon
-                  icon={menu.icon}
-                  className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
-                />
-                {!collapsed && <span className="menu-text">{menu.name}</span>}
-                {menu.hasDropdown && !collapsed && (
+            <React.Fragment key={index}>
+              {/* Main Menu Item */}
+              <li className="menu-item">
+                <div
+                  className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
+                  onClick={() => {
+                    if (menu.hasDropdown) {
+                      toggleSubmenu(menu.name);
+                    } else {
+                      handleNavigate(menu.path);
+                    }
+                  }}
+                  style={{ cursor: "pointer", position: "relative" }}
+                >
                   <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className={`dropdown-arrow ${openDropdown === menu.name ? "open" : ""}`}
+                    icon={menu.icon}
+                    className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
                   />
-                )}
-              </div>
-
-              {/* ✅ MODIFIED: Submenu Container */}
-              {menu.hasDropdown && !collapsed && openDropdown === menu.name && (
-                <div className="submenu-container">
-                  <ul className="submenu">
-                    {menu.subMenu.map((subItem, subIndex) => (
-                      <li key={subIndex} className="submenu-item">
-                        <div
-                          className={`submenu-link ${isActive(subItem.path) ? "active" : ""}`}
-                          onClick={() => {
-                            handleNavigate(subItem.path);
-                            setOpenDropdown(null);
-                          }}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <span className="submenu-text">{subItem.name}</span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  {!collapsed && <span className="menu-text">{menu.name}</span>}
+                  {menu.hasDropdown && !collapsed && (
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className={`dropdown-arrow ${openSubmenu === menu.name ? "rotate" : ""}`}
+                    />
+                  )}
                 </div>
-              )}
-            </li>
+              </li>
+
+              {/* Inline Submenu (Below parent, inside same list) */}
+              {!collapsed &&
+                menu.submenus &&
+                openSubmenu === menu.name &&
+                menu.submenus.map((sub, subIndex) => (
+                  <li key={`sub-${subIndex}`} className="menu-item submenu-item">
+                    <div
+                      className={`menu-link submenu-link ${isActive(sub.path) ? "active" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNavigate(sub.path);
+                      }}
+                      style={{ paddingLeft: "36px", cursor: "pointer" }}
+                    >
+                      <FontAwesomeIcon
+                        icon={sub.icon}
+                        className={`menu-icon ${isActive(sub.path) ? "active-icon" : ""}`}
+                        style={{ fontSize: "0.85em" }}
+                      />
+                      <span className="menu-text">{sub.name}</span>
+                    </div>
+                  </li>
+                ))}
+              
+              {/* For subMenu (alternative submenu structure) */}
+              {!collapsed &&
+                menu.subMenu &&
+                openSubmenu === menu.name &&
+                menu.subMenu.map((subItem, subIndex) => (
+                  <li key={`subItem-${subIndex}`} className="menu-item submenu-item">
+                    <div
+                      className={`menu-link submenu-link ${isActive(subItem.path) ? "active" : ""}`}
+                      onClick={() => {
+                        handleNavigate(subItem.path);
+                        setOpenSubmenu(null);
+                      }}
+                      style={{ paddingLeft: "36px", cursor: "pointer" }}
+                    >
+                      <span className="submenu-text">{subItem.name}</span>
+                    </div>
+                  </li>
+                ))}
+            </React.Fragment>
           ))}
         </ul>
       </div>

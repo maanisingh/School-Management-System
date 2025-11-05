@@ -224,3 +224,19 @@
     width: 250px;
   }
 }
+.submenu-item {
+  margin-top: 0;
+}
+
+.submenu-link {
+  height: 40px;
+  font-size: 0.9em;
+  color: #a0a0a0;
+}
+
+.submenu-link:hover,
+.submenu-link.active {
+  background-color: #ffc107;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.4);
+}
