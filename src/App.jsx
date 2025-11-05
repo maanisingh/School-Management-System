@@ -7,6 +7,8 @@ import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import ProjectManager from "./Components/ProjectManager/ProjectManager";
+import RequestForInformation from"./Components/ProjectManager/RequestForInformation.jsx"
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -51,6 +53,8 @@ function App() {
             >
               <Routes>
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/project-manager" element={<ProjectManager />} />
+                <Route path="/rfis" element={<RequestForInformation />} />
               </Routes>
             </div>
           </div>

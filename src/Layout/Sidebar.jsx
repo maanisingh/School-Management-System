@@ -1,11 +1,10 @@
-// src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartPie,           // ✅ Pie Chart (Top icon from your image)
-  faBriefcase,          // ✅ Briefcase (Middle icon)
-  faExclamationCircle,  // ✅ Alert (Bottom icon)
+  faChartPie,
+  faBriefcase,
+  faExclamationCircle,
   faUserGear,
   faCalculator,
   faUserTie,
@@ -13,6 +12,9 @@ import {
   faUserTag,
   faHandshake,
   faChevronDown,
+  faLock,
+  faCog,
+  faTachometerAlt // Project Manager Dashboard icon
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -22,6 +24,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const [userRole, setUserRole] = useState("admin");
 
   useEffect(() => {
+    // Get user role from localStorage
+    // NOTE: For real-world apps, use a proper state management solution or Context for user roles.
     const role = localStorage.getItem("userRole") || "admin";
     setUserRole(role);
   }, []);
@@ -30,16 +34,49 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   const handleNavigate = (path) => {
     navigate(path);
+    // On mobile screens, collapse the sidebar after navigation
     if (window.innerWidth <= 768) setCollapsed(true);
   };
 
   const allMenus = {
     admin: [
-      // ✅ Yeh teeno icons aapki image ke exactly match karte hain
+      { name: "Analytics", icon: faChartPie, path: "/analytics" },
+      { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
+      { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
+      { name: "RFIs", icon: faUsers, path: "/rfis", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/admin-settings" },
+    ],
+    // ... other roles ...
+    bookkeeper: [
+      { name: "Overview", icon: faCalculator, path: "/bookkeeper-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
+    ],
+    ceo: [
+      { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
+    ],
+    client: [
+      { name: "Overview", icon: faUsers, path: "/client-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
+    ],
+    owner: [
+      { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
+    ],
+    // 🎯 Project Manager Menu: RFIs is correctly set to path: "/rfis"
+    projectmanager: [
       {
-        name: "Analytics",
-        icon: faChartPie,
-        path: "/analytics",
+        name: "Dashboard",
+        icon: faTachometerAlt,
+        path: "/project-manager",
       },
       {
         name: "Daily Logs",
@@ -47,189 +84,37 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/daily-logs",
       },
       {
-        name: "Alerts",
-        icon: faExclamationCircle,
-        path: "/alerts",
-      },
-
-      // Baki ke options (as per your original design)
-      {
         name: "RFIs",
-        icon: faUsers,
-        path: "/rfis",
-        hasDropdown: true,
+        icon: faExclamationCircle,
+        path: "/rfis", // 👈 This links to the route in App.jsx
       },
       {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/admin-settings",
-      },
-    ],
-    bookkeeper: [
-      {
-        name: "Overview",
-        icon: faCalculator,
-        path: "/bookkeeper-dashboard",
+        name: "Change Orders",
+        icon: faLock,
+        path: "/change-orders",
       },
       {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
+        name: "Selection",
+        icon: faCog,
+        path: "/selection",
       },
       {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
-    ],
-    ceo: [
-      {
-        name: "Overview",
-        icon: faUserTie,
-        path: "/ceo-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
-    ],
-    client: [
-      {
-        name: "Overview",
-        icon: faUsers,
-        path: "/client-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
-    ],
-    owner: [
-      {
-        name: "Overview",
-        icon: faUserTag,
-        path: "/owner-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
-    ],
-    projectmanager: [
-      {
-        name: "Overview",
-        icon: faBriefcase,
-        path: "/project-manager-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
+        name: "Schedule",
+        icon: faCog,
+        path: "/schedule",
       },
     ],
     salesmanager: [
-      {
-        name: "Overview",
-        icon: faChartPie,
-        path: "/sales-manager-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
+      { name: "Overview", icon: faChartPie, path: "/sales-manager-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
     subcontractor: [
-      {
-        name: "Overview",
-        icon: faHandshake,
-        path: "/subcontractor-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
+      { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
   };
 
