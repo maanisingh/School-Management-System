@@ -87,6 +87,21 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         icon: faUserGear,
         path: "/settings",
       },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/bookkeeper-reports",
+      },
+      {
+        name: "Banking",
+        icon: faUserGear,
+        path: "/banking",
+      },
+      {
+        name: "Tax/Gst",
+        icon: faUserGear,
+        path: "/tax-gst",
+      },
     ],
     ceo: [
       {
