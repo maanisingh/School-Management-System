@@ -137,20 +137,25 @@ bookkeeper: [
         path: "/client-dashboard",
       },
       {
-        name: "Jobs Management",
+        name: "Selections",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/client-selections",
       },
       {
-        name: "Manage Users",
+        name: "Schedules",
         icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
+        path: "/client-schedules",
+        // hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Calendar",
         icon: faUserGear,
-        path: "/settings",
+        path: "/client-calendar",
+      },
+      {
+        name: "Payments",
+        icon: faUserGear,
+        path: "/client-payments",
       },
     ],
     owner: [
@@ -158,6 +163,11 @@ bookkeeper: [
         name: "Overview",
         icon: faUserTag,
         path: "/owner-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
       },
       {
         name: "Jobs Management",
@@ -203,23 +213,28 @@ bookkeeper: [
       {
         name: "Overview",
         icon: faChartPie,
-        path: "/sales-manager-dashboard",
+        path: "/sales-manager-overview",
       },
       {
-        name: "Jobs Management",
+        name: "Lead Management",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/lead-management",
       },
       {
-        name: "Manage Users",
+        name: "Proposals",
         icon: faUsers,
-        path: "/manage-users",
+        path: "/proposals",
         hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Activities",
         icon: faUserGear,
-        path: "/settings",
+        path: "/activities",
+      },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/reports",
       },
     ],
     subcontractor: [
