@@ -7,6 +7,10 @@ import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
+import JobManagment from "./Components/OwnerDashboard/JobManagment";
+import Permissions from "./Components/OwnerDashboard/Permissions";
+import ListOwer from "./Components/OwnerDashboard/ListOwer";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -32,7 +36,7 @@ function App() {
     <>
       {hideLayout ? (
         <Routes>
-          <Route path="/" element={<Login/>} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
         </Routes>
@@ -45,12 +49,21 @@ function App() {
               setCollapsed={setIsSidebarCollapsed}
             />
             <div
-              className={`right-side-content ${
-                isSidebarCollapsed ? "collapsed" : ""
-              }`}
+              className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""
+                }`}
             >
               <Routes>
+
+
+
+
+                {/* owner-dashboard */}
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/owner/settings" element={<SettingOwer />} />
+                <Route path="/jobs-management" element={<JobManagment />} />
+                <Route path="/manage-users/permissions" element={<Permissions />} />
+                <Route path="/manage-users/list" element={<ListOwer />} />
+
               </Routes>
             </div>
           </div>
