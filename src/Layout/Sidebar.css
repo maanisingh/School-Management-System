@@ -16,7 +16,7 @@
   z-index: 999;
 }
 
-/* ===== Collapsed State ===== */
+/* ===== Collapsed State (Desktop only) ===== */
 .sidebar-container.collapsed {
   width: 80px;
 }
@@ -26,20 +26,20 @@
   height: 100%;
 }
 
-/* ===== MENU STYLING ===== */
-.menu {
+/* ===== MENU LIST ===== */
+.menu-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* ===== MENU ITEM ===== */
 .menu-item {
   width: 100%;
   display: flex;
   justify-content: center;
   margin: 6px 0;
-  /* ✅ NEW: Added position relative so absolute children can position against it */
-  position: relative; 
+  position: relative;
 }
 
 /* ===== MENU LINKS ===== */
@@ -52,11 +52,11 @@
   font-size: 14px;
   font-weight: 500;
   color: #333;
-  text-decoration: none;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .menu-link:hover {
@@ -82,7 +82,7 @@
   align-items: center;
   justify-content: center;
   min-width: 18px;
-  transition: color 0.3s ease, margin 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 /* Special icon highlight (e.g. Alerts) */
@@ -97,7 +97,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 /* ===== Dropdown Arrow ===== */
@@ -105,78 +105,52 @@
   font-size: 12px;
   color: #777;
   margin-left: auto;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.dropdown-arrow.open {
+.dropdown-arrow.rotate {
   transform: rotate(180deg);
 }
 
-/* ===== ✅ NEW: PROPER SUBMENU STYLING ===== */
-.submenu-container {
-  /* This makes the submenu position relative to the menu-item */
-  position: absolute; 
-  top: 100%; /* Positions it right below the menu-link */
-  left: 50%; /* Start from the middle of the parent */
-  transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
-  width: 90%; /* Match the width of the menu-link */
-  z-index: 10; /* Ensure it's above other content */
-  margin-top: 4px; /* Small gap between menu item and submenu */
-}
-
-.submenu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Distinct shadow for the dropdown */
-  overflow: hidden; /* Ensures child corners are rounded */
-}
-
+/* ===== SUBMENU ITEMS ===== */
 .submenu-item {
-  /* The width is handled by the container */
   margin: 0;
 }
 
 .submenu-link {
   display: flex;
   align-items: center;
-  width: 100%; /* Take full width of the submenu container */
-  padding: 10px 14px;
+  width: 90%;
+  padding: 10px 14px 10px 36px; /* Indent submenus */
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   color: #555;
-  text-decoration: none;
-  background-color: #fff;
+  background-color: transparent;
   transition: all 0.2s ease;
   cursor: pointer;
-  border-radius: 0; /* No radius here, as parent handles it */
+  border-radius: 8px;
+  height: 40px;
 }
 
-.submenu-link:hover {
-  background-color: #f7f7f7; /* Slightly different hover for distinction */
-  color: #333;
-}
-
+.submenu-link:hover,
 .submenu-link.active {
-  background-color: #fff3cd; /* Lighter yellow for submenu */
-  color: #856404;
-  font-weight: 500;
+  background-color: #ffc107;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.4);
 }
 
-/* ===== COLLAPSED BEHAVIOR ===== */
+.submenu-link .menu-icon {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+/* ===== COLLAPSED BEHAVIOR (Desktop) ===== */
 .sidebar-container.collapsed .menu-text,
 .sidebar-container.collapsed .dropdown-arrow {
   opacity: 0;
   visibility: hidden;
   width: 0;
   overflow: hidden;
-}
-
-/* ✅ MODIFIED: Hide submenu container when sidebar is collapsed */
-.sidebar-container.collapsed .submenu-container {
-  display: none;
 }
 
 .sidebar-container.collapsed .menu-link {
@@ -188,10 +162,8 @@
   margin-right: 0;
 }
 
-/* Prevent layout shift during transition */
-.menu-item,
-.menu-link {
-  transition: padding 0.3s ease, justify-content 0.3s ease;
+.sidebar-container.collapsed .submenu-link {
+  display: none;
 }
 
 /* ===== SCROLLBAR STYLE ===== */
@@ -213,30 +185,22 @@
   .sidebar-container {
     top: 58px;
     left: -250px;
+    width: 250px;
     height: calc(100vh - 58px);
+    transition: left 0.3s ease;
   }
 
   .sidebar-container.active {
     left: 0;
   }
 
+  /* On mobile, ignore "collapsed" — always full width when open */
   .sidebar-container.collapsed {
     width: 250px;
   }
-}
-.submenu-item {
-  margin-top: 0;
-}
 
-.submenu-link {
-  height: 40px;
-  font-size: 0.9em;
-  color: #a0a0a0;
-}
-
-.submenu-link:hover,
-.submenu-link.active {
-  background-color: #ffc107;
-  color: #fff;
-  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.4);
+  /* Ensure submenus are visible on mobile */
+  .sidebar-container.active .submenu-link {
+    display: flex;
+  }
 }

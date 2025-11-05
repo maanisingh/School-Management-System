@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   overflow-x: hidden;
 }
 
@@ -38,8 +39,11 @@ body, html {
 }
 
 @media (max-width: 768px) {
-  .right-side-content,
-  .right-side-content.collapsed {
+  .right-side-content {
     margin-left: 80px;
+  }
+
+  .right-side-content.collapsed {
+    margin-left: 0;
   }
 }

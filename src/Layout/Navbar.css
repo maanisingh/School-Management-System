@@ -5,6 +5,14 @@
   border-bottom: 1px solid #eaeaea;
   height: 60px;
   padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 /* Logo Style */
@@ -12,7 +20,7 @@
   font-size: 1.8rem;
   font-weight: 700;
   color: #ff7b00;
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Brush Script MT", cursive;
   font-style: italic;
 }
 
@@ -37,6 +45,8 @@
   padding: 6px 15px;
   width: 300px;
   height: 36px;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
@@ -47,6 +57,7 @@
   background: transparent;
   outline: none;
   margin-left: 8px;
+  width: 100%;
 }
 
 .search-input:focus {
@@ -148,7 +159,7 @@
   padding: 8px 12px;
   border: none;
   background: transparent;
-  width: 100;
+  width: 100%;
   text-align: left;
 }
 
@@ -156,32 +167,49 @@
   background-color: #f8f9fa;
 }
 
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .search-container {
-    width: 200px;
+  .navbar-logo {
+    font-size: 1.5rem;
   }
-  
-  .user-profile .user-details {
+
+  .search-container {
+    width: 180px;
+  }
+
+  /* Hide user projects text on tablet & mobile */
+  .user-projects {
     display: none;
   }
-  
+
   .user-profile {
     min-width: auto;
-    padding: 4px 8px;
+    padding: 4px 10px;
   }
 }
 
 @media (max-width: 576px) {
+  /* Hide full search box */
   .search-container {
     display: none;
   }
-  
+
+  /* WhatsApp: hide text, keep icon */
   .whatsapp-btn span {
     display: none;
   }
-  
+
   .whatsapp-btn {
     padding: 6px;
+    width: 36px;
+    justify-content: center;
   }
+
+  /* User: show only icon + name if space allows, else just icon */
+  .user-name {
+    font-size: 13px;
+  }
+
+  /* Optional: if still too wide, hide name too */
+  /* .user-name { display: none; } */
 }
