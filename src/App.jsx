@@ -27,6 +27,7 @@ import CeoJobs from "./Components/CeoDashbaord/Jobs/CeoJobs";
 import List from "./Components/CeoDashbaord/ManageUser/List";
 import PermissionsMatrix from "./Components/CeoDashbaord/ManageUser/Permission";
 
+import RequestForInformation from"./Components/ProjectManager/RequestForInformation.jsx"
 import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";
 import JobDashboard from "./Components/SubConstractorDashboard/JobDashboard";
 import ScheduleDashboard from "./Components/SubConstractorDashboard/ScheduleDashboard";
@@ -129,6 +130,8 @@ function App() {
                 <Route path="/jobs-management" element={<CeoJobs />} />
                 <Route path="/manage-users/list" element={<List />} />
                 <Route path="/manage-users/permissions" element={<PermissionsMatrix />} />
+                <Route path="/project-manager" element={<ProjectManager />} />
+                <Route path="/rfis" element={<RequestForInformation />} />
                 <Route path="/invoices" element={<BookkeeperInvoice />} />
 
 

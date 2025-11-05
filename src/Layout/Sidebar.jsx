@@ -1,9 +1,8 @@
-// src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCalculator,  
+
   faChartPie,
   faBriefcase,
   faExclamationCircle,
@@ -13,6 +12,9 @@ import {
   faUserTag,
   faHandshake,
   faChevronDown,
+  faLock,
+  faCog,
+  faTachometerAlt,
   faFileInvoice,
   faFileInvoiceDollar,
   faCreditCard,
@@ -21,6 +23,7 @@ import {
   faPercent,
   faPlay,
   faCheckCircle,
+  faCalculator,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -95,6 +98,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         icon: faPercent,
         path: "/tax-gst",
       },
+      { name: "Dashboard", icon: faChartPie, path: "/bookkeeper-dashboard" },
+      { name: "Invoices", icon: faFileInvoice, path: "/invoices" },
+      { name: "Bills", icon: faFileInvoiceDollar, path: "/bills" },
+      { name: "Payments", icon: faCreditCard, path: "/payments" },
+      { name: "Reports", icon: faChartBar, path: "/reports" },
+      { name: "Banking", icon: faBuildingColumns, path: "/banking" },
+      { name: "Tax/GST", icon: faPercent, path: "/tax-gst" },
     ],
     ceo: [
       { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
@@ -109,6 +119,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
           { name: "Permissions", path: "/manage-users/permissions" }
         ]
       },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
       { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
     client: [
@@ -128,108 +139,47 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         icon: faBriefcase,
         path: "/jobs-management",
       },
+      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
+      { name: "Schedules", icon: faUsers, path: "/client-schedules" },
+      { name: "Calendar", icon: faUserGear, path: "/client-calendar" },
+      { name: "Payments", icon: faUserGear, path: "/client-payments" },
+    ],
+    owner: [
+      { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
       {
         name: "Manage Users",
         icon: faUsers,
         path: "/manage-users",
         hasDropdown: true,
         submenus: [
-          {
-            name: "List",
-            icon: faPlay,
-            path: "/manage-users/list",
-          },
-          {
-            name: "Permissions",
-            icon: faCheckCircle,
-            path: "/manage-users/permissions",
-          },
+          { name: "List", icon: faPlay, path: "/manage-users/list" },
+          { name: "Permissions", icon: faCheckCircle, path: "/manage-users/permissions" },
         ],
       },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/owner/settings",
-      },
+      { name: "Settings", icon: faUserGear, path: "/owner/settings" },
     ],
     projectmanager: [
-      {
-        name: "Selection",
-        icon: faUserGear,
-        path: "/selection",
-      },
-      {
-        name: "Overview",
-        icon: faBriefcase,
-        path: "/project-manager-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
+      { name: "Dashboard", icon: faTachometerAlt, path: "/project-manager" },
+      { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
+      { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
+      { name: "RFIs", icon: faExclamationCircle, path: "/rfis" },
+      { name: "Change Orders", icon: faLock, path: "/change-orders" },
+      { name: "Selection", icon: faCog, path: "/selection" },
+      { name: "Schedule", icon: faCog, path: "/schedule" },
     ],
     salesmanager: [
-      {
-        name: "Overview",
-        icon: faChartPie,
-        path: "/sales-manager-overview",
-      },
-      {
-        name: "Lead Management",
-        icon: faBriefcase,
-        path: "/lead-management",
-      },
-      {
-        name: "Proposals",
-        icon: faUsers,
-        path: "/proposals",
-        hasDropdown: true,
-      },
-      {
-        name: "Activities",
-        icon: faUserGear,
-        path: "/activities",
-      },
-      {
-        name: "Reports",
-        icon: faUserGear,
-        path: "/reports",
-      },
+      { name: "Overview", icon: faChartPie, path: "/sales-manager-overview" },
+      { name: "Lead Management", icon: faBriefcase, path: "/lead-management" },
+      { name: "Proposals", icon: faUsers, path: "/proposals", hasDropdown: true },
+      { name: "Activities", icon: faUserGear, path: "/activities" },
+      { name: "Reports", icon: faUserGear, path: "/reports" },
     ],
     subcontractor: [
-      {
-        name: "Overview",
-        icon: faHandshake,
-        path: "/subcontractor-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Schedule RFIs",
-        icon: faUsers,
-        path: "/schedule-rfis",
-        hasDropdown: true,
-      },
-      {
-        name: "To Do",
-        icon: faUserGear,
-        path: "/to-do",
-      },
+      { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Schedule RFIs", icon: faUsers, path: "/schedule-rfis", hasDropdown: true },
+      { name: "To Do", icon: faUserGear, path: "/to-do" },
     ],
   };    
 
@@ -241,16 +191,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         <ul className="menu-list">
           {userMenus.map((menu, index) => (
             <React.Fragment key={index}>
-              {/* Main Menu Item */}
               <li className="menu-item">
                 <div
                   className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
                   onClick={() => {
-                    if (menu.hasDropdown) {
-                      toggleSubmenu(menu.name);
-                    } else {
-                      handleNavigate(menu.path);
-                    }
+                    menu.hasDropdown ? toggleSubmenu(menu.name) : handleNavigate(menu.path);
                   }}
                   style={{ cursor: "pointer", position: "relative" }}
                 >
@@ -268,7 +213,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 </div>
               </li>
 
-              {/* Inline Submenu (Below parent, inside same list) */}
               {!collapsed &&
                 menu.submenus &&
                 openSubmenu === menu.name &&
