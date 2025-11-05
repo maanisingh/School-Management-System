@@ -32,6 +32,7 @@ import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview
 import BookKeeperReports from "./Components/BookkeeperDashboard/BookKeeperReports";
 import Banking from "./Components/BookkeeperDashboard/Banking";
 import TaxGst from "./Components/BookkeeperDashboard/TaxGst";
+import Selection from "./Components/ProjectManager/Selection";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -118,6 +119,7 @@ function App() {
                 <Route path="/bookkeeper-reports" element={<BookKeeperReports />} />
                 <Route path="/banking" element={<Banking />} />
                 <Route path="/tax-gst" element={<TaxGst />} />
+                <Route path="/selection" element={<Selection />} />
               </Routes>
 
               {/* Client Dashboard Content Start Here */}

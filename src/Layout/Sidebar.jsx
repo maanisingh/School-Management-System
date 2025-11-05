@@ -188,6 +188,11 @@ bookkeeper: [
     ],
     projectmanager: [
       {
+        name: "Selection",
+        icon: faUserGear,
+        path: "/selection",
+      },
+      {
         name: "Overview",
         icon: faBriefcase,
         path: "/project-manager-dashboard",
