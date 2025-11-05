@@ -8,7 +8,7 @@ import Sidebar from "./Layout/Sidebar";
 
 // ✅ 8 Clean Dashboards (only imports)
 import AdminDashboard from "./Components/AdminDashbaord/AdminDashboard";
-import CeoDashboard from "./Components/CeoDashbaord/CeoDashaboard";
+
 import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import ProjectManager from "./Components/ProjectManager/ProjectManager";
@@ -20,6 +20,13 @@ import BookkeeperInvoice from "./Components/BookkeeperDashboard/BookkeeperInvoic
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+
+import CeoDashboard from "./Components/CeoDashbaord/Dashboard/CeoDashboard";
+import CeoSettings from "./Components/CeoDashbaord/Settings/CeoSettings";
+import CeoJobs from "./Components/CeoDashbaord/Jobs/CeoJobs";
+import List from "./Components/CeoDashbaord/ManageUser/List";
+import PermissionsMatrix from "./Components/CeoDashbaord/ManageUser/Permission";
+
 import RequestForInformation from"./Components/ProjectManager/RequestForInformation.jsx"
 import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";
 import JobDashboard from "./Components/SubConstractorDashboard/JobDashboard";
@@ -99,10 +106,7 @@ function App() {
                   path="/bookkeeper-dashboard"
                   element={<BookkeeperDashboard/>}
                 />
-                <Route
-                  path="/ceo-dashboard"
-                  element={<CeoDashboard/>}
-                />
+                
       
                 <Route
                   path="/owner-dashboard"
@@ -122,6 +126,15 @@ function App() {
                 />
                 <Route path="/bookkeeper-dashboard" element={<BookkeeperDashboard />} />
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+
+
+
+                {/* ceo-dashboard routes */}
+                <Route path="/ceo-dashboard" element={<CeoDashboard />} />
+                <Route path="/settings" element={<CeoSettings />} />
+                <Route path="/jobs-management" element={<CeoJobs />} />
+                <Route path="/manage-users/list" element={<List />} />
+                <Route path="/manage-users/permissions" element={<PermissionsMatrix />} />
                 <Route path="/project-manager" element={<ProjectManager />} />
                 <Route path="/rfis" element={<RequestForInformation />} />
                 <Route path="/invoices" element={<BookkeeperInvoice />} />

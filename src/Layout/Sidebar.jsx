@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+
   faChartPie,
   faBriefcase,
   faExclamationCircle,
@@ -17,8 +18,6 @@ import {
       faChartBar,
       faBuildingColumns,
        faPercent,
-  faPlay,
-  faCheckCircle,
   faLock,
   faCog,
   faTachometerAlt,
@@ -29,7 +28,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userRole, setUserRole] = useState("admin");
-  const [openSubmenu, setOpenSubmenu] = useState(null);
+  const [openSubmenu, setOpenSubmenu] = useState(null); // Track which menu is open
 
   useEffect(() => {
     const role = localStorage.getItem("userRole") || "admin";
@@ -96,31 +95,42 @@ bookkeeper: [
     ceo: [
       { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
       { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
-    ],
-    client: [
-      { name: "Overview", icon: faUsers, path: "/client-dashboard" },
-      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
-      { name: "Schedules", icon: faUsers, path: "/client-schedules" },
-      // { name: "Calendar", icon: faUserGear, path: "/client-calendar" },
-      { name: "Payments", icon: faUserGear, path: "/client-payments" },
-    ],
-    owner: [
-      { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
       {
         name: "Manage Users",
         icon: faUsers,
         path: "/manage-users",
         hasDropdown: true,
-        submenus: [
-          { name: "List", icon: faPlay, path: "/manage-users/list" },
-          { name: "Permissions", icon: faCheckCircle, path: "/manage-users/permissions" },
-        ],
+        subMenu: [
+          { name: "List", path: "/manage-users/list" },
+          { name: "Permissions", path: "/manage-users/permissions" }
+        ]
       },
-      { name: "Settings", icon: faUserGear, path: "/owner/settings" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
     ],
+    client: [
+      { name: "Overview", icon: faUsers, path: "/client-dashboard" },
+      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
+      { name: "Settings", icon: faUserGear, path: "/settings" },
+    ],
+    owner: [
+      {
+        name: "Overview",
+        icon: faUserTag,
+        path: "/owner-dashboard",
+      },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
+      { name: "Schedules", icon: faUsers, path: "/client-schedules" },
+      // { name: "Calendar", icon: faUserGear, path: "/client-calendar" },
+      { name: "Payments", icon: faUserGear, path: "/client-payments" },
+    ],
+    
     projectmanager: [
       { name: "Dashboard", icon: faTachometerAlt, path: "/project-manager" },
       // { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
@@ -143,14 +153,14 @@ bookkeeper: [
       { name: "Schedule RFIs", icon: faUsers, path: "/schedule-rfis" },
       { name: "To Do", icon: faUserGear, path: "/to-do" },
     ],
-  };
+  };    
 
   const userMenus = allMenus[userRole.toLowerCase()] || allMenus.admin;
 
   return (
     <div className={`sidebar-container ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar">
-        <ul className="menu">
+        <ul className="menu-list">
           {userMenus.map((menu, index) => (
             <React.Fragment key={index}>
               <li className="menu-item">
@@ -194,6 +204,25 @@ bookkeeper: [
                         style={{ fontSize: "0.85em" }}
                       />
                       <span className="menu-text">{sub.name}</span>
+                    </div>
+                  </li>
+                ))}
+              
+              {/* For subMenu (alternative submenu structure) */}
+              {!collapsed &&
+                menu.subMenu &&
+                openSubmenu === menu.name &&
+                menu.subMenu.map((subItem, subIndex) => (
+                  <li key={`subItem-${subIndex}`} className="menu-item submenu-item">
+                    <div
+                      className={`menu-link submenu-link ${isActive(subItem.path) ? "active" : ""}`}
+                      onClick={() => {
+                        handleNavigate(subItem.path);
+                        setOpenSubmenu(null);
+                      }}
+                      style={{ paddingLeft: "36px", cursor: "pointer" }}
+                    >
+                      <span className="submenu-text">{subItem.name}</span>
                     </div>
                   </li>
                 ))}
