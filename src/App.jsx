@@ -7,6 +7,10 @@ import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";
+import JobDashboard from "./Components/SubConstractorDashboard/JobDashboard";
+import ScheduleDashboard from "./Components/SubConstractorDashboard/ScheduleDashboard";
+import ToDo from "./Components/SubConstractorDashboard/ToDo";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -51,6 +55,11 @@ function App() {
             >
               <Routes>
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/subcontractor-dashboard" element={<SubContractorDashboard />} />
+                <Route path="/jobs-management" element={<JobDashboard />} />
+                <Route path="/schedule-rfis" element={<ScheduleDashboard />} />
+                <Route path="/to-do" element={<ToDo />} />
+
               </Routes>
             </div>
           </div>

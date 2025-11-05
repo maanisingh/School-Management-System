@@ -220,15 +220,15 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/jobs-management",
       },
       {
-        name: "Manage Users",
+        name: "Schedule RFIs",
         icon: faUsers,
-        path: "/manage-users",
+        path: "/schedule-rfis",
         hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "To Do",
         icon: faUserGear,
-        path: "/settings",
+        path: "/to-do",
       },
     ],
   };
