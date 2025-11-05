@@ -133,20 +133,25 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/client-dashboard",
       },
       {
-        name: "Jobs Management",
+        name: "Selections",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/client-selections",
       },
       {
-        name: "Manage Users",
+        name: "Schedules",
         icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
+        path: "/client-schedules",
+        // hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Calendar",
         icon: faUserGear,
-        path: "/settings",
+        path: "/client-calendar",
+      },
+      {
+        name: "Payments",
+        icon: faUserGear,
+        path: "/client-payments",
       },
     ],
     owner: [
