@@ -7,10 +7,19 @@ import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
-import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
-import JobManagment from "./Components/OwnerDashboard/JobManagment";
-import Permissions from "./Components/OwnerDashboard/Permissions";
-import ListOwer from "./Components/OwnerDashboard/ListOwer";
+import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
+import ClientSelections from "./Components/ClientDashbaord/ClientSelections";
+import ClientSchedule from "./Components/ClientDashbaord/ClientSchedule";
+import ClientPayments from "./Components/ClientDashbaord/ClientPayments";
+import Activities from "./Components/SalesManager/Activities";
+import LeadManagement from "./Components/SalesManager/LeadManagement";
+import Proposals from "./Components/SalesManager/Proposals";
+import Reports from "./Components/SalesManager/Reports";
+import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
+import BookKeeperReports from "./Components/BookkeeperDashboard/BookKeeperReports";
+import Banking from "./Components/BookkeeperDashboard/Banking";
+import TaxGst from "./Components/BookkeeperDashboard/TaxGst";
+import Selection from "./Components/ProjectManager/Selection";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -64,7 +73,34 @@ function App() {
                 <Route path="/manage-users/permissions" element={<Permissions />} />
                 <Route path="/manage-users/list" element={<ListOwer />} />
 
+                <Route path="/sales-manager-overview" element={<SalesManagerOverview />} />
+                <Route path="/lead-management" element={<LeadManagement />} />
+                <Route path="/proposals" element={<Proposals />} />
+                <Route path="/activities" element={<Activities />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/bookkeeper-reports" element={<BookKeeperReports />} />
+                <Route path="/banking" element={<Banking />} />
+                <Route path="/tax-gst" element={<TaxGst />} />
+                <Route path="/selection" element={<Selection />} />
               </Routes>
+
+              {/* Client Dashboard Content Start Here */}
+              <Routes>
+                <Route path="/client-dashboard" element={<ClientDashboard />} />
+                <Route
+                  path="/client-selections"
+                  element={<ClientSelections />}
+                />
+                <Route
+                  path="/client-schedules"
+                  element={<ClientSchedule />}
+                />
+                <Route
+                  path="/client-payments"
+                  element={<ClientPayments />}
+                />
+              </Routes>
+              {/* Client Dashboard Content End Here */}
             </div>
           </div>
         </>
