@@ -6,7 +6,6 @@ import {
   faBriefcase,
   faExclamationCircle,
   faUserGear,
-  faCalculator,
   faUserTie,
   faUsers,
   faUserTag,
@@ -14,7 +13,16 @@ import {
   faChevronDown,
   faLock,
   faCog,
-  faTachometerAlt // Project Manager Dashboard icon
+  faTachometerAlt,
+  faFileInvoice,
+  faFileInvoiceDollar,
+  faCreditCard,
+  faChartBar,
+  faBuildingColumns,
+  faPercent,
+  faPlay,
+  faCheckCircle,
+  faCalculator,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -22,10 +30,9 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userRole, setUserRole] = useState("admin");
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
   useEffect(() => {
-    // Get user role from localStorage
-    // NOTE: For real-world apps, use a proper state management solution or Context for user roles.
     const role = localStorage.getItem("userRole") || "admin";
     setUserRole(role);
   }, []);
@@ -34,8 +41,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   const handleNavigate = (path) => {
     navigate(path);
-    // On mobile screens, collapse the sidebar after navigation
     if (window.innerWidth <= 768) setCollapsed(true);
+  };
+
+  const toggleSubmenu = (menuName) => {
+    setOpenSubmenu(openSubmenu === menuName ? null : menuName);
   };
 
   const allMenus = {
@@ -46,12 +56,14 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       { name: "RFIs", icon: faUsers, path: "/rfis", hasDropdown: true },
       { name: "Settings", icon: faUserGear, path: "/admin-settings" },
     ],
-    // ... other roles ...
     bookkeeper: [
-      { name: "Overview", icon: faCalculator, path: "/bookkeeper-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      { name: "Dashboard", icon: faChartPie, path: "/bookkeeper-dashboard" },
+      { name: "Invoices", icon: faFileInvoice, path: "/invoices" },
+      { name: "Bills", icon: faFileInvoiceDollar, path: "/bills" },
+      { name: "Payments", icon: faCreditCard, path: "/payments" },
+      { name: "Reports", icon: faChartBar, path: "/reports" },
+      { name: "Banking", icon: faBuildingColumns, path: "/banking" },
+      { name: "Tax/GST", icon: faPercent, path: "/tax-gst" },
     ],
     ceo: [
       { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
@@ -61,60 +73,47 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     ],
     client: [
       { name: "Overview", icon: faUsers, path: "/client-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
+      { name: "Schedules", icon: faUsers, path: "/client-schedules" },
+      { name: "Calendar", icon: faUserGear, path: "/client-calendar" },
+      { name: "Payments", icon: faUserGear, path: "/client-payments" },
     ],
     owner: [
       { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
       { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/manage-users",
+        hasDropdown: true,
+        submenus: [
+          { name: "List", icon: faPlay, path: "/manage-users/list" },
+          { name: "Permissions", icon: faCheckCircle, path: "/manage-users/permissions" },
+        ],
+      },
+      { name: "Settings", icon: faUserGear, path: "/owner/settings" },
     ],
-    // 🎯 Project Manager Menu: RFIs is correctly set to path: "/rfis"
     projectmanager: [
-      {
-        name: "Dashboard",
-        icon: faTachometerAlt,
-        path: "/project-manager",
-      },
-      {
-        name: "Daily Logs",
-        icon: faBriefcase,
-        path: "/daily-logs",
-      },
-      {
-        name: "RFIs",
-        icon: faExclamationCircle,
-        path: "/rfis", // 👈 This links to the route in App.jsx
-      },
-      {
-        name: "Change Orders",
-        icon: faLock,
-        path: "/change-orders",
-      },
-      {
-        name: "Selection",
-        icon: faCog,
-        path: "/selection",
-      },
-      {
-        name: "Schedule",
-        icon: faCog,
-        path: "/schedule",
-      },
+      { name: "Dashboard", icon: faTachometerAlt, path: "/project-manager" },
+      { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
+      { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
+      { name: "RFIs", icon: faExclamationCircle, path: "/rfis" },
+      { name: "Change Orders", icon: faLock, path: "/change-orders" },
+      { name: "Selection", icon: faCog, path: "/selection" },
+      { name: "Schedule", icon: faCog, path: "/schedule" },
     ],
     salesmanager: [
-      { name: "Overview", icon: faChartPie, path: "/sales-manager-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      { name: "Overview", icon: faChartPie, path: "/sales-manager-overview" },
+      { name: "Lead Management", icon: faBriefcase, path: "/lead-management" },
+      { name: "Proposals", icon: faUsers, path: "/proposals", hasDropdown: true },
+      { name: "Activities", icon: faUserGear, path: "/activities" },
+      { name: "Reports", icon: faUserGear, path: "/reports" },
     ],
     subcontractor: [
       { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
       { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      { name: "Manage Users", icon: faUsers, path: "/manage-users", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      { name: "Schedule RFIs", icon: faUsers, path: "/schedule-rfis", hasDropdown: true },
+      { name: "To Do", icon: faUserGear, path: "/to-do" },
     ],
   };
 
@@ -125,25 +124,52 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       <div className="sidebar">
         <ul className="menu">
           {userMenus.map((menu, index) => (
-            <li key={index} className="menu-item">
-              <div
-                className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
-                onClick={() => handleNavigate(menu.path)}
-                style={{ cursor: "pointer" }}
-              >
-                <FontAwesomeIcon
-                  icon={menu.icon}
-                  className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
-                />
-                {!collapsed && <span className="menu-text">{menu.name}</span>}
-                {menu.hasDropdown && !collapsed && (
+            <React.Fragment key={index}>
+              <li className="menu-item">
+                <div
+                  className={`menu-link ${isActive(menu.path) ? "active" : ""}`}
+                  onClick={() => {
+                    menu.hasDropdown ? toggleSubmenu(menu.name) : handleNavigate(menu.path);
+                  }}
+                  style={{ cursor: "pointer", position: "relative" }}
+                >
                   <FontAwesomeIcon
-                    icon={faChevronDown}
-                    className="dropdown-arrow"
+                    icon={menu.icon}
+                    className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
                   />
-                )}
-              </div>
-            </li>
+                  {!collapsed && <span className="menu-text">{menu.name}</span>}
+                  {menu.hasDropdown && !collapsed && (
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className={`dropdown-arrow ${openSubmenu === menu.name ? "rotate" : ""}`}
+                    />
+                  )}
+                </div>
+              </li>
+
+              {!collapsed &&
+                menu.submenus &&
+                openSubmenu === menu.name &&
+                menu.submenus.map((sub, subIndex) => (
+                  <li key={`sub-${subIndex}`} className="menu-item submenu-item">
+                    <div
+                      className={`menu-link submenu-link ${isActive(sub.path) ? "active" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNavigate(sub.path);
+                      }}
+                      style={{ paddingLeft: "36px", cursor: "pointer" }}
+                    >
+                      <FontAwesomeIcon
+                        icon={sub.icon}
+                        className={`menu-icon ${isActive(sub.path) ? "active-icon" : ""}`}
+                        style={{ fontSize: "0.85em" }}
+                      />
+                      <span className="menu-text">{sub.name}</span>
+                    </div>
+                  </li>
+                ))}
+            </React.Fragment>
           ))}
         </ul>
       </div>
