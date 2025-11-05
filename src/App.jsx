@@ -44,6 +44,9 @@ import Selection from "./Components/ProjectManager/Selection";
 import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
 import JobManagment from "./Components/OwnerDashboard/JobManagment";
 import ListOwer from "./Components/OwnerDashboard/ListOwer";
+import Permissions from "./Components/OwnerDashboard/Permissions";
+import Invoice from "./Components/BookkeeperDashboard/BookkeeperBill.jsx";
+
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -111,19 +114,23 @@ function App() {
                   path="/bookkeeper-dashboard"
                   element={<BookkeeperDashboard />}
                 />
+
+                <Route path="/bill" element={<Invoice />} />
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
 
                 {/* ceo-dashboard routes */}
                 <Route path="/ceo-dashboard" element={<CeoDashboard />} />
-                <Route path="/settings" element={<CeoSettings />} />
-                <Route path="/jobs-management" element={<CeoJobs />} />
-                <Route path="/manage-users/list" element={<List />} />
+                <Route path="/ceo-settings" element={<CeoSettings />} />
+                <Route path="/ceo-jobs-management" element={<CeoJobs />} />
+                <Route path="/ceo-manage-users/list" element={<List />} />
                 <Route
-                  path="/manage-users/permissions"
+                  path="/manage-users-ceo/permissions"
                   element={<PermissionsMatrix />}
                 />
+
                 <Route path="/project-manager" element={<ProjectManager />} />
                 <Route path="/rfis" element={<RequestForInformation />} />
+
                 <Route path="/invoices" element={<BookkeeperInvoice />} />
 
                 {/* owner-dashboard */}
@@ -150,7 +157,7 @@ function App() {
                 <Route path="/lead-management" element={<LeadManagement />} />
                 <Route path="/proposals" element={<Proposals />} />
                 <Route path="/activities" element={<Activities />} />
-                <Route path="/reports" element={<Reports />} />
+                <Route path="/sales-reports" element={<Reports />} />
                 <Route
                   path="/bookkeeper-reports"
                   element={<BookKeeperReports />}

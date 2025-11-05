@@ -71,80 +71,15 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
       { name: "Tax/GST", icon: faPercent, path: "/tax-gst" },
     ],
 
-    bookkeeper: [
-      {
-        name: "Dashboard",
-        icon: faChartPie, // ya faHome / faTachometerAlt, dashboard ke liye common icons
-        path: "/bookkeeper-dashboard",
-      },
-      {
-        name: "Invoices",
-        icon: faFileInvoice, // ya faFileInvoiceDollar
-        path: "/invoices",
-      },
-      {
-        name: "Bills", // spelling corrected
-        icon: faFileInvoiceDollar, // ya faFileAlt / faReceipt
-        path: "/bill",
-      },
-      {
-        name: "Payments",
-        icon: faCreditCard, // ya faMoneyCheck / faWallet
-        path: "/payment",
-      },
-      {
-        name: "Reports",
-        icon: faChartBar, // ya faChartLine / faFileAlt
-        path: "/reports",
-      },
-      {
-        name: "Banking",
-        icon: faBuildingColumns, // ya faLandmark / faPiggyBank
-        path: "/banking",
-      },
-      {
-        name: "Tax/GST",
-        icon: faPercent, // ya faFileInvoiceDollar / faBalanceScale
-        path: "/tax-gst",
-      },
-    ],
-    ceo: [
-      { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-        submenus: [
-          { name: "List", icon: faPlay, path: "/manage-users/list" },
-          {
-            name: "Permissions",
-            icon: faCheckCircle,
-            path: "/manage-users/permissions",
-          },
-        ],
-      },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
-    ],
     client: [
       { name: "Overview", icon: faUsers, path: "/client-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
+      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
       {
         name: "Manage Users",
         icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-        submenus: [
-          { name: "List", icon: faPlay, path: "/manage-users/list" },
-          {
-            name: "Permissions",
-            icon: faCheckCircle,
-            path: "/manage-users/permissions",
-          },
-        ],
+        path: "/client-schedules",
       },
-      { name: "Settings", icon: faUserGear, path: "/settings" },
+      { name: "Settings", icon: faUserGear, path: "/client-payments" },
     ],
     owner: [
       { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
@@ -165,29 +100,43 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
       },
       { name: "Settings", icon: faUserGear, path: "/owner/settings" },
     ],
+    ceo: [
+      { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
+      {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/ceo-jobs-management",
+      },
+      {
+        name: "Manage Users",
+        icon: faUsers,
+        path: "/ceo-manage-users",
+        hasDropdown: true,
+        submenus: [
+          { name: "List", icon: faPlay, path: "/ceo-manage-users/list" },
+          {
+            name: "Permissions",
+            icon: faCheckCircle,
+            path: "/ceo-manage-users/permissions",
+          },
+        ],
+      },
+      { name: "Settings", icon: faUserGear, path: "/ceo-settings" },
+    ],
 
     projectmanager: [
       { name: "Dashboard", icon: faTachometerAlt, path: "/project-manager" },
       // { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
       // { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
       { name: "RFIs", icon: faExclamationCircle, path: "/rfis" },
-      { name: "Change Orders", icon: faLock, path: "/change-orders" },
+      // { name: "Change Orders", icon: faLock, path: "/change-orders" },
       { name: "Selection", icon: faCog, path: "/selection" },
       // { name: "Schedule", icon: faCog, path: "/schedule" },
     ],
     salesmanager: [
       { name: "Overview", icon: faChartPie, path: "/sales-manager-overview" },
       { name: "Lead Management", icon: faBriefcase, path: "/lead-management" },
-      {
-        name: "Proposals",
-        icon: faUsers,
-        path: "/proposals",
-        hasDropdown: true,
-        submenus: [
-          { name: "Drafts", icon: faPlay, path: "/proposals/drafts" },
-          { name: "Sent", icon: faCheckCircle, path: "/proposals/sent" },
-        ],
-      },
+
       { name: "Proposals", icon: faUsers, path: "/proposals" },
       { name: "Activities", icon: faUserGear, path: "/activities" },
       { name: "Reports", icon: faChartBar, path: "/sales-reports" },
@@ -195,20 +144,7 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
     subcontractor: [
       { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
       { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      {
-        name: "Schedule RFIs",
-        icon: faUsers,
-        path: "/schedule-rfis",
-        hasDropdown: true,
-        submenus: [
-          { name: "Pending", icon: faPlay, path: "/schedule-rfis/pending" },
-          {
-            name: "Completed",
-            icon: faCheckCircle,
-            path: "/schedule-rfis/completed",
-          },
-        ],
-      },
+
       { name: "Schedule RFIs", icon: faUsers, path: "/schedule-rfis" },
       { name: "To Do", icon: faUserGear, path: "/to-do" },
     ],
