@@ -87,6 +87,21 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         icon: faUserGear,
         path: "/settings",
       },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/bookkeeper-reports",
+      },
+      {
+        name: "Banking",
+        icon: faUserGear,
+        path: "/banking",
+      },
+      {
+        name: "Tax/Gst",
+        icon: faUserGear,
+        path: "/tax-gst",
+      },
     ],
     ceo: [
       {
@@ -118,20 +133,25 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/client-dashboard",
       },
       {
-        name: "Jobs Management",
+        name: "Selections",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/client-selections",
       },
       {
-        name: "Manage Users",
+        name: "Schedules",
         icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
+        path: "/client-schedules",
+        // hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Calendar",
         icon: faUserGear,
-        path: "/settings",
+        path: "/client-calendar",
+      },
+      {
+        name: "Payments",
+        icon: faUserGear,
+        path: "/client-payments",
       },
     ],
     owner: [
@@ -164,6 +184,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     ],
     projectmanager: [
       {
+        name: "Selection",
+        icon: faUserGear,
+        path: "/selection",
+      },
+      {
         name: "Overview",
         icon: faBriefcase,
         path: "/project-manager-dashboard",
@@ -189,23 +214,28 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       {
         name: "Overview",
         icon: faChartPie,
-        path: "/sales-manager-dashboard",
+        path: "/sales-manager-overview",
       },
       {
-        name: "Jobs Management",
+        name: "Lead Management",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/lead-management",
       },
       {
-        name: "Manage Users",
+        name: "Proposals",
         icon: faUsers,
-        path: "/manage-users",
+        path: "/proposals",
         hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Activities",
         icon: faUserGear,
-        path: "/settings",
+        path: "/activities",
+      },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/reports",
       },
     ],
     subcontractor: [
