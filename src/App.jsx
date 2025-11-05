@@ -24,6 +24,9 @@ import BookKeeperReports from "./Components/BookkeeperDashboard/BookKeeperReport
 import Banking from "./Components/BookkeeperDashboard/Banking";
 import TaxGst from "./Components/BookkeeperDashboard/TaxGst";
 import Selection from "./Components/ProjectManager/Selection";
+import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
+import JobManagment from "./Components/OwnerDashboard/JobManagment";
+import ListOwer from "./Components/OwnerDashboard/ListOwer";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -66,11 +69,16 @@ function App() {
                 }`}
             >
               <Routes>
+                {/* owner-dashboard */}
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
                 <Route path="/subcontractor-dashboard" element={<SubContractorDashboard />} />
                 <Route path="/jobs-management" element={<JobDashboard />} />
                 <Route path="/schedule-rfis" element={<ScheduleDashboard />} />
                 <Route path="/to-do" element={<ToDo />} />
+                <Route path="/owner/settings" element={<SettingOwer />} />
+                <Route path="/jobs-management" element={<JobManagment />} />
+                <Route path="/manage-users/permissions" element={<Permissions />} />
+                <Route path="/manage-users/list" element={<ListOwer />} />
 
                 <Route path="/sales-manager-overview" element={<SalesManagerOverview />} />
                 <Route path="/lead-management" element={<LeadManagement />} />
