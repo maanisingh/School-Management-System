@@ -7,6 +7,10 @@ import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
+import ClientSelections from "./Components/ClientDashbaord/ClientSelections";
+import ClientSchedule from "./Components/ClientDashbaord/ClientSchedule";
+import ClientPayments from "./Components/ClientDashbaord/ClientPayments";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -32,7 +36,7 @@ function App() {
     <>
       {hideLayout ? (
         <Routes>
-          <Route path="/" element={<Login/>} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
         </Routes>
@@ -52,6 +56,24 @@ function App() {
               <Routes>
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
               </Routes>
+
+              {/* Client Dashboard Content Start Here */}
+              <Routes>
+                <Route path="/client-dashboard" element={<ClientDashboard />} />
+                <Route
+                  path="/client-selections"
+                  element={<ClientSelections />}
+                />
+                <Route
+                  path="/client-schedules"
+                  element={<ClientSchedule />}
+                />
+                <Route
+                  path="/client-payments"
+                  element={<ClientPayments />}
+                />
+              </Routes>
+              {/* Client Dashboard Content End Here */}
             </div>
           </div>
         </>
