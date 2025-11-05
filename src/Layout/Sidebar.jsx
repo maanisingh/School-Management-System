@@ -179,6 +179,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     ],
     projectmanager: [
       {
+        name: "Selection",
+        icon: faUserGear,
+        path: "/selection",
+      },
+      {
         name: "Overview",
         icon: faBriefcase,
         path: "/project-manager-dashboard",
