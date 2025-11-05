@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaBell, FaUserCircle, FaBars } from "react-icons/fa";
+import { FaBell, FaUserCircle, FaBars, FaSearch, FaMoon, FaWhatsapp } from "react-icons/fa";
 
 const Navbar = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -8,11 +8,11 @@ const Navbar = ({ toggleSidebar }) => {
 
   // dummy profile state
   const [profile, setProfile] = useState({
-    name: "Admin",
-    email: "admin@gymapp.com",
+    name: "Owner",
+    email: "owner@sunbuild.com",
     phone: "+91 90000 00000",
-    role: "Super Admin",
-    branch: "All Branches",
+    role: "Owner",
+    projects: "105 projects",
     notifyEmail: true,
     notifySMS: false,
   });
@@ -44,8 +44,10 @@ const Navbar = ({ toggleSidebar }) => {
       <nav
         className="navbar navbar-expand px-3 py-2 d-flex justify-content-between align-items-center fixed-top"
         style={{
-          backgroundColor: "#2f6a87",
+          backgroundColor: "#ffffff",
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          borderBottom: "1px solid #eaeaea",
+          height: "60px",
         }}
       >
         <div className="d-flex align-items-center gap-3">
@@ -54,98 +56,171 @@ const Navbar = ({ toggleSidebar }) => {
             className="btn p-2"
             style={{
               backgroundColor: "transparent",
-              borderColor: "white",
-              color: "white",
+              borderColor: "transparent",
+              color: "#ff7b00",
               borderRadius: "6px",
-              border: "2px solid white",
+              border: "none",
               transition: "all 0.3s ease",
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "white";
-              e.target.style.color = "#000";
-              e.target.style.borderColor = "white";
+              e.target.style.backgroundColor = "#f5f5f5";
             }}
             onMouseLeave={(e) => {
               e.target.style.backgroundColor = "transparent";
-              e.target.style.color = "white";
-              e.target.style.borderColor = "white";
             }}
             onClick={toggleSidebar}
           >
-            <FaBars color="currentColor" />
+            <FaBars color="#ff7b00" />
           </button>
 
-          {/* Text Logo */}
+          {/* Text Logo - Handwritten Style */}
           <span
             style={{
-              fontSize: "1.5rem",
+              fontSize: "1.8rem",
               fontWeight: "700",
-              color: "white",
-              letterSpacing: "-0.5px",
-              fontFamily: "'Poppins', sans-serif",
+              color: "#ff7b00",
+              fontFamily: "'Brush Script MT', cursive",
+              fontStyle: "italic",
             }}
           >
-            Gym<span style={{ color: "#0d6efd", fontWeight: "800" }}>Management</span>
+            Sunbuild
           </span>
         </div>
 
-        {/* Notification and User */}
-        <div className="d-flex align-items-center gap-3 position-relative">
+        {/* Middle Section: Search, Mode Toggle, Notifications, WhatsApp */}
+        <div className="d-flex align-items-center gap-3">
+          {/* Search Box */}
+          <div className="d-flex align-items-center" style={{ 
+            backgroundColor: "#f5f5f5", 
+            borderRadius: "20px", 
+            padding: "8px 15px",
+            minWidth: "300px",
+            height: "38px"
+          }}>
+            <FaSearch color="#888" size={16} />
+            <input
+              type="text"
+              placeholder="Search"
+              className="form-control border-0 bg-transparent shadow-none"
+              style={{ fontSize: "14px", paddingLeft: "10px" }}
+            />
+          </div>
+
+          {/* Mode Toggle Button */}
+          <button
+            className="btn p-2"
+            style={{
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+              color: "#333",
+              borderRadius: "6px",
+              border: "none",
+              transition: "all 0.3s ease",
+              height: "38px",
+              width: "38px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#f5f5f5";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "transparent";
+            }}
+          >
+            <FaMoon size={18} color="#333" />
+          </button>
+
           {/* Notification */}
-          <div className="position-relative">
-            <FaBell size={18} color="white" />
+          <div className="position-relative" style={{ height: "38px", display: "flex", alignItems: "center" }}>
+            <FaBell size={18} color="#333" />
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               3
             </span>
           </div>
 
-          {/* User Profile */}
-          <div className="dropdown" ref={dropdownRef}>
-            <div
-              className="d-flex align-items-center gap-2 cursor-pointer text-white"
-              role="button"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              <FaUserCircle size={24} />
-              <div className="d-none d-sm-block text-white">
-                <small className="mb-0">Welcome</small>
-                <div className="fw-bold">{profile.name}</div>
-              </div>
-            </div>
+          {/* WhatsApp Button */}
+          <button
+            className="btn d-flex align-items-center gap-1"
+            style={{
+              backgroundColor: "#25d366",
+              borderColor: "transparent",
+              color: "white",
+              borderRadius: "6px",
+              border: "none",
+              padding: "8px 12px",
+              fontSize: "14px",
+              fontWeight: "500",
+              transition: "all 0.3s ease",
+              height: "38px",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#128c7e";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#25d366";
+            }}
+          >
+            <FaWhatsapp size={16} />
+            <span>WhatsApp</span>
+          </button>
+        </div>
 
-            {dropdownOpen && (
-              <ul
-                className="dropdown-menu show mt-2 shadow-sm"
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  minWidth: "200px",
-                  maxWidth: "calc(100vw - 30px)",
-                  zIndex: 1000,
-                  borderRadius: "8px",
-                  overflow: "hidden",
-                }}
-              >
-                <li>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      setDropdownOpen(false);
-                      setShowProfileModal(true);
-                    }}
-                  >
-                    Profile
-                  </button>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item text-danger" href="/">Logout</a>
-                </li>
-              </ul>
-            )}
+        {/* User Profile */}
+        <div className="dropdown" ref={dropdownRef}>
+          <div
+            className="d-flex align-items-center gap-2"
+            style={{
+              border: "1px solid #ffcc00",
+              borderRadius: "6px",
+              padding: "6px 12px",
+              cursor: "pointer",
+              backgroundColor: "#fffaf0",
+              height: "38px",
+            }}
+            role="button"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            <FaUserCircle size={24} color="#333" />
+            <div className="d-none d-sm-block">
+              <div className="fw-bold" style={{ color: "#333", fontSize: "14px" }}>{profile.name}</div>
+              <small className="text-muted" style={{ fontSize: "12px" }}>{profile.projects}</small>
+            </div>
           </div>
+
+          {dropdownOpen && (
+            <ul
+              className="dropdown-menu show mt-2 shadow-sm"
+              style={{
+                position: "absolute",
+                right: 0,
+                minWidth: "200px",
+                maxWidth: "calc(100vw - 30px)",
+                zIndex: 1000,
+                borderRadius: "8px",
+                overflow: "hidden",
+              }}
+            >
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    setShowProfileModal(true);
+                  }}
+                >
+                  Profile
+                </button>
+              </li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <a className="dropdown-item text-danger" href="/">Logout</a>
+              </li>
+            </ul>
+          )}
         </div>
       </nav>
 
@@ -176,8 +251,6 @@ const Navbar = ({ toggleSidebar }) => {
               </div>
 
               <div className="modal-body">
-                
-
                 <div className="row g-3">
                   <div className="col-12 col-md-6">
                     <label className="form-label">Full Name</label>
@@ -205,18 +278,12 @@ const Navbar = ({ toggleSidebar }) => {
                     />
                   </div>
                   <div className="col-12 col-md-6">
-                    <label className="form-label">Branch</label>
-                    <select
-                      className="form-select"
-                      value={profile.branch}
-                      onChange={(e) => setProfile({ ...profile, branch: e.target.value })}
-                    >
-                      <option>All Branches</option>
-                      <option>Andheri</option>
-                      <option>Bandra</option>
-                      <option>Thane</option>
-                      <option>Pune</option>
-                    </select>
+                    <label className="form-label">Projects</label>
+                    <input
+                      className="form-control"
+                      value={profile.projects}
+                      onChange={(e) => setProfile({ ...profile, projects: e.target.value })}
+                    />
                   </div>
                 </div>
 
@@ -239,8 +306,6 @@ const Navbar = ({ toggleSidebar }) => {
                 </div>
 
                 <hr className="my-4" />
-
-              
               </div>
 
               <div className="modal-footer border-0">
