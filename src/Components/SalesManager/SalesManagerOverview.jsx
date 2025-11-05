@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FaPhone, FaEnvelope, FaCalendarAlt, FaCheck, FaExclamationTriangle, FaChartBar, FaUser, FaTasks, FaDollarSign, FaPercentage, FaHandshake, FaArrowUp, FaArrowDown } from 'react-icons/fa';
-import { Container, Row, Col, Card, Button, ProgressBar, Table, Badge, Alert } from 'react-bootstrap';
+import { FaPhone, FaEnvelope, FaCalendarAlt, FaCheck, FaExclamationTriangle, FaChartBar, FaUser, FaTasks, FaDollarSign, FaPercentage, FaHandshake, FaArrowUp, FaArrowDown, FaEllipsisV, FaSearch, FaBell, FaCog, FaUserCircle, FaMapMarkerAlt, FaFileAlt, FaMoneyBillWave, FaExclamationCircle } from 'react-icons/fa';
+import { Container, Row, Col, Card, Button, ProgressBar, Table, Badge, Alert, Form, InputGroup } from 'react-bootstrap';
 
-const Overview = () => {
+const SalesManagerOverview = () => {
   // State for the dashboard data
   const [stats] = useState({
     totalLeads: { value: 156, change: 11.01 },
@@ -75,13 +75,40 @@ const Overview = () => {
   };
 
   return (
-    <Container fluid style={{ padding: '20px', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
-      <h1 style={{ marginBottom: '30px', color: '#333', fontWeight: 'bold' }}>Sales Management</h1>
+    <Container fluid style={{ padding: '0', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+      {/* Top Navigation Bar */}
+      <Row style={{ backgroundColor: '#fff', borderBottom: '1px solid #e9ecef', padding: '15px 20px', margin: '0' }}>
+        <Col md={6} style={{ display: 'flex', alignItems: 'center' }}>
+          <h1 style={{ margin: '0', fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>Sales Management</h1>
+        </Col>
+        <Col md={6} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          <InputGroup style={{ width: '250px', marginRight: '15px' }}>
+            <InputGroup.Text style={{ backgroundColor: '#f8f9fa', border: '1px solid #ced4da' }}>
+              <FaSearch />
+            </InputGroup.Text>
+            <Form.Control
+              placeholder="Search..."
+              style={{ borderLeft: 'none' }}
+            />
+          </InputGroup>
+          {/* <Button variant="light" style={{ marginRight: '15px', position: 'relative' }}>
+            <FaBell />
+            <span style={{ position: 'absolute', top: '0', right: '0', width: '8px', height: '8px', backgroundColor: '#dc3545', borderRadius: '50%' }}></span>
+          </Button>
+          <Button variant="light" style={{ marginRight: '15px' }}>
+            <FaCog />
+          </Button>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ marginRight: '10px', fontSize: '0.9rem' }}>Admin</span>
+            <FaUserCircle style={{ fontSize: '1.5rem', color: '#6c757d' }} />
+          </div> */}
+        </Col>
+      </Row>
       
       {/* Stats Cards */}
-      <Row style={{ marginBottom: '30px' }}>
+      <Row style={{ padding: '20px', margin: '0' }}>
         {Object.entries(stats).map(([key, stat]) => (
-          <Col key={key} xs={12} sm={6} md={4} lg={2} style={{ marginBottom: '20px' }}>
+          <Col key={key} xs={12} sm={6} md={4} lg={2} style={{ marginBottom: '20px', paddingLeft: '10px', paddingRight: '10px' }}>
             <Card style={{ 
               height: '100%', 
               borderRadius: '8px', 
@@ -136,9 +163,9 @@ const Overview = () => {
         ))}
       </Row>
 
-      <Row style={{ marginBottom: '30px' }}>
-        {/* Sales Pipeline */}
-        <Col md={6} style={{ marginBottom: '20px' }}>
+      <Row style={{ padding: '0 20px 20px', margin: '0' }}>
+        {/* Left Column - Sales Pipeline */}
+        <Col md={6} style={{ marginBottom: '20px', paddingLeft: '10px', paddingRight: '10px' }}>
           <Card style={{ 
             height: '100%', 
             borderRadius: '8px', 
@@ -149,10 +176,18 @@ const Overview = () => {
               backgroundColor: '#fff', 
               borderBottom: '1px solid #e9ecef',
               fontWeight: 'bold',
-              padding: '15px'
+              padding: '15px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
             }}>
-              <FaChartBar style={{ marginRight: '10px' }} />
-              Sales Pipeline
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <FaChartBar style={{ marginRight: '10px', color: '#6c757d' }} />
+                Sales Pipeline
+              </div>
+              <Button variant="light" size="sm">
+                <FaEllipsisV />
+              </Button>
             </Card.Header>
             <Card.Body style={{ padding: '20px' }}>
               {pipelineData.map((stage, index) => (
@@ -170,7 +205,7 @@ const Overview = () => {
               ))}
               
               <div style={{ marginTop: '30px' }}>
-                <h5 style={{ marginBottom: '15px', color: '#dc3545' }}>
+                <h5 style={{ marginBottom: '15px', color: '#dc3545', fontSize: '1rem' }}>
                   <FaExclamationTriangle style={{ marginRight: '10px' }} />
                   Hot Leads - Immediate Action Required
                 </h5>
@@ -179,10 +214,11 @@ const Overview = () => {
                     padding: '15px', 
                     backgroundColor: '#f8f9fa', 
                     borderRadius: '8px',
-                    marginBottom: '15px'
+                    marginBottom: '15px',
+                    borderLeft: '4px solid #dc3545'
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <h6 style={{ marginBottom: '5px' }}>{lead.name}</h6>
+                      <h6 style={{ marginBottom: '5px', fontWeight: 'bold' }}>{lead.name}</h6>
                       <div>
                         {lead.status.map((status, idx) => (
                           <Badge 
@@ -208,8 +244,8 @@ const Overview = () => {
           </Card>
         </Col>
 
-        {/* Recent Activities, To Do List, Calendar */}
-        <Col md={6}>
+        {/* Right Column - Recent Activities, To Do List, Calendar */}
+        <Col md={6} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
           <Row>
             {/* Recent Activities */}
             <Col md={12} style={{ marginBottom: '20px' }}>
@@ -222,21 +258,41 @@ const Overview = () => {
                   backgroundColor: '#fff', 
                   borderBottom: '1px solid #e9ecef',
                   fontWeight: 'bold',
-                  padding: '15px'
+                  padding: '15px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}>
-                  Recent Activities
+                  <div>Recent Activities</div>
+                  <Button variant="light" size="sm">
+                    <FaEllipsisV />
+                  </Button>
                 </Card.Header>
                 <Card.Body style={{ padding: '15px' }}>
                   {recentActivities.map(activity => (
                     <div key={activity.id} style={{ 
                       padding: '10px 0', 
-                      borderBottom: '1px solid #e9ecef'
+                      borderBottom: '1px solid #e9ecef',
+                      display: 'flex',
+                      alignItems: 'flex-start'
                     }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span>{activity.description}</span>
-                        <span style={{ fontSize: '0.8rem', color: '#6c757d' }}>
+                      <div style={{ 
+                        width: '32px', 
+                        height: '32px', 
+                        borderRadius: '50%', 
+                        backgroundColor: '#e9ecef',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: '10px'
+                      }}>
+                        <FaUser style={{ color: '#6c757d', fontSize: '0.9rem' }} />
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div>{activity.description}</div>
+                        <div style={{ fontSize: '0.8rem', color: '#6c757d' }}>
                           {activity.time}
-                        </span>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -255,9 +311,15 @@ const Overview = () => {
                   backgroundColor: '#fff', 
                   borderBottom: '1px solid #e9ecef',
                   fontWeight: 'bold',
-                  padding: '15px'
+                  padding: '15px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}>
-                  To Do List
+                  <div>To Do List</div>
+                  <Button variant="light" size="sm">
+                    <FaEllipsisV />
+                  </Button>
                 </Card.Header>
                 <Card.Body style={{ padding: '15px' }}>
                   {todoList.map(todo => (
@@ -304,10 +366,18 @@ const Overview = () => {
                   backgroundColor: '#fff', 
                   borderBottom: '1px solid #e9ecef',
                   fontWeight: 'bold',
-                  padding: '15px'
+                  padding: '15px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}>
-                  <FaCalendarAlt style={{ marginRight: '10px' }} />
-                  September 2025
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <FaCalendarAlt style={{ marginRight: '10px', color: '#6c757d' }} />
+                    September 2025
+                  </div>
+                  <Button variant="light" size="sm">
+                    <FaEllipsisV />
+                  </Button>
                 </Card.Header>
                 <Card.Body style={{ padding: '15px' }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '5px' }}>
@@ -351,9 +421,9 @@ const Overview = () => {
         </Col>
       </Row>
 
-      {/* Hot Leads Detail */}
-      <Row>
-        <Col md={12}>
+      {/* Hot Leads Detail - Full Width */}
+      <Row style={{ padding: '0 20px 20px', margin: '0' }}>
+        <Col md={12} style={{ paddingLeft: '10px', paddingRight: '10px' }}>
           <Card style={{ 
             borderRadius: '8px', 
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -368,7 +438,7 @@ const Overview = () => {
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
                 <FaExclamationTriangle style={{ marginRight: '10px', color: '#dc3545' }} />
                 Leads - Immediate Action Required
               </div>
@@ -378,11 +448,12 @@ const Overview = () => {
               {hotLeads.map((lead, index) => (
                 <div key={index}>
                   <Row>
+                    {/* Left Column - Lead Details */}
                     <Col md={8}>
-                      <h4 style={{ marginBottom: '15px' }}>{lead.name}</h4>
-                      <p style={{ marginBottom: '10px' }}>
-                        <FaEnvelope style={{ marginRight: '10px' }} />
-                        {lead.email} | <FaPhone style={{ marginRight: '5px', marginLeft: '10px' }} />
+                      <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>{lead.name}</h4>
+                      <p style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                        <FaEnvelope style={{ marginRight: '10px', color: '#6c757d' }} />
+                        {lead.email} | <FaPhone style={{ marginRight: '5px', marginLeft: '10px', color: '#6c757d' }} />
                         {lead.phone}
                       </p>
                       
@@ -427,11 +498,13 @@ const Overview = () => {
                       </div>
                     </Col>
                     
+                    {/* Right Column - Client Information and AI Insights */}
                     <Col md={4}>
-                      <h5 style={{ marginBottom: '15px' }}>Client Information</h5>
+                      <h5 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Client Information</h5>
                       <Card style={{ marginBottom: '20px', border: '1px solid #e9ecef' }}>
                         <Card.Body style={{ padding: '15px' }}>
-                          <p style={{ marginBottom: '10px' }}>
+                          <p style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}>
+                            <FaMapMarkerAlt style={{ marginRight: '10px', color: '#6c757d' }} />
                             <strong>Address:</strong> 123 Main Street, Vancouver, BC
                           </p>
                           <p style={{ marginBottom: '10px' }}>
@@ -443,15 +516,20 @@ const Overview = () => {
                         </Card.Body>
                       </Card>
                       
-                      <h5 style={{ marginBottom: '15px' }}>AI Insights & Recommendations</h5>
+                      <h5 style={{ marginBottom: '15px', fontWeight: 'bold' }}>AI Insights & Recommendations</h5>
                       {aiInsights.map(insight => (
                         <Alert 
                           key={insight.id} 
                           variant={insight.status === 'Complete' ? 'success' : insight.status === 'Medium' ? 'warning' : 'info'}
-                          style={{ marginBottom: '10px' }}
+                          style={{ marginBottom: '10px', padding: '10px' }}
                         >
-                          <div style={{ fontWeight: 'bold' }}>{insight.category}</div>
-                          <div style={{ fontSize: '0.9rem' }}>{insight.description}</div>
+                          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                            {insight.category === 'Quality Risk' && <FaExclamationCircle style={{ marginRight: '10px' }} />}
+                            {insight.category === 'Deposit' && <FaMoneyBillWave style={{ marginRight: '10px' }} />}
+                            {insight.category === 'Documentation' && <FaFileAlt style={{ marginRight: '10px' }} />}
+                            <div style={{ fontWeight: 'bold' }}>{insight.category}</div>
+                          </div>
+                          <div style={{ fontSize: '0.9rem', marginLeft: '25px' }}>{insight.description}</div>
                         </Alert>
                       ))}
                     </Col>
@@ -466,4 +544,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default SalesManagerOverview;

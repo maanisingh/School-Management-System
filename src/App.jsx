@@ -18,9 +18,10 @@ import CeoDashboard from "./Components/CeoDashbaord/CeoDashaboard";
 import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import ProjectManager from "./Components/ProjectManager/ProjectManager";
-import SalesManager from "./Components/SalesManager/SalesManager"; 
-import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";  
-
+import SalesManager from "./Components/SalesManager/SalesManagerOverview";
+import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";
+import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
+import LeadManagement from "./Components/SalesManager/LeadManagement";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -39,9 +40,9 @@ function App() {
   const hideLayout =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
-    location.pathname === "/login" ;
-    // location.pathname === "/forgot-password"
-    
+    location.pathname === "/login";
+  // location.pathname === "/forgot-password"
+
 
   return (
     <>
@@ -51,7 +52,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Login />} />
           {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
-    
+
         </Routes>
       ) : (
         <>
@@ -62,46 +63,53 @@ function App() {
               setCollapsed={setIsSidebarCollapsed}
             />
             <div
-              className={`right-side-content ${
-                isSidebarCollapsed ? "collapsed" : ""
-              }`}
+              className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""
+                }`}
             >
               <Routes>
-             
 
-             
+
+
                 {/* ✅ 8 Dashboards */}
                 <Route
                   path="/admin-dashboard"
-                  element={<AdminDashboard/>}
+                  element={<AdminDashboard />}
                 />
                 <Route
                   path="/bookkeeper-dashboard"
-                  element={<BookkeeperDashboard/>}
+                  element={<BookkeeperDashboard />}
                 />
                 <Route
                   path="/ceo-dashboard"
-                  element={<CeoDashboard/>}
+                  element={<CeoDashboard />}
                 />
                 <Route
                   path="/client-dashboard"
-                  element={<ClientDashboard/>}
+                  element={<ClientDashboard />}
                 />
                 <Route
                   path="/owner-dashboard"
-                  element={<OwnerDashboard/>}
+                  element={<OwnerDashboard />}
                 />
                 <Route
                   path="/project-manager-dashboard"
-                  element={<ProjectManager/>}
+                  element={<ProjectManager />}
                 />
-                <Route
+                {/* <Route
                   path="/sales-manager-dashboard"
-                  element={<SalesManager/>}
-                />
+                  element={<SalesManager />}
+                /> */}
                 <Route
                   path="/subcontractor-dashboard"
-                  element={<SubContractorDashboard/>}
+                  element={<SubContractorDashboard />}
+                />
+                <Route
+                  path="/sales-manager-overview"
+                  element={<SalesManagerOverview />}
+                />
+                <Route
+                  path="/lead-management"
+                  element={<LeadManagement />}
                 />
               </Routes>
             </div>

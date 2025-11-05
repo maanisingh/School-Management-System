@@ -184,12 +184,12 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       {
         name: "Overview",
         icon: faChartPie,
-        path: "/sales-manager-dashboard",
+        path: "/sales-manager-overview",
       },
       {
-        name: "Jobs Management",
+        name: "Lead Management",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/lead-management",
       },
       {
         name: "Manage Users",
