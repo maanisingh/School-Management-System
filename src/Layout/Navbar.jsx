@@ -1,21 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaBell, FaUserCircle, FaBars, FaSearch, FaMoon, FaWhatsapp } from "react-icons/fa";
+import "./Navbar.css";
 
 const Navbar = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showProfileModal, setShowProfileModal] = useState(false);
   const dropdownRef = useRef();
-
-  // dummy profile state
-  const [profile, setProfile] = useState({
-    name: "Owner",
-    email: "owner@sunbuild.com",
-    phone: "+91 90000 00000",
-    role: "Owner",
-    projects: "105 projects",
-    notifyEmail: true,
-    notifySMS: false,
-  });
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,302 +16,90 @@ const Navbar = ({ toggleSidebar }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // prevent background scroll when modal open
-  useEffect(() => {
-    document.body.style.overflow = showProfileModal ? "hidden" : "unset";
-    return () => (document.body.style.overflow = "unset");
-  }, [showProfileModal]);
-
-  const handleSaveProfile = () => {
-    // TODO: call API to save
-    alert("Profile saved!");
-    setShowProfileModal(false);
-  };
-
   return (
     <>
-      <nav
-        className="navbar navbar-expand px-3 py-2 d-flex justify-content-between align-items-center fixed-top"
-        style={{
-          backgroundColor: "#ffffff",
-          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-          borderBottom: "1px solid #eaeaea",
-          height: "60px",
-        }}
-      >
+      <nav className="navbar navbar-expand px-3 py-2 d-flex justify-content-between align-items-center fixed-top navbar-custom">
+        {/* Left Section - Menu Button and Logo */}
         <div className="d-flex align-items-center gap-3">
-          {/* Toggle Button with Custom Hover */}
           <button
-            className="btn p-2"
-            style={{
-              backgroundColor: "transparent",
-              borderColor: "transparent",
-              color: "#ff7b00",
-              borderRadius: "6px",
-              border: "none",
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#f5f5f5";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "transparent";
-            }}
+            className="menu-btn"
             onClick={toggleSidebar}
           >
-            <FaBars color="#ff7b00" />
+            <FaBars size={20} />
           </button>
 
-          {/* Text Logo - Handwritten Style */}
-          <span
-            style={{
-              fontSize: "1.8rem",
-              fontWeight: "700",
-              color: "#ff7b00",
-              fontFamily: "'Brush Script MT', cursive",
-              fontStyle: "italic",
-            }}
-          >
+          <span className="navbar-logo">
             Sunbuild
           </span>
         </div>
 
-        {/* Middle Section: Search, Mode Toggle, Notifications, WhatsApp */}
+        {/* Center Section - Search and Icons */}
         <div className="d-flex align-items-center gap-3">
           {/* Search Box */}
-          <div className="d-flex align-items-center" style={{ 
-            backgroundColor: "#f5f5f5", 
-            borderRadius: "20px", 
-            padding: "8px 15px",
-            minWidth: "300px",
-            height: "38px"
-          }}>
-            <FaSearch color="#888" size={16} />
+          <div className="search-container d-flex align-items-center">
+            <FaSearch color="#888" size={14} />
             <input
               type="text"
               placeholder="Search"
-              className="form-control border-0 bg-transparent shadow-none"
-              style={{ fontSize: "14px", paddingLeft: "10px" }}
+              className="search-input"
             />
           </div>
 
-          {/* Mode Toggle Button */}
-          <button
-            className="btn p-2"
-            style={{
-              backgroundColor: "transparent",
-              borderColor: "transparent",
-              color: "#333",
-              borderRadius: "6px",
-              border: "none",
-              transition: "all 0.3s ease",
-              height: "38px",
-              width: "38px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#f5f5f5";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "transparent";
-            }}
-          >
-            <FaMoon size={18} color="#333" />
-          </button>
+          {/* Icons Container */}
+          <div className="d-flex align-items-center gap-2">
+            {/* Moon Icon */}
+            <button className="icon-btn">
+              <FaMoon size={16} color="#333" />
+            </button>
 
-          {/* Notification */}
-          <div className="position-relative" style={{ height: "38px", display: "flex", alignItems: "center" }}>
-            <FaBell size={18} color="#333" />
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              3
-            </span>
+            {/* Bell Icon with Badge */}
+            <div className="icon-btn position-relative">
+              <FaBell size={16} color="#333" />
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">
+                3
+              </span>
+            </div>
+
+            {/* WhatsApp Button */}
+            <button className="whatsapp-btn">
+              <FaWhatsapp size={14} />
+              <span>WhatsApp</span>
+            </button>
           </div>
-
-          {/* WhatsApp Button */}
-          <button
-            className="btn d-flex align-items-center gap-1"
-            style={{
-              backgroundColor: "#25d366",
-              borderColor: "transparent",
-              color: "white",
-              borderRadius: "6px",
-              border: "none",
-              padding: "8px 12px",
-              fontSize: "14px",
-              fontWeight: "500",
-              transition: "all 0.3s ease",
-              height: "38px",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#128c7e";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#25d366";
-            }}
-          >
-            <FaWhatsapp size={16} />
-            <span>WhatsApp</span>
-          </button>
         </div>
 
-        {/* User Profile */}
+        {/* Right Section - User Profile */}
         <div className="dropdown" ref={dropdownRef}>
           <div
-            className="d-flex align-items-center gap-2"
-            style={{
-              border: "1px solid #ffcc00",
-              borderRadius: "6px",
-              padding: "6px 12px",
-              cursor: "pointer",
-              backgroundColor: "#fffaf0",
-              height: "38px",
-            }}
-            role="button"
+            className="user-profile"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
-            <FaUserCircle size={24} color="#333" />
-            <div className="d-none d-sm-block">
-              <div className="fw-bold" style={{ color: "#333", fontSize: "14px" }}>{profile.name}</div>
-              <small className="text-muted" style={{ fontSize: "12px" }}>{profile.projects}</small>
+            <FaUserCircle size={20} color="#333" />
+            <div className="user-details">
+              <div className="user-name">Owner</div>
+              <div className="user-projects">105 project</div>
             </div>
           </div>
 
           {dropdownOpen && (
-            <ul
-              className="dropdown-menu show mt-2 shadow-sm"
-              style={{
-                position: "absolute",
-                right: 0,
-                minWidth: "200px",
-                maxWidth: "calc(100vw - 30px)",
-                zIndex: 1000,
-                borderRadius: "8px",
-                overflow: "hidden",
-              }}
-            >
+            <ul className="dropdown-menu show mt-1 dropdown-menu-custom">
               <li>
-                <button
-                  className="dropdown-item"
-                  onClick={() => {
-                    setDropdownOpen(false);
-                    setShowProfileModal(true);
-                  }}
-                >
+                <button className="dropdown-item dropdown-item-custom">
                   Profile
                 </button>
               </li>
               <li>
-                <hr className="dropdown-divider" />
+                <hr className="dropdown-divider my-1" />
               </li>
               <li>
-                <a className="dropdown-item text-danger" href="/">Logout</a>
+                <a className="dropdown-item dropdown-item-custom text-danger" href="/">
+                  Logout
+                </a>
               </li>
             </ul>
           )}
         </div>
       </nav>
-
-      {/* PROFILE MODAL */}
-      {showProfileModal && (
-        <div
-          className="modal fade show"
-          tabIndex="-1"
-          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
-          onClick={() => setShowProfileModal(false)}
-        >
-          <div
-            className="modal-dialog modal-lg modal-dialog-centered"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-content">
-              <div className="modal-header border-0 pb-0">
-                 <div className="d-flex align-items-center gap-3 mb-3">
-                  <FaUserCircle size={48} color="#6c757d" />
-               
-                <h5 className="modal-title fw-bold">My Profile</h5>
-                </div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowProfileModal(false)}
-                ></button>
-              </div>
-
-              <div className="modal-body">
-                <div className="row g-3">
-                  <div className="col-12 col-md-6">
-                    <label className="form-label">Full Name</label>
-                    <input
-                      className="form-control"
-                      value={profile.name}
-                      onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                    />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <label className="form-label">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      value={profile.email}
-                      onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                    />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <label className="form-label">Phone</label>
-                    <input
-                      className="form-control"
-                      value={profile.phone}
-                      onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                    />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <label className="form-label">Projects</label>
-                    <input
-                      className="form-control"
-                      value={profile.projects}
-                      onChange={(e) => setProfile({ ...profile, projects: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <hr className="my-4" />
-
-                {/* Password change */}
-                <div className="row g-3">
-                  <div className="col-12 col-md-4">
-                    <label className="form-label">Current Password</label>
-                    <input type="password" className="form-control" placeholder="••••••••" />
-                  </div>
-                  <div className="col-12 col-md-4">
-                    <label className="form-label">New Password</label>
-                    <input type="password" className="form-control" placeholder="••••••••" />
-                  </div>
-                  <div className="col-12 col-md-4">
-                    <label className="form-label">Confirm New Password</label>
-                    <input type="password" className="form-control" placeholder="••••••••" />
-                  </div>
-                </div>
-
-                <hr className="my-4" />
-              </div>
-
-              <div className="modal-footer border-0">
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={() => setShowProfileModal(false)}
-                >
-                  Cancel
-                </button>
-                <button className="btn btn-primary" onClick={handleSaveProfile}>
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

@@ -7,12 +7,17 @@ import {
   faBriefcase,
   faExclamationCircle,
   faUserGear,
-  faCalculator,
   faUserTie,
   faUsers,
   faUserTag,
   faHandshake,
   faChevronDown,
+  faFileInvoice,
+  faFileInvoiceDollar,
+  faCreditCard,
+  faChartBar,
+  faBuildingColumns,
+  faPercent,
   faPlay,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
@@ -71,39 +76,38 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     ],
     bookkeeper: [
       {
-        name: "Overview",
-        icon: faCalculator,
+        name: "Dashboard",
+        icon: faChartPie, // ya faHome / faTachometerAlt, dashboard ke liye common icons
         path: "/bookkeeper-dashboard",
       },
       {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
+        name: "Invoices",
+        icon: faFileInvoice, // ya faFileInvoiceDollar
+        path: "/invoices",
       },
       {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
+        name: "Bills", // spelling corrected
+        icon: faFileInvoiceDollar, // ya faFileAlt / faReceipt
+        path: "/bills",
       },
       {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
+        name: "Payments",
+        icon: faCreditCard, // ya faMoneyCheck / faWallet
+        path: "/payments",
       },
       {
         name: "Reports",
-        icon: faUserGear,
-        path: "/bookkeeper-reports",
+        icon: faChartBar, // ya faChartLine / faFileAlt
+        path: "/reports",
       },
       {
         name: "Banking",
-        icon: faUserGear,
+        icon: faBuildingColumns, // ya faLandmark / faPiggyBank
         path: "/banking",
       },
       {
-        name: "Tax/Gst",
-        icon: faUserGear,
+        name: "Tax/GST",
+        icon: faPercent, // ya faFileInvoiceDollar / faBalanceScale
         path: "/tax-gst",
       },
     ],
@@ -168,8 +172,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         name: "Jobs Management",
         icon: faBriefcase,
         path: "/jobs-management",
-     
-   
+
+
       },
       {
         name: "Manage Users",

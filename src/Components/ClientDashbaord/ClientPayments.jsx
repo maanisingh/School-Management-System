@@ -82,7 +82,7 @@ const ClientPayments = () => {
 
         {invoices.map((invoice) => (
           <div key={invoice.id} className="ipui-card">
-            <div className="ipui-card-content">
+            <div className="ipui-card-content border rounded-3 ">
               <div className="ipui-left-section">
                 <div className="ipui-header-row">
                   <h3 className="ipui-title">{invoice.title}</h3>
@@ -120,7 +120,7 @@ const ClientPayments = () => {
 
         {changeOrders.map((order) => (
           <div key={order.id} className="ipui-card">
-            <div className="ipui-card-content">
+            <div className="ipui-card-content border rounded-3 ">
               <div className="ipui-left-section">
                 <div className="ipui-header-row">
                   <h3 className="ipui-title">{order.title}</h3>

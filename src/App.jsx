@@ -3,7 +3,20 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Navbar from "./Layout/Navbar";
 import Sidebar from "./Layout/Sidebar";
+
+
+
+// ✅ 8 Clean Dashboards (only imports)
+import AdminDashboard from "./Components/AdminDashbaord/AdminDashboard";
+import CeoDashboard from "./Components/CeoDashbaord/CeoDashaboard";
+import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
+import ProjectManager from "./Components/ProjectManager/ProjectManager";
+import SalesManager from "./Components/SalesManager/SalesManagerOverview"; 
+import BookkeeperDashboard from "./Components/BookkeeperDashboard/BookkeeperDashboard"
+import BookkeeperInvoice from "./Components/BookkeeperDashboard/BookkeeperInvoice";
+
+
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
@@ -11,7 +24,6 @@ import SubContractorDashboard from "./Components/SubConstractorDashboard/SubCont
 import JobDashboard from "./Components/SubConstractorDashboard/JobDashboard";
 import ScheduleDashboard from "./Components/SubConstractorDashboard/ScheduleDashboard";
 import ToDo from "./Components/SubConstractorDashboard/ToDo";
-import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import ClientSelections from "./Components/ClientDashbaord/ClientSelections";
 import ClientSchedule from "./Components/ClientDashbaord/ClientSchedule";
 import ClientPayments from "./Components/ClientDashbaord/ClientPayments";
@@ -69,6 +81,46 @@ function App() {
                 }`}
             >
               <Routes>
+             
+
+             
+                {/* ✅ 8 Dashboards */}
+                <Route
+                  path="/admin-dashboard"
+                  element={<AdminDashboard/>}
+                />
+                <Route
+                  path="/bookkeeper-dashboard"
+                  element={<BookkeeperDashboard/>}
+                />
+                <Route
+                  path="/ceo-dashboard"
+                  element={<CeoDashboard/>}
+                />
+      
+                <Route
+                  path="/owner-dashboard"
+                  element={<OwnerDashboard/>}
+                />
+                <Route
+                  path="/project-manager-dashboard"
+                  element={<ProjectManager/>}
+                />
+                <Route
+                  path="/sales-manager-dashboard"
+                  element={<SalesManager/>}
+                />
+                <Route
+                  path="/subcontractor-dashboard"
+                  element={<SubContractorDashboard/>}
+                />
+                <Route path="/bookkeeper-dashboard" element={<BookkeeperDashboard />} />
+                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/invoices" element={<BookkeeperInvoice />} />
+
+
+
+
                 {/* owner-dashboard */}
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
                 <Route path="/subcontractor-dashboard" element={<SubContractorDashboard />} />
