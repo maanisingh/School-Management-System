@@ -33,6 +33,12 @@ import BookKeeperReports from "./Components/BookkeeperDashboard/BookKeeperReport
 import Banking from "./Components/BookkeeperDashboard/Banking";
 import TaxGst from "./Components/BookkeeperDashboard/TaxGst";
 import Selection from "./Components/ProjectManager/Selection";
+import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
+import JobManagment from "./Components/OwnerDashboard/JobManagment";
+import Permissions from "./Components/OwnerDashboard/Permissions";
+import ListOwer from "./Components/OwnerDashboard/ListOwer";
+import Payments from "./Components/BookkeeperDashboard/BookkeeperPayments";
+import Invoice from "./Components/BookkeeperDashboard/BookkeeperBill";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -111,6 +117,8 @@ function App() {
                 <Route path="/bookkeeper-dashboard" element={<BookkeeperDashboard />} />
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
                 <Route path="/invoices" element={<BookkeeperInvoice />} />
+                   <Route path="/payment" element={<Payments/>} />
+                      <Route path="/bill" element={<Invoice/>} />
 
 
 

@@ -12,17 +12,14 @@ import {
   faUserTag,
   faHandshake,
   faChevronDown,
-<<<<<<< HEAD
    faFileInvoice,
     faFileInvoiceDollar,
      faCreditCard,
       faChartBar,
       faBuildingColumns,
-       faPercent
-=======
+       faPercent,
   faPlay,
   faCheckCircle,
->>>>>>> 6ba7e553582e530e9f7886d18f3c704e89138294
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -91,12 +88,12 @@ bookkeeper: [
   {
     name: "Bills", // spelling corrected
     icon: faFileInvoiceDollar, // ya faFileAlt / faReceipt
-    path: "/bills",
+    path: "/bill",
   },
   {
     name: "Payments",
     icon: faCreditCard, // ya faMoneyCheck / faWallet
-    path: "/payments",
+    path: "/payment",
   },
   {
     name: "Reports",
