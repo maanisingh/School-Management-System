@@ -87,6 +87,21 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         icon: faUserGear,
         path: "/settings",
       },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/bookkeeper-reports",
+      },
+      {
+        name: "Banking",
+        icon: faUserGear,
+        path: "/banking",
+      },
+      {
+        name: "Tax/Gst",
+        icon: faUserGear,
+        path: "/tax-gst",
+      },
     ],
     ceo: [
       {
@@ -194,23 +209,28 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       {
         name: "Overview",
         icon: faChartPie,
-        path: "/sales-manager-dashboard",
+        path: "/sales-manager-overview",
       },
       {
-        name: "Jobs Management",
+        name: "Lead Management",
         icon: faBriefcase,
-        path: "/jobs-management",
+        path: "/lead-management",
       },
       {
-        name: "Manage Users",
+        name: "Proposals",
         icon: faUsers,
-        path: "/manage-users",
+        path: "/proposals",
         hasDropdown: true,
       },
       {
-        name: "Settings",
+        name: "Activities",
         icon: faUserGear,
-        path: "/settings",
+        path: "/activities",
+      },
+      {
+        name: "Reports",
+        icon: faUserGear,
+        path: "/reports",
       },
     ],
     subcontractor: [

@@ -11,6 +11,14 @@ import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import ClientSelections from "./Components/ClientDashbaord/ClientSelections";
 import ClientSchedule from "./Components/ClientDashbaord/ClientSchedule";
 import ClientPayments from "./Components/ClientDashbaord/ClientPayments";
+import Activities from "./Components/SalesManager/Activities";
+import LeadManagement from "./Components/SalesManager/LeadManagement";
+import Proposals from "./Components/SalesManager/Proposals";
+import Reports from "./Components/SalesManager/Reports";
+import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
+import BookKeeperReports from "./Components/BookkeeperDashboard/BookKeeperReports";
+import Banking from "./Components/BookkeeperDashboard/Banking";
+import TaxGst from "./Components/BookkeeperDashboard/TaxGst";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -49,12 +57,19 @@ function App() {
               setCollapsed={setIsSidebarCollapsed}
             />
             <div
-              className={`right-side-content ${
-                isSidebarCollapsed ? "collapsed" : ""
-              }`}
+              className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""
+                }`}
             >
               <Routes>
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/sales-manager-overview" element={<SalesManagerOverview />} />
+                <Route path="/lead-management" element={<LeadManagement />} />
+                <Route path="/proposals" element={<Proposals />} />
+                <Route path="/activities" element={<Activities />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/bookkeeper-reports" element={<BookKeeperReports />} />
+                <Route path="/banking" element={<Banking />} />
+                <Route path="/tax-gst" element={<TaxGst />} />
               </Routes>
 
               {/* Client Dashboard Content Start Here */}
