@@ -7,6 +7,13 @@ import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+
+import CeoDashboard from "./Components/CeoDashbaord/Dashboard/CeoDashboard";
+import CeoSettings from "./Components/CeoDashbaord/Settings/CeoSettings";
+import CeoJobs from "./Components/CeoDashbaord/Jobs/CeoJobs";
+import List from "./Components/CeoDashbaord/ManageUser/List";
+import PermissionsMatrix from "./Components/CeoDashbaord/ManageUser/Permission";
+
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -51,6 +58,15 @@ function App() {
             >
               <Routes>
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+
+
+
+                {/* ceo-dashboard routes */}
+                <Route path="/ceo-dashboard" element={<CeoDashboard />} />
+                <Route path="/settings" element={<CeoSettings />} />
+                <Route path="/jobs-management" element={<CeoJobs />} />
+                <Route path="/manage-users/list" element={<List />} />
+                <Route path="/manage-users/permissions" element={<PermissionsMatrix />} />
               </Routes>
             </div>
           </div>
