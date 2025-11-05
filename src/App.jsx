@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Navbar from "./Layout/Navbar";
 import Sidebar from "./Layout/Sidebar";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
+import { BiLogIn } from "react-icons/bi";
+import Login from "./Auth/Login";
+import Signup from "./Auth/Signup";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -29,9 +32,9 @@ function App() {
     <>
       {hideLayout ? (
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login/>} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
         </Routes>
       ) : (
         <>

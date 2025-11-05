@@ -146,6 +146,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/jobs-management",
       },
       {
+        name: "Jobs Management",
+        icon: faBriefcase,
+        path: "/jobs-management",
+      },
+      {
         name: "Manage Users",
         icon: faUsers,
         path: "/manage-users",

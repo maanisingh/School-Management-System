@@ -104,7 +104,7 @@ const Login = () => {
           </h2>
         </div>
 
-        <h4 className="text-center mb-4">Login</h4>
+        {/* <h4 className="text-center mb-4">Login</h4> */}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
