@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import Navbar from "./Layout/Navbar";
 import Sidebar from "./Layout/Sidebar";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
-import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
+import { BiLogIn } from "react-icons/bi";
+import Login from "./Auth/Login";
+import Signup from "./Auth/Signup";
+import Activities from "./Components/SalesManager/Activities";
 import LeadManagement from "./Components/SalesManager/LeadManagement";
 import Proposals from "./Components/SalesManager/Proposals";
-import Activities from "./Components/SalesManager/Activities";
 import Reports from "./Components/SalesManager/Reports";
+import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -34,9 +37,9 @@ function App() {
     <>
       {hideLayout ? (
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login/>} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
         </Routes>
       ) : (
         <>
