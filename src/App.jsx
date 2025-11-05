@@ -1,12 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { useState, useEffect } from "react";
-import * as echarts from "echarts";
-
 import Navbar from "./Layout/Navbar";
-import Login from "./Auth/Login";
-import Signup from "./Auth/Signup";
-
 import Sidebar from "./Layout/Sidebar";
 
 
@@ -20,6 +15,7 @@ import ProjectManager from "./Components/ProjectManager/ProjectManager";
 import SalesManager from "./Components/SalesManager/SalesManager"; 
 import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";  
 import BookkeeperDashboard from "./Components/BookkeeperDashboard/BookkeeperDashboard"
+import BookkeeperInvoice from "./Components/BookkeeperDashboard/BookkeeperInvoice";
 
 
 function App() {
@@ -27,7 +23,9 @@ function App() {
 
   useEffect(() => {
     const checkIfMobile = () => window.innerWidth <= 768;
-    if (checkIfMobile()) setIsSidebarCollapsed(true);
+    if (checkIfMobile()) {
+      setIsSidebarCollapsed(true);
+    }
   }, []);
 
   const toggleSidebar = () => {
@@ -39,19 +37,15 @@ function App() {
   const hideLayout =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
-    location.pathname === "/login" ;
-    // location.pathname === "/forgot-password"
-    
+    location.pathname === "/forgot-password";
 
   return (
     <>
       {hideLayout ? (
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Login />} />
-          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
-    
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       ) : (
         <>
@@ -104,6 +98,8 @@ function App() {
                   element={<SubContractorDashboard/>}
                 />
                 <Route path="/bookkeeper-dashboard" element={<BookkeeperDashboard />} />
+                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+                <Route path="/invoices" element={<BookkeeperInvoice />} />
               </Routes>
             </div>
           </div>
