@@ -7,12 +7,17 @@ import {
   faBriefcase,          // ✅ Briefcase (Middle icon)
   faExclamationCircle,  // ✅ Alert (Bottom icon)
   faUserGear,
-  faCalculator,
   faUserTie,
   faUsers,
   faUserTag,
   faHandshake,
   faChevronDown,
+   faFileInvoice,
+    faFileInvoiceDollar,
+     faCreditCard,
+      faChartBar,
+      faBuildingColumns,
+       faPercent
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -65,29 +70,43 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         path: "/admin-settings",
       },
     ],
-    bookkeeper: [
-      {
-        name: "Overview",
-        icon: faCalculator,
-        path: "/bookkeeper-dashboard",
-      },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-      },
-      {
-        name: "Settings",
-        icon: faUserGear,
-        path: "/settings",
-      },
-    ],
+bookkeeper: [
+  {
+    name: "Dashboard",
+    icon: faChartPie, // ya faHome / faTachometerAlt, dashboard ke liye common icons
+    path: "/bookkeeper-dashboard",
+  },
+  {
+    name: "Invoices",
+    icon: faFileInvoice, // ya faFileInvoiceDollar
+    path: "/invoices",
+  },
+  {
+    name: "Bills", // spelling corrected
+    icon: faFileInvoiceDollar, // ya faFileAlt / faReceipt
+    path: "/bills",
+  },
+  {
+    name: "Payments",
+    icon: faCreditCard, // ya faMoneyCheck / faWallet
+    path: "/payments",
+  },
+  {
+    name: "Reports",
+    icon: faChartBar, // ya faChartLine / faFileAlt
+    path: "/reports",
+  },
+  {
+    name: "Banking",
+    icon: faBuildingColumns, // ya faLandmark / faPiggyBank
+    path: "/banking",
+  },
+  {
+    name: "Tax/GST",
+    icon: faPercent, // ya faFileInvoiceDollar / faBalanceScale
+    path: "/tax-gst",
+  },
+],
     ceo: [
       {
         name: "Overview",

@@ -13,13 +13,13 @@ import Sidebar from "./Layout/Sidebar";
 
 // ✅ 8 Clean Dashboards (only imports)
 import AdminDashboard from "./Components/AdminDashbaord/AdminDashboard";
-import BookkeeperDashboard from "./Components/BookkeeperDashboard/BookkeeperDashboard";
 import CeoDashboard from "./Components/CeoDashbaord/CeoDashaboard";
 import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import ProjectManager from "./Components/ProjectManager/ProjectManager";
 import SalesManager from "./Components/SalesManager/SalesManager"; 
 import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";  
+import BookkeeperDashboard from "./Components/BookkeeperDashboard/BookkeeperDashboard"
 
 
 function App() {
@@ -103,6 +103,7 @@ function App() {
                   path="/subcontractor-dashboard"
                   element={<SubContractorDashboard/>}
                 />
+                <Route path="/bookkeeper-dashboard" element={<BookkeeperDashboard />} />
               </Routes>
             </div>
           </div>
