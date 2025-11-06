@@ -2,10 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faUsers,
-  faUserTag,
-  faUserTie,
-  faChevronDown,
+  faTachometerAlt,   // Dashboard
+  faChalkboardTeacher, // Classes
+  faUserGraduate,     // Learners
+  faBookOpen,         // Subjects
+  faPenNib,           // Mark Entry
+  faChartBar,         // Analysis
+  faCog,              // Settings
+  faUsers,            // Teachers / Users
+  faClipboardList,    // Reports
+  faFolderOpen,       // My Subjects
+  faFileAlt,          // My Results
+  faUserTag,          // Role generic
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
@@ -35,35 +43,34 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
     setOpenSubmenu(openSubmenu === menuName ? null : menuName);
   };
 
-  const allMenus = {
-    admin: [
-      { name: "Dashboard", icon: faUsers, path: "/admin-dashboard" },
-      { name: "Classes", icon: faUsers, path: "/admin-classes" },
-      { name: "Teachers", icon: faUsers, path: "/admin-teachers" },
-      { name: "Learners", icon: faUsers, path: "/admin-learners" },
-      { name: "Subjects", icon: faUsers, path: "/admin-subjects" },
-       { name: "Mark Entry", icon: faUsers, path: "/admin-mark-entry" },
-        { name: "Analysis", icon: faUsers, path: "/admin-analysis" },
-         { name: "Settings", icon: faUsers, path: "/admin-settings" },
-    ],
-    teacher: [
-      { name: "Dashboard", icon: faUserTag, path: "/teacher-dashboard" },
-      { name: "Classes", icon: faUserTag, path: "/teacher-classes" },
-      { name: "Learners", icon: faUserTag, path: "/teacher-learners" },
-      { name: "Subjects", icon: faUserTag, path: "/teacher-subjects" },
-      { name: "Mark Entry", icon: faUserTag, path: "/teacher-mark-entry" },
-      { name: "analysis", icon: faUserTag, path: "/teacher-analysis" },
-      { name: "Reports", icon: faUserTag, path: "/teacher-reports" },
-      { name: "Settings", icon: faUserTag, path: "/teacher-settings" },
-    ],
-    student: [
-      { name: "Dashboard", icon: faUserTie, path: "/student-dashboard" },
-      { name: "My Subjects", icon: faUserTie, path: "/student-my-subjects" },
-      { name: "My Results", icon: faUserTie, path: "/student-my-results" },
-      { name: "Reports", icon: faUserTie, path: "/student-reports" },
-    ],
-  };
-
+const allMenus = {
+  admin: [
+    { name: "Dashboard", icon: faTachometerAlt, path: "/admin-dashboard" },
+    { name: "Classes", icon: faChalkboardTeacher, path: "/admin-classes" },
+    { name: "Teachers", icon: faUsers, path: "/admin-teachers" },
+    { name: "Learners", icon: faUserGraduate, path: "/admin-learners" },
+    { name: "Subjects", icon: faBookOpen, path: "/admin-subjects" },
+    { name: "Mark Entry", icon: faPenNib, path: "/admin-mark-entry" },
+    { name: "Analysis", icon: faChartBar, path: "/admin-analysis" },
+    { name: "Settings", icon: faCog, path: "/admin-settings" },
+  ],
+  teacher: [
+    { name: "Dashboard", icon: faTachometerAlt, path: "/teacher-dashboard" },
+    { name: "Classes", icon: faChalkboardTeacher, path: "/teacher-classes" },
+    { name: "Learners", icon: faUserGraduate, path: "/teacher-learners" },
+    { name: "Subjects", icon: faBookOpen, path: "/teacher-subjects" },
+    { name: "Mark Entry", icon: faPenNib, path: "/teacher-mark-entry" },
+    { name: "Analysis", icon: faChartBar, path: "/teacher-analysis" },
+    { name: "Reports", icon: faClipboardList, path: "/teacher-reports" },
+    { name: "Settings", icon: faCog, path: "/teacher-settings" },
+  ],
+  student: [
+    { name: "Dashboard", icon: faTachometerAlt, path: "/student-dashboard" },
+    { name: "My Subjects", icon: faFolderOpen, path: "/student-my-subjects" },
+    { name: "My Results", icon: faFileAlt, path: "/student-my-results" },
+    { name: "Reports", icon: faClipboardList, path: "/student-reports" },
+  ],
+};
   const userMenus = allMenus[userRole] || allMenus["admin"];
 
   return (
