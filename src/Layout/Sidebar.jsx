@@ -69,6 +69,7 @@ const allMenus = {
     { name: "My Subjects", icon: faFolderOpen, path: "/student-my-subjects" },
     { name: "My Results", icon: faFileAlt, path: "/student-my-results" },
     { name: "Reports", icon: faClipboardList, path: "/student-reports" },
+    { name: "Settings", icon: faClipboardList, path: "/student-settings" },
   ],
 };
   const userMenus = allMenus[userRole] || allMenus["admin"];

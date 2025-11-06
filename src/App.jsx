@@ -5,41 +5,33 @@ import Navbar from "./Layout/Navbar";
 import Sidebar from "./Layout/Sidebar";
 
 // ✅ 8 Clean Dashboards (only imports)
-import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
-import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
-import ProjectManager from "./Components/ProjectManager/ProjectManager";
-import BookkeeperInvoice from "./Components/BookkeeperDashboard/BookkeeperInvoice";
+
 
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+import TeacherDashboard from "./Components/TeacherDashbaord/TeacherDashboard";
+import StudentDashboard from "./Components/StudentDashboard/StudentDashboard";
+import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
+import AdminAnalysis from "./Components/AdminDashboard/AdminAnalysis";
+import AdminClasses from "./Components/AdminDashboard/AdminClasses";
+import AdminLearners from "./Components/AdminDashboard/AdminLearners";
+import AdminReports from "./Components/AdminDashboard/AdminReports";
+import AdminSettings from "./Components/AdminDashboard/AdminSettings";
+import AdminSubjects from "./Components/AdminDashboard/AdminSubjects";
+import AdminTeachers from "./Components/AdminDashboard/AdminTeachers";
+import TeacherReports from "./Components/TeacherDashbaord/TeacherReports";
+import TeacherAnalysis from "./Components/TeacherDashbaord/TeacherAnalysis";
+import TeacherMarkEntry from "./Components/TeacherDashbaord/TeacherMarkEntry";
+import TeacherSubjects from "./Components/TeacherDashbaord/TeacherSubjects";
+import TeacherLearners from "./Components/TeacherDashbaord/TeacherLearners";
+import TeacherClasses from "./Components/TeacherDashbaord/TeacherClasses";
+import TeacherSettings from "./Components/TeacherDashbaord/TeacherSettings";
+import AdminMarkEntry from "./Components/AdminDashboard/AdminMarkEntry";
+import StudentSettings from "./Components/StudentDashboard/StudentSettings";
+import StudentReports from "./Components/StudentDashboard/StudentReports";
+import StudentMyResults from "./Components/StudentDashboard/StudentMyResults";
+import StudentMySubjects from "./Components/StudentDashboard/StudentMySubjects";
 
-import CeoDashboard from "./Components/CeoDashbaord/Dashboard/CeoDashboard";
-import CeoSettings from "./Components/CeoDashbaord/Settings/CeoSettings";
-import CeoJobs from "./Components/CeoDashbaord/Jobs/CeoJobs";
-import List from "./Components/CeoDashbaord/ManageUser/List";
-import PermissionsMatrix from "./Components/CeoDashbaord/ManageUser/Permission";
-
-import RequestForInformation from "./Components/ProjectManager/RequestForInformation.jsx";
-import SubContractorDashboard from "./Components/SubConstractorDashboard/SubContractorDashboard";
-import JobDashboard from "./Components/SubConstractorDashboard/JobDashboard";
-import ScheduleDashboard from "./Components/SubConstractorDashboard/ScheduleDashboard";
-import ToDo from "./Components/SubConstractorDashboard/ToDo";
-import ClientSelections from "./Components/ClientDashbaord/ClientSelections";
-import ClientSchedule from "./Components/ClientDashbaord/ClientSchedule";
-import ClientPayments from "./Components/ClientDashbaord/ClientPayments";
-import Activities from "./Components/SalesManager/Activities";
-import LeadManagement from "./Components/SalesManager/LeadManagement";
-import Proposals from "./Components/SalesManager/Proposals";
-import Reports from "./Components/SalesManager/Reports";
-import SalesManagerOverview from "./Components/SalesManager/SalesManagerOverview";
-import BookKeeperReports from "./Components/BookkeeperDashboard/BookKeeperReports";
-import Banking from "./Components/BookkeeperDashboard/Banking";
-import TaxGst from "./Components/BookkeeperDashboard/TaxGst";
-import Selection from "./Components/ProjectManager/Selection";
-import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
-import JobManagment from "./Components/OwnerDashboard/JobManagment";
-import ListOwer from "./Components/OwnerDashboard/ListOwer";
-import Permissions from "./Components/OwnerDashboard/Permissions";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -79,22 +71,44 @@ function App() {
               setCollapsed={setIsSidebarCollapsed}
             />
             <div
-              className={`right-side-content ${
-                isSidebarCollapsed ? "collapsed" : ""
-              }`}
+              className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""
+                }`}
             >
               <Routes>
-                {/* CEO Dashboard */}
-                <Route path="/ceo-dashboard" element={<CeoDashboard />} />
-        
+                {/* Admin Dashboard */}
+                <Route path="/admin-dashboard" element={<AdminDashboard />} />
 
-                {/* Owner Dashboard */}
-                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-        
-        
-               {/* Client Dashboard */}
-                <Route path="/client-dashboard" element={<ClientDashboard />} />
-              
+                <Route path="/admin-analysis" element={<AdminAnalysis />} />
+                <Route path="/admin-classes" element={<AdminClasses />} />
+                <Route path="/admin-learners" element={<AdminLearners />} />
+                <Route path="/admin-mark-entry" element={<AdminMarkEntry/> }/>
+                <Route path="/admin-reports" element={<AdminReports />} />
+                <Route path="/admin-settings" element={<AdminSettings />} />
+                <Route path="/admin-subjects" element={<AdminSubjects />} />
+                <Route path="/admin-teachers" element={<AdminTeachers />} />
+
+                {/* Admin Dashboard  end */}
+                {/* teacher Dashboard */}
+                <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+
+                <Route path="/teacher-settings" element={<TeacherSettings/>} />
+                <Route path="/teacher-reports" element={<TeacherReports/>} />
+                <Route path="/teacher-analysis" element={<TeacherAnalysis/>} />
+                <Route path="/teacher-mark-entry" element={<TeacherMarkEntry/>} />
+                <Route path="/teacher-subjects" element={<TeacherSubjects/>} />
+                <Route path="/teacher-learners" element={<TeacherLearners/>} />
+                <Route path="/teacher-classes" element={<TeacherClasses/>} />
+
+                {/* teacher Dashboard   end*/}
+                {/* student Dashboard */}
+                <Route path="/student-dashboard" element={<StudentDashboard />} />
+                <Route path="/student-settings" element={<StudentSettings/>} />
+                <Route path="/student-reports" element={<StudentReports/>} />
+                <Route path="/student-my-results" element={<StudentMyResults/>} />
+                <Route path="/student-my-subjects" element={<StudentMySubjects/>} />
+       
+                {/* student Dashboard   end */}
+
               </Routes>
             </div>
           </div>

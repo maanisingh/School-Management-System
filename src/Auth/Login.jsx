@@ -9,17 +9,17 @@ const Login = () => {
 
   // ✅ 8 Role-based credentials (email, password, and redirect path)
   const roleCredentials = {
-    ceo: {
+    Admin: {
       email: "admin@gmail.com",
       password: "123",
       redirect: "/admin-dashboard",
     },
-    client: {
+    Teacher: {
       email: "teacher@gmail.com",
       password: "123",
       redirect: "/teacher-dashboard",
     },
-    owner: {
+    Student: {
       email: "student@gmail.com",
       password: "123",
       redirect: "/student-dashboard",
