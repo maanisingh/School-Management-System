@@ -10,6 +10,8 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import { Image } from 'react-bootstrap';
+import logo from '../assets/logo (2).png';
 
 const Navbar = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -66,31 +68,22 @@ const Navbar = ({ toggleSidebar }) => {
         <button className="menu-btn" onClick={handleToggleSidebar} aria-label="Toggle sidebar">
           <FaBars size={20} />
         </button>
-        <span className="navbar-logo">Sunbuild</span>
+        <span className="navbar-logo">
+          <img src={logo} alt="Logo" style={{ width: '170px', height: '120px' }} />
+        </span>
       </div>
 
-      <div className="navbar-center">
-        <div className="search-container">
-          <FaSearch className="search-icon" />
-          <input type="text" placeholder="Search..." className="search-input" />
-        </div>
-      </div>
+     
 
       <div className="navbar-right">
         <div className="nav-icons">
-          <button className="nav-icon-btn" title="Dark Mode">
-            <FaMoon size={16} />
-          </button>
-
+        
           <div className="nav-icon-btn position-relative" title="Notifications">
             <FaBell size={16} />
             <span className="notification-badge">3</span>
           </div>
 
-          <button className="whatsapp-btn" title="WhatsApp">
-            <FaWhatsapp size={16} />
-            <span className="whatsapp-text">WhatsApp</span>
-          </button>
+          
 
           {/* ✅ ADDED: Visible Logout Button */}
           <button
