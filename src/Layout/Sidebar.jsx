@@ -37,13 +37,30 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
 
   const allMenus = {
     admin: [
-      { name: "Overview", icon: faUsers, path: "/client-dashboard" },
+      { name: "Dashboard", icon: faUsers, path: "/admin-dashboard" },
+      { name: "Classes", icon: faUsers, path: "/admin-classes" },
+      { name: "Teachers", icon: faUsers, path: "/admin-teachers" },
+      { name: "Learners", icon: faUsers, path: "/admin-learners" },
+      { name: "Subjects", icon: faUsers, path: "/admin-subjects" },
+       { name: "Mark Entry", icon: faUsers, path: "/admin-mark-entry" },
+        { name: "Analysis", icon: faUsers, path: "/admin-analysis" },
+         { name: "Settings", icon: faUsers, path: "/admin-settings" },
     ],
     teacher: [
-      { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
+      { name: "Dashboard", icon: faUserTag, path: "/teacher-dashboard" },
+      { name: "Classes", icon: faUserTag, path: "/teacher-classes" },
+      { name: "Learners", icon: faUserTag, path: "/teacher-learners" },
+      { name: "Subjects", icon: faUserTag, path: "/teacher-subjects" },
+      { name: "Mark Entry", icon: faUserTag, path: "/teacher-mark-entry" },
+      { name: "analysis", icon: faUserTag, path: "/teacher-analysis" },
+      { name: "Reports", icon: faUserTag, path: "/teacher-reports" },
+      { name: "Settings", icon: faUserTag, path: "/teacher-settings" },
     ],
     student: [
-      { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
+      { name: "Dashboard", icon: faUserTie, path: "/student-dashboard" },
+      { name: "My Subjects", icon: faUserTie, path: "/student-my-subjects" },
+      { name: "My Results", icon: faUserTie, path: "/student-my-results" },
+      { name: "Reports", icon: faUserTie, path: "/student-reports" },
     ],
   };
 
