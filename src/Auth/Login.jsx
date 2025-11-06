@@ -10,19 +10,19 @@ const Login = () => {
   // ✅ 8 Role-based credentials (email, password, and redirect path)
   const roleCredentials = {
     ceo: {
-      email: "ceo@gmail.com",
-      password: "ceo123",
-      redirect: "/ceo-dashboard",
+      email: "admin@gmail.com",
+      password: "123",
+      redirect: "/admin-dashboard",
     },
     client: {
-      email: "client@gmail.com",
-      password: "client123",
-      redirect: "/client-dashboard",
+      email: "teacher@gmail.com",
+      password: "123",
+      redirect: "/teacher-dashboard",
     },
     owner: {
-      email: "owner@gmail.com",
-      password: "owner123",
-      redirect: "/owner-dashboard",
+      email: "student@gmail.com",
+      password: "123",
+      redirect: "/student-dashboard",
     },
   };
 
@@ -48,12 +48,12 @@ const Login = () => {
   return (
     <div
       className="d-flex align-items-center justify-content-center min-vh-100"
-      style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
+      // style={{
+      //   backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')`,
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      //   backgroundAttachment: "fixed",
+      // }}
     >
       {/* Login Card — Updated with dark theme colours */}
       <div
@@ -76,7 +76,7 @@ const Login = () => {
               textShadow: "0 2px 4px rgba(0,0,0,0.3)",
             }}
           >
-            Sunbuild
+            School Managment
           </h2>
         </div>
 
