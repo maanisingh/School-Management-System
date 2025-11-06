@@ -10,6 +10,8 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import { Image } from 'react-bootstrap';
+import logo from '../assets/logo (2).png';
 
 const Navbar = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -66,7 +68,9 @@ const Navbar = ({ toggleSidebar }) => {
         <button className="menu-btn" onClick={handleToggleSidebar} aria-label="Toggle sidebar">
           <FaBars size={20} />
         </button>
-        <span className="navbar-logo">Sunbuild</span>
+        <span className="navbar-logo">
+          <img src={logo} alt="Logo" style={{ width: '170px', height: '120px' }} />
+        </span>
       </div>
 
       <div className="navbar-center">
