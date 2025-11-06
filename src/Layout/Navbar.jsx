@@ -6,12 +6,15 @@ import {
   FaSearch,
   FaMoon,
   FaWhatsapp,
+  FaSignOutAlt, // Added for logout icon
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = ({ toggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -29,9 +32,36 @@ const Navbar = ({ toggleSidebar }) => {
     }
   };
 
+  const handleLogout = () => {
+    // Clear all authentication data
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Close dropdown
+    setDropdownOpen(false);
+    
+    // Force navigate to login page
+    navigate("/", { replace: true });
+    
+    // If navigate doesn't work, use window.location
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 100);
+  };
+
+  const handleProfile = () => {
+    setDropdownOpen(false);
+    alert("Profile page coming soon!");
+  };
+
+  // ✅ Only toggle dropdown on user-profile click
+  const toggleDropdown = (e) => {
+    e.stopPropagation(); // Prevent interference
+    setDropdownOpen((prev) => !prev);
+  };
+
   return (
     <nav className="navbar-custom">
-      {/* Left: Menu + Logo */}
       <div className="navbar-left">
         <button className="menu-btn" onClick={handleToggleSidebar} aria-label="Toggle sidebar">
           <FaBars size={20} />
@@ -39,7 +69,6 @@ const Navbar = ({ toggleSidebar }) => {
         <span className="navbar-logo">Sunbuild</span>
       </div>
 
-      {/* Center: Search (desktop only) */}
       <div className="navbar-center">
         <div className="search-container">
           <FaSearch className="search-icon" />
@@ -47,7 +76,6 @@ const Navbar = ({ toggleSidebar }) => {
         </div>
       </div>
 
-      {/* Right: Icons + User Profile */}
       <div className="navbar-right">
         <div className="nav-icons">
           <button className="nav-icon-btn" title="Dark Mode">
@@ -63,14 +91,22 @@ const Navbar = ({ toggleSidebar }) => {
             <FaWhatsapp size={16} />
             <span className="whatsapp-text">WhatsApp</span>
           </button>
+
+          {/* ✅ ADDED: Visible Logout Button */}
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+            title="Logout"
+            aria-label="Logout"
+          >
+            <FaSignOutAlt size={16} />
+            <span className="btn-text">Logout</span>
+          </button>
         </div>
 
-        {/* User Profile Dropdown */}
+        {/* ✅ Fixed: Full clickable area with proper event handling */}
         <div className="dropdown" ref={dropdownRef}>
-          <div
-            className="user-profile"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
+          <div className="user-profile" onClick={toggleDropdown}>
             <FaUserCircle size={20} />
             <div className="user-details">
               <div className="user-name">Owner</div>
@@ -81,15 +117,22 @@ const Navbar = ({ toggleSidebar }) => {
           {dropdownOpen && (
             <ul className="dropdown-menu">
               <li>
-                <button className="dropdown-item">Profile</button>
+                <button className="dropdown-item" onClick={handleProfile}>
+                  Profile
+                </button>
               </li>
               <li>
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                <a className="dropdown-item text-danger" href="/">
+                {/* ✅ Ensured logout button is visible and clickable */}
+                <button
+                  className="dropdown-item text-danger d-flex align-items-center"
+                  onClick={handleLogout}
+                >
+                  <FaSignOutAlt size={14} style={{ marginRight: '8px' }} />
                   Logout
-                </a>
+                </button>
               </li>
             </ul>
           )}
