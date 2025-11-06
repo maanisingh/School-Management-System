@@ -1,215 +1,155 @@
-/* Navbar Main Styles */
-.navbar-custom {
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #eaeaea;
-  height: 60px;
-  padding: 0 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-/* Logo Style */
-.navbar-logo {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #ff7b00;
-  font-family: "Brush Script MT", cursive;
-  font-style: italic;
-}
-
-/* Menu Button */
-.menu-btn {
-  background-color: transparent;
-  border: none;
-  color: #ff7b00;
-  border-radius: 6px;
-  padding: 8px;
-  transition: all 0.3s ease;
-}
-
-.menu-btn:hover {
-  background-color: #f5f5f5;
-}
-
-/* Search Box */
-.search-container {
-  background-color: #f5f5f5;
-  border-radius: 20px;
-  padding: 6px 15px;
-  width: 300px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-}
-
-.search-input {
-  font-size: 14px;
-  padding: 0;
-  height: 24px;
-  border: none;
-  background: transparent;
-  outline: none;
-  margin-left: 8px;
-  width: 100%;
-}
-
-.search-input:focus {
-  box-shadow: none;
-  border: none;
-}
-
-/* Icon Buttons */
-.icon-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  transition: all 0.3s ease;
-}
-
-.icon-btn:hover {
-  background-color: #f5f5f5;
-}
-
-/* Notification Badge */
-.notification-badge {
-  font-size: 10px;
-  padding: 2px 4px;
-  min-width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* WhatsApp Button */
-.whatsapp-btn {
-  background-color: #25d366;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  height: 36px;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-}
-
-.whatsapp-btn:hover {
-  background-color: #128c7e;
-  color: white;
-}
-
-/* User Profile */
+/* Ensure clickable area is not blocked */
 .user-profile {
-  border: 1px solid #ffcc00;
-  border-radius: 6px;
-  padding: 4px 12px;
-  cursor: pointer;
-  background-color: #fffaf0;
-  height: 36px;
-  min-width: 120px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  cursor: pointer;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  /* ✅ MOST IMPORTANT: */
+  pointer-events: auto !important;
+}
+
+.user-profile * {
+  pointer-events: none; /* So clicks go to parent */
+}
+
+.user-details {
+  text-align: left;
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .user-details {
+    display: block;
+  }
 }
 
 .user-name {
-  color: #333;
   font-size: 14px;
   font-weight: 600;
+  color: #e2e8f0;
   line-height: 1.2;
 }
 
 .user-projects {
-  font-size: 11px;
-  color: #666;
+  font-size: 12px;
+  color: #94a3b8;
   line-height: 1.2;
 }
 
-/* Dropdown Menu */
-.dropdown-menu-custom {
+/* Dropdown */
+.dropdown-menu {
   position: absolute;
+  top: 100%;
   right: 0;
-  min-width: 160px;
-  z-index: 1000;
-  border-radius: 6px;
-  border: 1px solid #eaeaea;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 8px;
+  background: #1e2a38;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  min-width: 180px;
+  list-style: none;
+  padding: 8px 0;
+  z-index: 1001;
 }
 
-.dropdown-item-custom {
-  font-size: 14px;
-  padding: 8px 12px;
-  border: none;
-  background: transparent;
+.dropdown-item {
+  display: block;
   width: 100%;
+  background: none;
+  border: none;
   text-align: left;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.dropdown-item-custom:hover {
-  background-color: #f8f9fa;
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .navbar-logo {
-    font-size: 1.5rem;
-  }
+.dropdown-divider {
+  margin: 4px 0;
+  border-color: rgba(255, 255, 255, 0.1);
+}/* Ensure clickable area is not blocked */
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  /* ✅ MOST IMPORTANT: */
+  pointer-events: auto !important;
+}
 
-  .search-container {
-    width: 180px;
-  }
+.user-profile * {
+  pointer-events: none; /* So clicks go to parent */
+}
 
-  /* Hide user projects text on tablet & mobile */
-  .user-projects {
-    display: none;
-  }
+.user-details {
+  text-align: left;
+  display: none;
+}
 
-  .user-profile {
-    min-width: auto;
-    padding: 4px 10px;
+@media (min-width: 769px) {
+  .user-details {
+    display: block;
   }
 }
 
-@media (max-width: 576px) {
-  /* Hide full search box */
-  .search-container {
-    display: none;
-  }
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+  line-height: 1.2;
+}
 
-  /* WhatsApp: hide text, keep icon */
-  .whatsapp-btn span {
-    display: none;
-  }
+.user-projects {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.2;
+}
 
-  .whatsapp-btn {
-    padding: 6px;
-    width: 36px;
-    justify-content: center;
-  }
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #1e2a38;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  min-width: 180px;
+  list-style: none;
+  padding: 8px 0;
+  z-index: 1001;
+}
 
-  /* User: show only icon + name if space allows, else just icon */
-  .user-name {
-    font-size: 13px;
-  }
+.dropdown-item {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
-  /* Optional: if still too wide, hide name too */
-  /* .user-name { display: none; } */
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-divider {
+  margin: 4px 0;
+  border-color: rgba(255, 255, 255, 0.1);
 }

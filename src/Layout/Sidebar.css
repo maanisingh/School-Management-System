@@ -1,110 +1,102 @@
-/* ===== SIDEBAR MAIN CONTAINER ===== */
+/* Sidebar.css */
+
 .sidebar-container {
   position: fixed;
-  top: 58px; /* below the navbar */
+  top: 60px; /* Adjust if your header height is different */
   left: 0;
-  height: calc(100vh - 58px);
-  width: 250px;
-  background-color: #ffffff;
-  color: #333;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  padding: 15px 0;
-  transition: width 0.3s ease, left 0.3s ease;
-  overflow-y: auto;
+  height: calc(100vh - 60px);
+  width: 240px;
+  background: linear-gradient(135deg, #1e2a38, #141b25);
+  color: #e2e8f0;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
   z-index: 999;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-/* ===== Collapsed State (Desktop only) ===== */
 .sidebar-container.collapsed {
-  width: 80px;
+  width: 70px;
+}
+
+.sidebar-container:not(.collapsed) {
+  width: 240px;
+}
+
+.sidebar-container.active {
+  transform: translateX(0);
 }
 
 .sidebar {
-  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
 }
 
-/* ===== MENU LIST ===== */
 .menu-list {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
 }
 
-/* ===== MENU ITEM ===== */
 .menu-item {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 6px 0;
-  position: relative;
 }
 
-/* ===== MENU LINKS ===== */
 .menu-link {
   display: flex;
   align-items: center;
-  width: 90%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  padding: 14px 20px;
+  margin: 6px 12px;
+  border-radius: 12px;
   cursor: pointer;
-  text-decoration: none;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .menu-link:hover {
-  background-color: #f7f7f7;
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .menu-link.active {
-  background-color: #ffc107;
-  color: #fff;
-  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.4);
+  background: linear-gradient(90deg, #4f46e5, #7e3af2);
+  color: white;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+.menu-icon {
+  font-size: 18px;
+  min-width: 24px;
+  text-align: center;
+  color: #a0aec0;
+  transition: color 0.2s;
 }
 
 .menu-link.active .menu-icon {
-  color: #9c27b0;
+  color: white;
 }
 
-/* ===== ICONS ===== */
-.menu-icon {
-  font-size: 18px;
-  margin-right: 12px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  transition: color 0.3s ease;
-}
-
-/* Special icon highlight (e.g. Alerts) */
-.menu-link[href="/alerts"] .menu-icon,
-.menu-link[href="/alerts"].active .menu-icon {
-  color: #e74c3c;
-}
-
-/* ===== MENU TEXT ===== */
 .menu-text {
-  flex-grow: 1;
+  margin-left: 16px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
-/* ===== Dropdown Arrow ===== */
+.sidebar-container.collapsed .menu-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  margin-left: 0;
+}
+
 .dropdown-arrow {
-  font-size: 12px;
-  color: #777;
   margin-left: auto;
+  font-size: 14px;
+  color: #a0aec0;
   transition: transform 0.3s ease;
 }
 
@@ -112,95 +104,31 @@
   transform: rotate(180deg);
 }
 
-/* ===== SUBMENU ITEMS ===== */
-.submenu-item {
-  margin: 0;
-}
-
-.submenu-link {
-  display: flex;
-  align-items: center;
-  width: 90%;
-  padding: 10px 14px 10px 36px; /* Indent submenus */
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  background-color: transparent;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  border-radius: 8px;
-  height: 40px;
-}
-
-.submenu-link:hover,
-.submenu-link.active {
-  background-color: #ffc107;
-  color: #fff;
-  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.4);
-}
-
-.submenu-link .menu-icon {
+.submenu-item .menu-link {
+  padding-left: 40px;
   font-size: 14px;
-  margin-right: 10px;
+  margin: 4px 12px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
-/* ===== COLLAPSED BEHAVIOR (Desktop) ===== */
-.sidebar-container.collapsed .menu-text,
-.sidebar-container.collapsed .dropdown-arrow {
-  opacity: 0;
-  visibility: hidden;
-  width: 0;
-  overflow: hidden;
+.submenu-link:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
-.sidebar-container.collapsed .menu-link {
-  justify-content: center;
-  padding: 12px 0;
-}
-
-.sidebar-container.collapsed .menu-icon {
-  margin-right: 0;
-}
-
-.sidebar-container.collapsed .submenu-link {
-  display: none;
-}
-
-/* ===== SCROLLBAR STYLE ===== */
-.sidebar-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar-container::-webkit-scrollbar-thumb {
-  background: #ddd;
-  border-radius: 4px;
-}
-
-.sidebar-container::-webkit-scrollbar-thumb:hover {
-  background: #ccc;
-}
-
-/* ===== MOBILE RESPONSIVENESS ===== */
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .sidebar-container {
-    top: 58px;
-    left: -250px;
-    width: 250px;
-    height: calc(100vh - 58px);
-    transition: left 0.3s ease;
+    top: 60px;
+    height: calc(100vh - 60px);
+    width: 260px;
+    transform: translateX(-100%);
   }
 
   .sidebar-container.active {
-    left: 0;
+    transform: translateX(0);
   }
 
-  /* On mobile, ignore "collapsed" — always full width when open */
   .sidebar-container.collapsed {
-    width: 250px;
-  }
-
-  /* Ensure submenus are visible on mobile */
-  .sidebar-container.active .submenu-link {
-    display: flex;
+    width: 70px;
   }
 }

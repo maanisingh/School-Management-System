@@ -9,17 +9,6 @@ const Login = () => {
 
   // ✅ 8 Role-based credentials (email, password, and redirect path)
   const roleCredentials = {
-  
-    // admin: {
-    //   email: "admin@gmail.com",
-    //   password: "admin123",
-    //   redirect: "/admin-dashboard",
-    // },
-    bookkeeper: {
-      email: "bookkeeper@gmail.com",
-      password: "book123",
-      redirect: "/bookkeeper-dashboard",
-    },
     ceo: {
       email: "ceo@gmail.com",
       password: "ceo123",
@@ -34,21 +23,6 @@ const Login = () => {
       email: "owner@gmail.com",
       password: "owner123",
       redirect: "/owner-dashboard",
-    },
-    projectmanager: {
-      email: "pm@gmail.com",
-      password: "pm123",
-      redirect: "/project-manager-dashboard",
-    },
-    salesmanager: {
-      email: "sales@gmail.com",
-      password: "sales123",
-      redirect: "/sales-manager-dashboard",
-    },
-    subcontractor: {
-      email: "subcontractor@gmail.com",
-      password: "sub123",
-      redirect: "/subcontractor-dashboard",
     },
   };
 
@@ -81,14 +55,15 @@ const Login = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Login Card */}
+      {/* Login Card — Updated with dark theme colours */}
       <div
         className="card shadow p-4"
         style={{
           width: "400px",
           backdropFilter: "blur(10px)",
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          backgroundColor: "rgba(30, 42, 56, 0.85)", // #1e2a38 with opacity
           borderRadius: "1rem",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
         }}
       >
         <div className="text-center mb-4">
@@ -96,22 +71,30 @@ const Login = () => {
             style={{
               fontFamily: "'Poppins', sans-serif",
               fontWeight: "700",
-              color: "#FF6B00",
+              color: "#A5B4FC", // Matches navbar logo
               fontSize: "2.2rem",
+              textShadow: "0 2px 4px rgba(0,0,0,0.3)",
             }}
           >
             Sunbuild
           </h2>
         </div>
 
-        {/* <h4 className="text-center mb-4">Login</h4> */}
-
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Email</label>
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.95rem" }}>
+              Email
+            </label>
             <input
               type="email"
               className="form-control"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                color: "#E2E8F0",
+                borderRadius: "8px",
+                padding: "8px 12px",
+              }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -120,11 +103,20 @@ const Login = () => {
           </div>
 
           <div className="mb-3 position-relative">
-            <label className="form-label">Password</label>
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.95rem" }}>
+              Password
+            </label>
             <div className="input-group">
               <input
                 type={showPassword ? "text" : "password"}
                 className="form-control"
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  border: "1px solid rgba(255, 255, 255, 0.15)",
+                  color: "#E2E8F0",
+                  borderRadius: "8px",
+                  padding: "8px 12px 8px 12px",
+                }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -132,7 +124,7 @@ const Login = () => {
               />
               <span
                 className="position-absolute top-50 end-0 translate-middle-y pe-3"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", color: "#CBD5E1" }}
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -146,12 +138,21 @@ const Login = () => {
 
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="remember" />
-              <label className="form-check-label" htmlFor="remember">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="remember"
+                style={{ accentColor: "#4F46E5" }}
+              />
+              <label className="form-check-label" htmlFor="remember" style={{ color: "#E2E8F0" }}>
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-decoration-none small text-muted">
+            <a
+              href="#"
+              className="text-decoration-none small"
+              style={{ color: "#94A3B8" }}
+            >
               Forgot Password?
             </a>
           </div>
@@ -159,7 +160,13 @@ const Login = () => {
           <div className="d-flex gap-2">
             <button
               type="button"
-              className="btn btn-outline-secondary w-50"
+              className="btn w-50"
+              style={{
+                backgroundColor: "transparent",
+                color: "#E2E8F0",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                borderRadius: "8px",
+              }}
               onClick={() => alert("Create Account clicked")}
             >
               Create Account
@@ -167,20 +174,32 @@ const Login = () => {
             <button
               type="submit"
               className="btn w-50"
-              style={{ backgroundColor: "#FFC107", color: "#000" }}
+              style={{
+                backgroundColor: "#4F46E5", // Primary purple
+                color: "#FFFFFF",
+                borderRadius: "8px",
+                border: "none",
+              }}
             >
               Login
             </button>
           </div>
         </form>
 
-        {/* ✅ Test Credentials */}
-        <div className="mt-4 p-3 bg-light rounded small">
-          <strong>Test Credentials:</strong>
-          <ul className="mb-0">
+        {/* ✅ Test Credentials — Styled to match theme */}
+        <div
+          className="mt-4 p-3 rounded small"
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            color: "#E2E8F0",
+          }}
+        >
+          <strong style={{ color: "#A5B4FC" }}>Test Credentials:</strong>
+          <ul className="mb-0" style={{ paddingLeft: "16px", marginTop: "4px" }}>
             {Object.entries(roleCredentials).map(([role, cred]) => (
-              <li key={role}>
-                <strong>{role}:</strong> {cred.email} / {cred.password}
+              <li key={role} style={{ color: "#94A3B8", fontSize: "0.85rem" }}>
+                <strong style={{ color: "#A5B4FC" }}>{role}:</strong> {cred.email} / {cred.password}
               </li>
             ))}
           </ul>

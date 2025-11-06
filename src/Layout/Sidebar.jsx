@@ -2,38 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartPie,
-  faBriefcase,
-  faExclamationCircle,
-  faUserGear,
-  faUserTie,
   faUsers,
   faUserTag,
-  faHandshake,
+  faUserTie,
   faChevronDown,
-  faFileInvoice,
-  faFileInvoiceDollar,
-  faCreditCard,
-  faChartBar,
-  faBuildingColumns,
-  faLock,
-  faCog,
-  faTachometerAlt,
-  faPercent,
-  faPlay,
-  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
 
 const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userRole, setUserRole] = useState("admin");
-
-  const [openSubmenu, setOpenSubmenu] = useState(null); // Track which menu is open
+  const [userRole, setUserRole] = useState("client");
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
   useEffect(() => {
-    const role = (localStorage.getItem("userRole") || "admin").toLowerCase();
+    const role = (localStorage.getItem("userRole") || "client").toLowerCase();
     setUserRole(role);
   }, []);
 
@@ -43,7 +26,7 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
     navigate(path);
     setOpenSubmenu(null);
     if (window.innerWidth <= 768 && onMobileToggle) {
-      onMobileToggle(); // Close sidebar after nav on mobile
+      onMobileToggle();
     }
     if (window.innerWidth <= 768) setCollapsed(true);
   };
@@ -52,112 +35,22 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
     setOpenSubmenu(openSubmenu === menuName ? null : menuName);
   };
 
-  // ✅ Cleaned & deduplicated menus
   const allMenus = {
     admin: [
-      { name: "Analytics", icon: faChartPie, path: "/analytics" },
-      { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
-      { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
-      { name: "RFIs", icon: faUsers, path: "/rfis", hasDropdown: true },
-      { name: "Settings", icon: faUserGear, path: "/admin-settings" },
-    ],
-    bookkeeper: [
-      { name: "Dashboard", icon: faChartPie, path: "/bookkeeper-dashboard" },
-      { name: "Invoices", icon: faFileInvoice, path: "/invoices" },
-      { name: "Bills", icon: faFileInvoiceDollar, path: "/bills" },
-      { name: "Payments", icon: faCreditCard, path: "/payments" },
-      { name: "Reports", icon: faChartBar, path: "/reports" },
-      { name: "Banking", icon: faBuildingColumns, path: "/banking" },
-      { name: "Tax/GST", icon: faPercent, path: "/tax-gst" },
-    ],
-
-    client: [
       { name: "Overview", icon: faUsers, path: "/client-dashboard" },
-      { name: "Selections", icon: faBriefcase, path: "/client-selections" },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/client-schedules",
-      },
-      { name: "Settings", icon: faUserGear, path: "/client-payments" },
     ],
-    owner: [
+    teacher: [
       { name: "Overview", icon: faUserTag, path: "/owner-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/manage-users",
-        hasDropdown: true,
-        submenus: [
-          { name: "List", icon: faPlay, path: "/manage-users/list" },
-          {
-            name: "Permissions",
-            icon: faCheckCircle,
-            path: "/manage-users/permissions",
-          },
-        ],
-      },
-      { name: "Settings", icon: faUserGear, path: "/owner/settings" },
     ],
-    ceo: [
+    student: [
       { name: "Overview", icon: faUserTie, path: "/ceo-dashboard" },
-      {
-        name: "Jobs Management",
-        icon: faBriefcase,
-        path: "/ceo-jobs-management",
-      },
-      {
-        name: "Manage Users",
-        icon: faUsers,
-        path: "/ceo-manage-users",
-        hasDropdown: true,
-        submenus: [
-          { name: "List", icon: faPlay, path: "/ceo-manage-users/list" },
-          {
-            name: "Permissions",
-            icon: faCheckCircle,
-            path: "/ceo-manage-users/permissions",
-          },
-        ],
-      },
-      { name: "Settings", icon: faUserGear, path: "/ceo-settings" },
-    ],
-
-    projectmanager: [
-      { name: "Dashboard", icon: faTachometerAlt, path: "/project-manager" },
-      // { name: "Daily Logs", icon: faBriefcase, path: "/daily-logs" },
-      // { name: "Alerts", icon: faExclamationCircle, path: "/alerts" },
-      { name: "RFIs", icon: faExclamationCircle, path: "/rfis" },
-      // { name: "Change Orders", icon: faLock, path: "/change-orders" },
-      { name: "Selection", icon: faCog, path: "/selection" },
-      // { name: "Schedule", icon: faCog, path: "/schedule" },
-    ],
-    salesmanager: [
-      { name: "Overview", icon: faChartPie, path: "/sales-manager-overview" },
-      { name: "Lead Management", icon: faBriefcase, path: "/lead-management" },
-
-      { name: "Proposals", icon: faUsers, path: "/proposals" },
-      { name: "Activities", icon: faUserGear, path: "/activities" },
-      { name: "Reports", icon: faChartBar, path: "/sales-reports" },
-    ],
-    subcontractor: [
-      { name: "Overview", icon: faHandshake, path: "/subcontractor-dashboard" },
-      { name: "Jobs Management", icon: faBriefcase, path: "/jobs-management" },
-
-      { name: "Schedule RFIs", icon: faUsers, path: "/schedule-rfis" },
-      { name: "To Do", icon: faUserGear, path: "/to-do" },
     ],
   };
 
-  const userMenus = allMenus[userRole] || allMenus.admin;
+  const userMenus = allMenus[userRole] || allMenus["admin"];
 
   return (
-    <div
-      className={`sidebar-container ${collapsed ? "collapsed" : ""} ${
-        window.innerWidth <= 768 && !collapsed ? "active" : ""
-      }`}
-    >
+    <div className={`sidebar-container ${collapsed ? "collapsed" : ""} ${window.innerWidth <= 768 && !collapsed ? "active" : ""}`}>
       <div className="sidebar">
         <ul className="menu-list">
           {userMenus.map((menu, index) => (
@@ -172,51 +65,36 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
                       handleNavigate(menu.path);
                     }
                   }}
-                  style={{ cursor: "pointer", position: "relative" }}
                 >
                   <FontAwesomeIcon
                     icon={menu.icon}
-                    className={`menu-icon ${
-                      isActive(menu.path) ? "active-icon" : ""
-                    }`}
+                    className={`menu-icon ${isActive(menu.path) ? "active-icon" : ""}`}
                   />
                   {!collapsed && <span className="menu-text">{menu.name}</span>}
                   {menu.hasDropdown && !collapsed && (
                     <FontAwesomeIcon
                       icon={faChevronDown}
-                      className={`dropdown-arrow ${
-                        openSubmenu === menu.name ? "rotate" : ""
-                      }`}
+                      className={`dropdown-arrow ${openSubmenu === menu.name ? "rotate" : ""}`}
                     />
                   )}
                 </div>
               </li>
 
-              {/* Render submenus if open and not collapsed */}
               {!collapsed &&
                 menu.submenus &&
                 openSubmenu === menu.name &&
                 menu.submenus.map((sub, subIndex) => (
-                  <li
-                    key={`sub-${subIndex}`}
-                    className="menu-item submenu-item"
-                  >
+                  <li key={`sub-${subIndex}`} className="menu-item submenu-item">
                     <div
-                      className={`menu-link submenu-link ${
-                        isActive(sub.path) ? "active" : ""
-                      }`}
+                      className={`menu-link submenu-link ${isActive(sub.path) ? "active" : ""}`}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleNavigate(sub.path);
                       }}
-                      style={{ paddingLeft: "36px", cursor: "pointer" }}
                     >
                       <FontAwesomeIcon
                         icon={sub.icon}
-                        className={`menu-icon ${
-                          isActive(sub.path) ? "active-icon" : ""
-                        }`}
-                        style={{ fontSize: "0.85em" }}
+                        className={`menu-icon ${isActive(sub.path) ? "active-icon" : ""}`}
                       />
                       <span className="menu-text">{sub.name}</span>
                     </div>

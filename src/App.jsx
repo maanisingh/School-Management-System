@@ -5,16 +5,11 @@ import Navbar from "./Layout/Navbar";
 import Sidebar from "./Layout/Sidebar";
 
 // ✅ 8 Clean Dashboards (only imports)
-import AdminDashboard from "./Components/AdminDashbaord/AdminDashboard";
-
 import ClientDashboard from "./Components/ClientDashbaord/ClientDashboard";
 import OwnerDashboard from "./Components/OwnerDashboard/OwerDashboard";
 import ProjectManager from "./Components/ProjectManager/ProjectManager";
-import SalesManager from "./Components/SalesManager/SalesManagerOverview";
-import BookkeeperDashboard from "./Components/BookkeeperDashboard/BookkeeperDashboard";
 import BookkeeperInvoice from "./Components/BookkeeperDashboard/BookkeeperInvoice";
 
-import { BiLogIn } from "react-icons/bi";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 
@@ -45,7 +40,6 @@ import SettingOwer from "./Components/OwnerDashboard/SettingOwer";
 import JobManagment from "./Components/OwnerDashboard/JobManagment";
 import ListOwer from "./Components/OwnerDashboard/ListOwer";
 import Permissions from "./Components/OwnerDashboard/Permissions";
-import Invoice from "./Components/BookkeeperDashboard/BookkeeperBill.jsx";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -90,94 +84,18 @@ function App() {
               }`}
             >
               <Routes>
-                {/* ✅ 8 Dashboards */}
-                <Route path="/admin-dashboard" element={<AdminDashboard />} />
-                <Route
-                  path="/bookkeeper-dashboard"
-                  element={<BookkeeperDashboard />}
-                />
-
-                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-                <Route
-                  path="/project-manager-dashboard"
-                  element={<ProjectManager />}
-                />
-                <Route
-                  path="/sales-manager-dashboard"
-                  element={<SalesManager />}
-                />
-                <Route
-                  path="/subcontractor-dashboard"
-                  element={<SubContractorDashboard />}
-                />
-                <Route
-                  path="/bookkeeper-dashboard"
-                  element={<BookkeeperDashboard />}
-                />
-
-                <Route path="/bill" element={<Invoice />} />
-                <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-
-                {/* ceo-dashboard routes */}
+                {/* CEO Dashboard */}
                 <Route path="/ceo-dashboard" element={<CeoDashboard />} />
-                <Route path="/ceo-settings" element={<CeoSettings />} />
-                <Route path="/ceo-jobs-management" element={<CeoJobs />} />
-                <Route path="/ceo-manage-users/list" element={<List />} />
-                <Route
-                  path="/manage-users-ceo/permissions"
-                  element={<PermissionsMatrix />}
-                />
+        
 
-                <Route path="/project-manager" element={<ProjectManager />} />
-                <Route path="/rfis" element={<RequestForInformation />} />
-
-                <Route path="/invoices" element={<BookkeeperInvoice />} />
-
-                {/* owner-dashboard */}
+                {/* Owner Dashboard */}
                 <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-                <Route
-                  path="/subcontractor-dashboard"
-                  element={<SubContractorDashboard />}
-                />
-                <Route path="/jobs-management" element={<JobDashboard />} />
-                <Route path="/schedule-rfis" element={<ScheduleDashboard />} />
-                <Route path="/to-do" element={<ToDo />} />
-                <Route path="/owner/settings" element={<SettingOwer />} />
-                <Route path="/jobs-management" element={<JobManagment />} />
-                <Route
-                  path="/manage-users/permissions"
-                  element={<Permissions />}
-                />
-                <Route path="/manage-users/list" element={<ListOwer />} />
-
-                <Route
-                  path="/sales-manager-overview"
-                  element={<SalesManagerOverview />}
-                />
-                <Route path="/lead-management" element={<LeadManagement />} />
-                <Route path="/proposals" element={<Proposals />} />
-                <Route path="/activities" element={<Activities />} />
-                <Route path="/sales-reports" element={<Reports />} />
-                <Route
-                  path="/bookkeeper-reports"
-                  element={<BookKeeperReports />}
-                />
-                <Route path="/banking" element={<Banking />} />
-                <Route path="/tax-gst" element={<TaxGst />} />
-                <Route path="/selection" element={<Selection />} />
-              </Routes>
-
-              {/* Client Dashboard Content Start Here */}
-              <Routes>
+        
+        
+               {/* Client Dashboard */}
                 <Route path="/client-dashboard" element={<ClientDashboard />} />
-                <Route
-                  path="/client-selections"
-                  element={<ClientSelections />}
-                />
-                <Route path="/client-schedules" element={<ClientSchedule />} />
-                <Route path="/client-payments" element={<ClientPayments />} />
+              
               </Routes>
-              {/* Client Dashboard Content End Here */}
             </div>
           </div>
         </>
