@@ -16,13 +16,13 @@ const DashboardSummary = () => {
       title: "Total Classes",
       value: 42,
       icon: <FaChalkboardTeacher />,
-      color: "#4f46e5",
+      color: "#7e3af2",
     },
     {
       title: "Total Learners",
       value: 980,
       icon: <FaUsers />,
-      color: "#25D366",
+      color: "#7e3af2",
     },
     {
       title: "Total Subjects",
@@ -34,7 +34,7 @@ const DashboardSummary = () => {
       title: "Total Teachers",
       value: 25,
       icon: <FaUserTie />,
-      color: "#ef4444",
+      color: "#7e3af2",
     },
   ];
 
@@ -54,26 +54,25 @@ const DashboardSummary = () => {
 
   // Helper to determine progress bar color
   const getProgressColor = (progress) => {
-    if (progress > 80) return "#25D366";
-    if (progress > 70) return "#4f46e5";
-    return "#ef4444";
+    if (progress > 80) return "#7e3af2";
+    if (progress > 70) return "#7e3af2";
+    return "#7e3af2";
   };
 
   return (
     <div
      style={{
-        // backgroundColor: "#1e2a38",
         minHeight: "100vh",
-        color: "#e2e8f0",
-        padding: "40px 20px",
+        color: "#1e2a38",
+        padding: "10px 20px",
       }} 
     >
       {/* ================= Header ================= */}
-      <div className="text-center mb-5">
-        <h1 className="fw-bold" style={{ color: "#a5b4fc" }}>
-          🎓 School Management Dashboard
+      <div className="mb-5">
+        <h1 className="fw-bold" style={{ color: "#1e2a38" }}>
+          Dashboard
         </h1>
-        <p style={{ color: "#94a3b8" }}>Overall System Summary & Insights</p>
+        <p style={{ color: "#1e2a38" }}>Overall System Summary & Insights</p>
       </div>
 
       {/* ================= Summary Cards ================= */}
@@ -83,16 +82,16 @@ const DashboardSummary = () => {
             <Card
               className="shadow-lg border-0 text-center"
               style={{
-                background: "#1e2a38",
-                backdropFilter: "blur(10px)",
+                background: "white",
+                border: "1px solid #cbd5e1",
                 borderRadius: "20px",
                 transition: "0.3s",
               }}
               onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "rgba(255,255,255,0.15)")
+                (e.currentTarget.style.background = "rgba(126, 58, 242, 0.1)")
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
+                (e.currentTarget.style.background = "white")
               }
             >
               <Card.Body>
@@ -100,7 +99,7 @@ const DashboardSummary = () => {
                   style={{
                     fontSize: "2rem",
                     color: item.color,
-                    background: "rgba(255,255,255,0.1)",
+                    background: "rgba(126, 58, 242, 0.1)",
                     width: "70px",
                     height: "70px",
                     margin: "0 auto 15px",
@@ -112,8 +111,8 @@ const DashboardSummary = () => {
                 >
                   {item.icon}
                 </div>
-                <h5 style={{ color: "#cbd5e1" }}>{item.title}</h5>
-                <h3 style={{ color: "#a5b4fc" }}>{item.value}</h3>
+                <h5 style={{ color: "#1e2a38" }}>{item.title}</h5>
+                <h3 style={{ color: "#1e2a38" }}>{item.value}</h3>
               </Card.Body>
             </Card>
           </Col>
@@ -126,14 +125,15 @@ const DashboardSummary = () => {
           <Card
             className="border-0 shadow-lg"
             style={{
-              background: "rgba(255,255,255,0.1)",
+              background: "white",
+              border: "1px solid #cbd5e1",
               borderRadius: "20px",
-              color: "#e2e8f0",
+              color: "#1e2a38",
             }}
           >
             <Card.Body>
               <h5 className="mb-4">
-                <FaChartLine className="me-2" />
+                <FaChartLine className="me-2" style={{ color: "#7e3af2" }} />
                 Subject Performance Overview
               </h5>
               {performance.map((item, index) => (
@@ -144,7 +144,7 @@ const DashboardSummary = () => {
                   </div>
                   <div
                     style={{
-                      background: "rgba(255,255,255,0.2)",
+                      background: "#e2e8f0",
                       height: "10px",
                       borderRadius: "10px",
                       overflow: "hidden",
@@ -171,14 +171,15 @@ const DashboardSummary = () => {
           <Card
             className="border-0 shadow-lg"
             style={{
-              background: "rgba(255,255,255,0.1)",
+              background: "white",
+              border: "1px solid #cbd5e1",
               borderRadius: "20px",
-              color: "#e2e8f0",
+              color: "#1e2a38",
             }}
           >
             <Card.Body>
               <h5 className="mb-4">
-                <FaBell className="me-2" />
+                <FaBell className="me-2" style={{ color: "#7e3af2" }} />
                 Recent Activity
               </h5>
               <ul className="list-unstyled">
@@ -187,11 +188,11 @@ const DashboardSummary = () => {
                     key={act.id}
                     className="mb-3 p-3 rounded"
                     style={{
-                      background: "rgba(255,255,255,0.08)",
+                      background: "rgba(126, 58, 242, 0.1)",
                     }}
                   >
                     <p className="mb-1">{act.msg}</p>
-                    <small style={{ color: "#94a3b8" }}>{act.time}</small>
+                    <small style={{ color: "#1e2a38" }}>{act.time}</small>
                   </li>
                 ))}
               </ul>
@@ -205,18 +206,19 @@ const DashboardSummary = () => {
         <Card
           className="border-0 shadow-lg"
           style={{
-            background: "rgba(255,255,255,0.1)",
+            background: "white",
+            border: "1px solid #cbd5e1",
             borderRadius: "20px",
-            color: "#e2e8f0",
+            color: "#1e2a38",
           }}
         >
           <Card.Body>
             <h5 className="mb-4">
-              <FaChalkboardTeacher className="me-2" />
+              <FaChalkboardTeacher className="me-2" style={{ color: "#7e3af2" }} />
               Class Summary
             </h5>
-            <Table hover responsive bordered style={{ color: "#cbd5e1" }}>
-              <thead style={{ background: "rgba(255,255,255,0.15)" }}>
+            <Table hover responsive bordered style={{ color: "#1e2a38" }}>
+              <thead style={{ background: "rgba(126, 58, 242, 0.1)" }}>
                 <tr>
                   <th>Class</th>
                   <th>Section</th>
@@ -231,21 +233,21 @@ const DashboardSummary = () => {
                   <td>A</td>
                   <td>45</td>
                   <td>Mr. Sharma</td>
-                  <td style={{ color: "#25D366" }}>Active</td>
+                  <td style={{ color: "#7e3af2" }}>Active</td>
                 </tr>
                 <tr>
                   <td>9</td>
                   <td>B</td>
                   <td>42</td>
                   <td>Mrs. Rao</td>
-                  <td style={{ color: "#4f46e5" }}>Active</td>
+                  <td style={{ color: "#7e3af2" }}>Active</td>
                 </tr>
                 <tr>
                   <td>8</td>
                   <td>A</td>
                   <td>50</td>
                   <td>Mr. Singh</td>
-                  <td style={{ color: "#ef4444" }}>Inactive</td>
+                  <td style={{ color: "#7e3af2" }}>Active</td>
                 </tr>
               </tbody>
             </Table>
