@@ -1,3 +1,4 @@
+// src/pages/Signup.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -24,14 +25,12 @@ const Signup = () => {
     setPasswordMismatch(false);
 
     try {
-      // Simulate signup delay
+      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Save authentication flag (demo only)
       localStorage.setItem("isAuthenticated", "true");
-
-      // Navigate to dashboard or another route
-      navigate("/user/dashboard"); // Change route as needed
+      localStorage.setItem("userEmail", email);
+      navigate("/user/dashboard");
     } catch (error) {
       console.error("Signup failed:", error);
     } finally {
@@ -39,144 +38,270 @@ const Signup = () => {
     }
   };
 
+  // Common input style
+  const inputStyle = {
+    backgroundColor: "rgba(30, 42, 66, 0.7)",
+    border: "1px solid rgba(148, 163, 184, 0.2)",
+    color: "#E2E8F0",
+    borderRadius: "10px",
+    padding: "10px 14px",
+    fontSize: "0.95rem",
+    width: "100%",
+  };
+
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light p-4">
+    <div
+      className="d-flex align-items-center justify-content-center min-vh-100"
+      style={{
+        background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+        fontFamily: "'Poppins', sans-serif",
+      }}
+    >
       <div
-        className="card shadow-lg w-100"
-        style={{ maxWidth: "1000px", borderRadius: "2rem" }}
+        className="card shadow p-4"
+        style={{
+          width: "100%",
+          maxWidth: "420px",
+          backgroundColor: "#1e293b",
+          borderRadius: "16px",
+          border: "1px solid rgba(255, 255, 255, 0.08)",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
+        }}
       >
-        <div className="row g-0">
-          {/* Left Form Section */}
-          <div className="col-12 col-md-6 p-5 text-center">
-            <div className="d-flex justify-content-center align-items-center mb-4">
-              <img
-                src="https://i.postimg.cc/mZHz3k1Q/Whats-App-Image-2025-07-23-at-12-38-03-add5b5dd-removebg-preview-1.png"
-                alt="logo"
-                className="navbar-logo m-2"
-                style={{ height: "50px" }}
-              />
-          
-            </div>
-
-            <h2 className="h5 text-secondary mt-3">Create an Account</h2>
-            <p className="text-muted mb-4">Fill in your details to register</p>
-
-            <form onSubmit={handleSignup}>
-              {/* First Name */}
-              <div className="mb-3 position-relative">
-                <i className="bi bi-person position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
-                <input
-                  type="text"
-                  className="form-control ps-5"
-                  placeholder="First Name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                />
-              </div>
-
-              {/* Last Name */}
-              <div className="mb-3 position-relative">
-                <i className="bi bi-person-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
-                <input
-                  type="text"
-                  className="form-control ps-5"
-                  placeholder="Last Name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required
-                />
-              </div>
-
-              {/* Email */}
-              <div className="mb-3 position-relative">
-                <i className="bi bi-envelope position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
-                <input
-                  type="email"
-                  className="form-control ps-5"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              {/* Password */}
-              <div className="mb-3 position-relative">
-                <i className="bi bi-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className="form-control ps-5 pe-5"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength="3"
-                />
-                <i
-                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"} position-absolute top-50 end-0 translate-middle-y me-3 text-secondary cursor-pointer`}
-                  role="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                ></i>
-              </div>
-
-              {/* Confirm Password */}
-              <div className="mb-3 position-relative">
-                <i className="bi bi-shield-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className="form-control ps-5"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              {passwordMismatch && (
-                <p className="text-danger small mb-3">Passwords do not match</p>
-              )}
-
-              {/* Signup Button */}
-              <button
-                type="submit"
-                className="btn btn-warning w-100 text-white fw-semibold mb-3"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Creating account...
-                  </>
-                ) : (
-                  "Sign Up"
-                )}
-              </button>
-
-              <div className="text-center">
-                <span className="text-muted">Already have an account? </span>
-                <Link to="/" className="text-decoration-none fw-semibold" style={{ color: "#1f2937" }}>
-                  Login
-                </Link>
-              </div>
-            </form>
-          </div>
-
-          {/* Right Image Sectionhdf */}
-          <div className="col-md-6 d-none d-md-block">
-            <div className="h-100 position-relative">
-              <img
-                src="https://i.postimg.cc/GpVFJDn8/create-image-for-resturant-and-game-zone-pool-for-login-page-right-side-image-do-not-write-anything.jpg"
-                alt="Signup Illustration"
-                className="img-fluid h-100 w-100 object-fit-cover"
-                style={{
-                  borderTopRightRadius: "2rem",
-                  borderBottomRightRadius: "2rem",
-                }}
-              />
-            </div>
-          </div>
+        <div className="text-center mb-4">
+          <h2
+            style={{
+              fontWeight: "700",
+              color: "#A5B4FC",
+              fontSize: "2rem",
+              letterSpacing: "-0.5px",
+            }}
+          >
+            School Management
+          </h2>
+          <p style={{ color: "#94A3B8", fontSize: "0.95rem", marginTop: "6px" }}>
+            Create your account
+          </p>
         </div>
+
+        <form onSubmit={handleSignup}>
+          {/* First Name */}
+          <div className="mb-3 position-relative">
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
+              First Name
+            </label>
+            <div className="position-relative">
+              <i
+                className="bi bi-person position-absolute"
+                style={{
+                  left: "14px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#94A3B8",
+                  pointerEvents: "none",
+                }}
+              ></i>
+              <input
+                type="text"
+                style={{
+                  ...inputStyle,
+                  paddingLeft: "40px",
+                }}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+                placeholder="Enter first name"
+              />
+            </div>
+          </div>
+
+          {/* Last Name */}
+          <div className="mb-3 position-relative">
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
+              Last Name
+            </label>
+            <div className="position-relative">
+              <i
+                className="bi bi-person-fill position-absolute"
+                style={{
+                  left: "14px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#94A3B8",
+                  pointerEvents: "none",
+                }}
+              ></i>
+              <input
+                type="text"
+                style={{
+                  ...inputStyle,
+                  paddingLeft: "40px",
+                }}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+                placeholder="Enter last name"
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div className="mb-3 position-relative">
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
+              Email Address
+            </label>
+            <div className="position-relative">
+              <i
+                className="bi bi-envelope position-absolute"
+                style={{
+                  left: "14px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#94A3B8",
+                  pointerEvents: "none",
+                }}
+              ></i>
+              <input
+                type="email"
+                style={{
+                  ...inputStyle,
+                  paddingLeft: "40px",
+                }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="you@example.com"
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div className="mb-3 position-relative">
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
+              Password
+            </label>
+            <div className="position-relative">
+              <i
+                className="bi bi-lock position-absolute"
+                style={{
+                  left: "14px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#94A3B8",
+                  pointerEvents: "none",
+                }}
+              ></i>
+              <input
+                type={showPassword ? "text" : "password"}
+                style={{
+                  ...inputStyle,
+                  paddingLeft: "40px",
+                  paddingRight: "40px",
+                }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength="3"
+                placeholder="••••••••"
+              />
+              <i
+                className={`bi ${showPassword ? "bi-eye-slash-fill" : "bi-eye-fill"} position-absolute`}
+                style={{
+                  right: "14px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  color: "#94A3B8",
+                }}
+                onClick={() => setShowPassword(!showPassword)}
+              ></i>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div className="mb-3 position-relative">
+            <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
+              Confirm Password
+            </label>
+            <div className="position-relative">
+              <i
+                className="bi bi-shield-lock position-absolute"
+                style={{
+                  left: "14px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "#94A3B8",
+                  pointerEvents: "none",
+                }}
+              ></i>
+              <input
+                type={showPassword ? "text" : "password"}
+                style={{
+                  ...inputStyle,
+                  paddingLeft: "40px",
+                }}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          {passwordMismatch && (
+            <p className="text-danger mb-3" style={{ fontSize: "0.85rem", textAlign: "center" }}>
+              Passwords do not match
+            </p>
+          )}
+
+          {/* Signup Button */}
+          <div className="d-grid gap-2 mb-4">
+            <button
+              type="submit"
+              className="btn"
+              disabled={isLoading}
+              style={{
+                backgroundColor: "#6366F1",
+                color: "#FFFFFF",
+                borderRadius: "10px",
+                padding: "10px",
+                fontSize: "1rem",
+                fontWeight: "600",
+                border: "none",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {isLoading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                    style={{ width: "1rem", height: "1rem" }}
+                  ></span>
+                  Creating account...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+          </div>
+
+          <div className="text-center">
+            <span style={{ color: "#94A3B8", fontSize: "0.9rem" }}>
+              Already have an account?{" "}
+            </span>
+            <Link
+              to="/"
+              className="text-decoration-none"
+              style={{ color: "#A5B4FC", fontWeight: "600" }}
+            >
+              Login
+            </Link>
+          </div>
+        </form>
       </div>
     </div>
   );

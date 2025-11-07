@@ -5,6 +5,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const roleCredentials = {
@@ -23,6 +24,15 @@ const Login = () => {
       password: "123",
       redirect: "/student-dashboard",
     },
+  };
+
+  const handleRoleSelect = (role) => {
+    setSelectedRole(role);
+    const cred = roleCredentials[role];
+    if (cred) {
+      setEmail(cred.email);
+      setPassword(cred.password);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -46,14 +56,8 @@ const Login = () => {
   return (
     <div
       className="d-flex align-items-center justify-content-center min-vh-100"
-      // style={{
-      //   backgroundImage: `url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80')`,
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      //   backgroundAttachment: "fixed",
-      // }}
       style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", // Dark slate gradient
+        background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
         fontFamily: "'Poppins', sans-serif",
       }}
     >
@@ -77,7 +81,7 @@ const Login = () => {
               letterSpacing: "-0.5px",
             }}
           >
-            School Managment
+            School Management
           </h2>
           <p style={{ color: "#94A3B8", fontSize: "0.95rem", marginTop: "6px" }}>
             Sign in to your account
@@ -85,6 +89,36 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
+          {/* Minimal Bullet-Style Role Selector */}
+      {/* Minimal Bullet-Style Role Selector – Horizontal */}
+<div className="mb-4">
+  <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem", marginBottom: "10px" }}>
+    Select Your Role
+  </label>
+  <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+    {Object.keys(roleCredentials).map((role) => (
+      <div
+        key={role}
+        onClick={() => handleRoleSelect(role)}
+        style={{
+          color: selectedRole === role ? "#A5B4FC" : "#CBD5E1",
+          fontSize: "0.95rem",
+          fontWeight: selectedRole === role ? "600" : "normal",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          transition: "color 0.2s",
+        }}
+      >
+        <span style={{ fontSize: "1.1rem" }}>●</span>
+        <span>{role}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+          {/* Email */}
           <div className="mb-3">
             <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
               Email Address
@@ -107,6 +141,7 @@ const Login = () => {
             />
           </div>
 
+          {/* Password */}
           <div className="mb-4 position-relative">
             <label className="form-label" style={{ color: "#E2E8F0", fontSize: "0.9rem" }}>
               Password
@@ -142,6 +177,7 @@ const Login = () => {
             </div>
           </div>
 
+          {/* Remember & Forgot */}
           <div className="d-flex justify-content-between align-items-center mb-4">
             <div className="form-check">
               <input
@@ -163,6 +199,7 @@ const Login = () => {
             </a>
           </div>
 
+          {/* Submit Button */}
           <div className="d-grid gap-2 mb-4">
             <button
               type="submit"
@@ -193,28 +230,7 @@ const Login = () => {
           </div>
         </form>
 
-        {/* Test Credentials */}
-        <div
-          className="mt-4 p-3 rounded"
-          style={{
-            backgroundColor: "rgba(15, 23, 42, 0.6)",
-            border: "1px solid rgba(148, 163, 184, 0.15)",
-            color: "#E2E8F0",
-            fontSize: "0.85rem",
-          }}
-        >
-          <strong style={{ color: "#A5B4FC", display: "block", marginBottom: "6px" }}>
-            Test Credentials:
-          </strong>
-          {Object.entries(roleCredentials).map(([role, cred]) => (
-            <div key={role} style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ color: "#94A3B8", textTransform: "capitalize" }}>{role}:</span>
-              <span style={{ color: "#CBD5E1" }}>
-                {cred.email} / {cred.password}
-              </span>
-            </div>
-          ))}
-        </div>
+     
       </div>
     </div>
   );
