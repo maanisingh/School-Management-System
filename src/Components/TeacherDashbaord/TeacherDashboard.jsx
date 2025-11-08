@@ -6,7 +6,6 @@ const TeacherDashboard = () => {
   // Inline styles (following your palette)
   const styles = {
     page: {
-      backgroundColor: "#e2e8f0",
       minHeight: "100vh",
       padding: "20px",
       fontFamily: "Segoe UI, sans-serif",

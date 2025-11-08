@@ -201,7 +201,7 @@ const AdminAnalysis = () => {
   });
 
   return (
-    <div style={{ backgroundColor: "#e2e8f0", minHeight: "100vh", color: "#1e2a38", padding: "15px 0" }}>
+    <div style={{minHeight: "100vh", color: "#1e2a38", padding: "15px 0" }}>
       <Container fluid style={{ maxWidth: "98%", px: 2 }}>
         
         {/* Header */}
@@ -259,9 +259,7 @@ const AdminAnalysis = () => {
                   <Dropdown.Item onClick={() => exportReport("PDF")}>
                     <FaFilePdf className="me-2" /> Export as PDF
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => exportReport("Excel")}>
-                    <FaFileExcel className="me-2" /> Export as Excel
-                  </Dropdown.Item>
+                
                 </Dropdown.Menu>
               </Dropdown>
             </div>

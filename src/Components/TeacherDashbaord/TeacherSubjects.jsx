@@ -54,7 +54,6 @@ const TeacherSubjects = () => {
   // Inline styles
   const styles = {
     page: {
-      backgroundColor: "#e2e8f0",
       minHeight: "100vh",
       padding: "2rem 1rem",
     },
