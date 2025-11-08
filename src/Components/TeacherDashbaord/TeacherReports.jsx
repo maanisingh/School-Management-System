@@ -11,7 +11,6 @@ const TeacherReports = () => {
   // ✅ Inline Styles
   const styles = {
     page: {
-      backgroundColor: "#e2e8f0",
       minHeight: "100vh",
       padding: "20px",
     },

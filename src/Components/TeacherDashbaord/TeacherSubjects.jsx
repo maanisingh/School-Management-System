@@ -54,7 +54,6 @@ const TeacherSubjects = () => {
   // Inline styles
   const styles = {
     page: {
-      backgroundColor: "#e2e8f0",
       minHeight: "100vh",
       padding: "2rem 1rem",
     },
@@ -118,8 +117,7 @@ const TeacherSubjects = () => {
       flexWrap: "wrap",
     },
     modalHeader: {
-      backgroundColor: "#7e3af2",
-      color: "#fff",
+      color: "#1e2a38",
       borderBottom: "none",
     },
     modalFooter: {

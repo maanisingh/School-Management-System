@@ -57,7 +57,7 @@ const TeacherAnalysis = () => {
 
   // ✅ Inline Styles
   const styles = {
-    page: { backgroundColor: "#e2e8f0", minHeight: "100vh", padding: "20px" },
+    page: {minHeight: "100vh", padding: "20px" },
     heading: {
       color: "#1e2a38",
       fontWeight: "bold",

@@ -62,7 +62,6 @@ const TeacherMarkEntry = () => {
   // Inline Styles
   const styles = {
     page: {
-      backgroundColor: "#e2e8f0",
       minHeight: "100vh",
       padding: "2rem 1rem",
     },
@@ -111,8 +110,7 @@ const TeacherMarkEntry = () => {
       marginRight: "6px",
     },
     modalHeader: {
-      backgroundColor: "#7e3af2",
-      color: "#fff",
+      color: "#1e2a38",
       borderBottom: "none",
     },
     modalFooter: {
