@@ -183,13 +183,29 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
   ];
 
   // ✅ Final menu: base + (adminExtras if admin)
-  const menuItems = userRole === "admin" ? [...baseMenu, ...adminExtras] : baseMenu;
+  // ✅ Final menu: base + (adminExtras inserted before Settings if admin)
+  let menuItems = baseMenu;
 
+  if (userRole === "admin") {
+    // Find the index of "Settings"
+    const settingsIndex = menuItems.findIndex(item => item.name === "Settings");
+
+    // If Settings exists, insert adminExtras before it
+    if (settingsIndex !== -1) {
+      menuItems = [
+        ...menuItems.slice(0, settingsIndex), // Everything before Settings
+        ...adminExtras,                       // Admin items go here
+        ...menuItems.slice(settingsIndex)     // Settings and everything after
+      ];
+    } else {
+      // Fallback: append if Settings not found
+      menuItems = [...menuItems, ...adminExtras];
+    }
+  }
   return (
     <div
-      className={`sidebar-container ${
-        collapsed ? "collapsed" : ""
-      } ${window.innerWidth <= 768 && !collapsed ? "active" : ""}`}
+      className={`sidebar-container ${collapsed ? "collapsed" : ""
+        } ${window.innerWidth <= 768 && !collapsed ? "active" : ""}`}
     >
       <div className="sidebar">
         <ul className="menu-list">
@@ -202,9 +218,8 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
               >
                 <FontAwesomeIcon
                   icon={item.icon}
-                  className={`menu-icon ${
-                    isActive(item.path) ? "active-icon" : ""
-                  }`}
+                  className={`menu-icon ${isActive(item.path) ? "active-icon" : ""
+                    }`}
                 />
                 {!collapsed && <span className="menu-text">{item.name}</span>}
               </div>
