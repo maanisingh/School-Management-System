@@ -86,8 +86,8 @@ const ManageLearners = () => {
       >
         <thead>
           <tr style={{ color: "#1e2a38" }}>
-            <th style={{ borderColor: "#cbd5e1" }}>Surname</th>
             <th style={{ borderColor: "#cbd5e1" }}>Name</th>
+            <th style={{ borderColor: "#cbd5e1" }}>Surname</th>
             <th style={{ borderColor: "#cbd5e1" }}>Progressed</th>
             <th style={{ width: 160, borderColor: "#cbd5e1" }}>Actions</th>
           </tr>
@@ -106,8 +106,8 @@ const ManageLearners = () => {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(126, 58, 242, 0.1)"}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ""}
               >
-                <td style={{ borderColor: "#cbd5e1" }}>{l.surname}</td>
                 <td style={{ borderColor: "#cbd5e1" }}>{l.name}</td>
+                <td style={{ borderColor: "#cbd5e1" }}>{l.surname}</td>
                 <td style={{ borderColor: "#cbd5e1" }}>{l.progressed ? "Yes" : "No"}</td>
                 <td style={{ borderColor: "#cbd5e1" }}>
                   <Button 

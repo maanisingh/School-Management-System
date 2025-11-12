@@ -178,7 +178,7 @@ const Sidebar = ({ collapsed, setCollapsed, onMobileToggle }) => {
 
   // ✅ Admin-only extras
   const adminExtras = [
-    { name: "All Classes", icon: faChalkboard, path: "/admin/classes" },
+    // { name: "All Classes", icon: faChalkboard, path: "/admin/classes" },
     { name: "Teachers", icon: faUsers, path: "/admin/teachers" },
   ];
 

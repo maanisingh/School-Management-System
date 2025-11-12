@@ -154,7 +154,11 @@ import AdminTeachers from "./Components/Dashboard/AdminTeachers"; // /admin/teac
 // ✅ Class Workspace (shared)
 import ClassWorkspace from "./Components/Dashboard/ClassWorkspace";
 import ManageLearners from "./Components/Dashboard/ManageLearners";
-
+import MarkEntryPage from "./Components/Dashboard/MarkEntryPage";
+import FormalTaskMarkEntry from "./Components/Dashboard/FormalTaskMarkEntry";
+import SubjectAnalysisSelectionPage from "./Components/Dashboard/SubjectAnalysisSelectionPage";
+import SingleTaskAnalysisPage from "./Components/Dashboard/SingleTaskAnalysisPage";
+import TermAnalysisPage from "./Components/Dashboard/TermAnalysisPage";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -202,10 +206,16 @@ function App() {
                 <Route path="/subjects" element={<SubjectList />} />
                 <Route path="/analysis" element={<Analysis />} />
                 <Route path="/settings" element={<Settings />} />
+                
 
                 {/* ✅ Class Workspace (shared between roles) */}
                 <Route path="/class/:id" element={<ClassWorkspace />} />
                 <Route path="/class/:classId/learners" element={<ManageLearners />} />
+                <Route path="/class/:classId/subject/:subjectId/formal-tasks" element={<FormalTaskMarkEntry />} />
+                <Route path="/class/:classId/subject/:subjectId/task/:taskName/marks" element={<MarkEntryPage />} />
+                <Route path="/analysis/:taskType/:subjectId/select" element={<SubjectAnalysisSelectionPage />} />
+                <Route path="/analysis/:taskType/:subjectId/task/:taskId" element={<SingleTaskAnalysisPage />} />
+                <Route path="/analysis/:taskType/:subjectId/term/:termId" element={<TermAnalysisPage />} />
 
                 {/* ✅ Admin-Only Pages (protected by UI logic) */}
                 <Route path="/admin/classes" element={<AdminClasses />} />

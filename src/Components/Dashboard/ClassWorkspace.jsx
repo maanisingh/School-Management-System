@@ -153,6 +153,11 @@ const ClassWorkspace = () => {
     // Small helpers to compute class name
     const classNameDisplay = `Grade ${store.grade}${store.section ? ` ${store.section}` : ""}`;
 
+    const goToAnalysisSelection = (subjectId, taskType) => {
+        navigate(`/analysis/${taskType}/${subjectId}/select`);
+    };
+
+
     return (
         <Container fluid style={{ minHeight: "100vh", padding: "20px", backgroundColor: "#e2e8f0" }}>
             {/* Header */}
@@ -256,14 +261,16 @@ const ClassWorkspace = () => {
                                     <Button
                                         variant="link"
                                         style={{ color: "#7e3af2", textDecoration: "none" }}
-                                        onClick={() => alert(`Formal Mark Entry for ${s.name}`)}
+                                        // UPDATED: Navigate to the new Formal Task Mark Entry page
+                                        onClick={() => navigate(`/class/${classId}/subject/${s.id}/formal-tasks`)}
                                     >
                                         Mark Entry
                                     </Button>
                                     <Button
                                         variant="link"
                                         style={{ color: "#7e3af2", textDecoration: "none" }}
-                                        onClick={() => alert(`Analyse Formal Tasks for ${s.name}`)}
+                                        // UPDATED: Navigate to the analysis page (you can create this later)
+                                        onClick={() => goToAnalysisSelection(s.id, "formal")}
                                     >
                                         Analyse
                                     </Button>
@@ -274,14 +281,16 @@ const ClassWorkspace = () => {
                                     <Button
                                         variant="link"
                                         style={{ color: "#7e3af2", textDecoration: "none" }}
-                                        onClick={() => alert(`Informal Mark Entry for ${s.name}`)}
+                                        // UPDATED: Navigate to the informal tasks page (you can create this later)
+                                        onClick={() => navigate(`/class/${classId}/subject/${s.id}/informal-tasks`)}
                                     >
                                         Mark Entry
                                     </Button>
                                     <Button
                                         variant="link"
                                         style={{ color: "#7e3af2", textDecoration: "none" }}
-                                        onClick={() => alert(`Analyse Informal Tasks for ${s.name}`)}
+                                        // UPDATED: Navigate to the informal analysis page (you can create this later)
+                                        onClick={() => navigate(`/class/${classId}/subject/${s.id}/informal-analysis`)}
                                     >
                                         Analyse
                                     </Button>
@@ -355,17 +364,17 @@ const ClassWorkspace = () => {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-2">
-                            <Form.Label style={{ color: "#1e2a38" }}>Surname</Form.Label>
-                            <Form.Control
-                                value={addLearnerForm.surname}
-                                onChange={(e) => setAddLearnerForm((p) => ({ ...p, surname: e.target.value }))}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-2">
                             <Form.Label style={{ color: "#1e2a38" }}>Name</Form.Label>
                             <Form.Control
                                 value={addLearnerForm.name}
                                 onChange={(e) => setAddLearnerForm((p) => ({ ...p, name: e.target.value }))}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-2">
+                            <Form.Label style={{ color: "#1e2a38" }}>Surname</Form.Label>
+                            <Form.Control
+                                value={addLearnerForm.surname}
+                                onChange={(e) => setAddLearnerForm((p) => ({ ...p, surname: e.target.value }))}
                             />
                         </Form.Group>
                         <Form.Group className="mb-2">
