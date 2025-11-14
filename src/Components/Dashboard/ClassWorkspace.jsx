@@ -363,20 +363,20 @@ const ClassWorkspace = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-2">
-                            <Form.Label style={{ color: "#1e2a38" }}>Name</Form.Label>
-                            <Form.Control
-                                value={addLearnerForm.name}
-                                onChange={(e) => setAddLearnerForm((p) => ({ ...p, name: e.target.value }))}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-2">
-                            <Form.Label style={{ color: "#1e2a38" }}>Surname</Form.Label>
-                            <Form.Control
-                                value={addLearnerForm.surname}
-                                onChange={(e) => setAddLearnerForm((p) => ({ ...p, surname: e.target.value }))}
-                            />
-                        </Form.Group>
+                    <Form.Group className="mb-2">
+    <Form.Label style={{ color: "#1e2a38" }}>Surname</Form.Label>
+    <Form.Control
+        value={addLearnerForm.surname}
+        onChange={(e) => setAddLearnerForm((p) => ({ ...p, surname: e.target.value }))}
+    />
+</Form.Group>
+<Form.Group className="mb-2">
+    <Form.Label style={{ color: "#1e2a38" }}>Name</Form.Label>
+    <Form.Control
+        value={addLearnerForm.name}
+        onChange={(e) => setAddLearnerForm((p) => ({ ...p, name: e.target.value }))}
+    />
+</Form.Group>
                         <Form.Group className="mb-2">
                             <Form.Check
                                 type="checkbox"

@@ -159,6 +159,9 @@ import FormalTaskMarkEntry from "./Components/Dashboard/FormalTaskMarkEntry";
 import SubjectAnalysisSelectionPage from "./Components/Dashboard/SubjectAnalysisSelectionPage";
 import SingleTaskAnalysisPage from "./Components/Dashboard/SingleTaskAnalysisPage";
 import TermAnalysisPage from "./Components/Dashboard/TermAnalysisPage";
+
+import InfromalTaskMarkEntry from "./Components/Dashboard/InformalTaskMarkEntry";
+import InformalTaskAnalysisPage from "./Components/Dashboard/InformalTaskAnalysisPage";
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -216,7 +219,12 @@ function App() {
                 <Route path="/analysis/:taskType/:subjectId/select" element={<SubjectAnalysisSelectionPage />} />
                 <Route path="/analysis/:taskType/:subjectId/task/:taskId" element={<SingleTaskAnalysisPage />} />
                 <Route path="/analysis/:taskType/:subjectId/term/:termId" element={<TermAnalysisPage />} />
+                <Route path="/class/:classId/subject/:subjectId/informal-tasks" element={<InfromalTaskMarkEntry/>} />
 
+                <Route 
+    path="/class/:classId/subject/:subjectId/task/:taskName/analysis" 
+    element={<InformalTaskAnalysisPage />} 
+  />
                 {/* ✅ Admin-Only Pages (protected by UI logic) */}
                 <Route path="/admin/classes" element={<AdminClasses />} />
                 <Route path="/admin/teachers" element={<AdminTeachers />} />
