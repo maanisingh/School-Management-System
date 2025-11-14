@@ -1,261 +1,246 @@
-import React from "react";
-import { Row, Col, Card, ProgressBar, Table } from "react-bootstrap";
-import {
-  FaChalkboardTeacher,
-  FaUsers,
-  FaBookOpen,
-  FaUserTie,
-  FaBell,
-  FaChartLine,
-} from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap";
+import { FaChalkboardTeacher, FaUsers, FaBookOpen, FaChartBar, FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
-const DashboardSummary = () => {
-  const stats = [
-    {
-      title: "Total Classes",
-      value: 42,
-      icon: <FaChalkboardTeacher />,
-      color: "#7e3af2",
-    },
-    {
-      title: "Total Learners",
-      value: 980,
-      icon: <FaUsers />,
-      color: "#7e3af2",
-    },
-    {
-      title: "Total Subjects",
-      value: 18,
-      icon: <FaBookOpen />,
-      color: "#7e3af2",
-    },
-    {
-      title: "Total Teachers",
-      value: 25,
-      icon: <FaUserTie />,
-      color: "#7e3af2",
-    },
-  ];
+const AdminDashboard = () => {
+  const navigate = useNavigate();
 
-  const activities = [
-    { id: 1, msg: "New student 'Aarav Patel' enrolled in Class 8.", time: "5 mins ago" },
-    { id: 2, msg: "Science quiz results published for Class 10.", time: "20 mins ago" },
-    { id: 3, msg: "Math assignment added for Class 6.", time: "1 hour ago" },
-    { id: 4, msg: "Weekly staff meeting scheduled.", time: "2 hours ago" },
-  ];
+  // classes: each class has id, grade, section (optional), learners: []
+  const [classes, setClasses] = useState([
+    { id: uuidv4(), grade: "12", section: "B", learners: [ /* learner objects */ ] },
+    { id: uuidv4(), grade: "10", section: "A", learners: [] },
+  ]);
 
-  const performance = [
-    { subject: "Mathematics", progress: 85 },
-    { subject: "Science", progress: 78 },
-    { subject: "English", progress: 92 },
-    { subject: "History", progress: 66 },
-  ];
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [classToDelete, setClassToDelete] = useState(null);
+  const [newClass, setNewClass] = useState({ grade: "", section: "" });
 
-  // Helper to determine progress bar color
-  const getProgressColor = (progress) => {
-    if (progress > 80) return "#7e3af2";
-    if (progress > 70) return "#7e3af2";
-    return "#7e3af2";
+  const styles = {
+    page: { minHeight: "100vh", padding: "20px", fontFamily: "Segoe UI, sans-serif" },
+    heading: { color: "#1e2a38", fontSize: "2rem", fontWeight: "600", marginBottom: "10px" },
+    subheading: { color: "#1e2a38", fontSize: "1rem", marginBottom: "30px" },
+    card: {
+      border: "1px solid #cbd5e1",
+      borderRadius: "10px",
+      padding: "20px",
+      backgroundColor: "white",
+      textAlign: "center",
+      transition: "all 0.3s ease",
+    },
+    primaryBtn: {
+      backgroundColor: "#7e3af2",
+      color: "#fff",
+      border: "none",
+      padding: "10px 20px",
+      borderRadius: "6px",
+      fontWeight: "500",
+      transition: "0.3s",
+    },
+    secondaryBtn: {
+      backgroundColor: "transparent",
+      border: "1px solid #7e3af2",
+      color: "#7e3af2",
+      padding: "10px 20px",
+      borderRadius: "6px",
+      fontWeight: "500",
+      transition: "0.3s",
+    },
+    icon: { fontSize: "2rem", color: "#1e2a38", marginBottom: "10px" },
+  };
+
+  const totalLearners = classes.reduce((sum, c) => sum + (c.learners?.length || 0), 0);
+
+  // Create class — per spec only Grade + optional Section in popup
+  const handleCreateClass = () => {
+    if (!newClass.grade) return alert("Please select a Grade.");
+    const created = {
+      id: uuidv4(),
+      grade: newClass.grade,
+      section: newClass.section?.trim() || "",
+      learners: [], // empty initially — learners will be added inside class workspace
+      subjects: [], // subjects linked to class
+    };
+    setClasses((prev) => [...prev, created]);
+    setNewClass({ grade: "", section: "" });
+    setShowModal(false);
+  };
+
+  // Delete class with confirmation modal
+  const handleDeleteClick = (cls) => {
+    setClassToDelete(cls);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (classToDelete) {
+      setClasses((prev) => prev.filter((c) => c.id !== classToDelete.id));
+      setShowDeleteModal(false);
+      setClassToDelete(null);
+    }
+  };
+
+  // Navigate to class workspace (open)
+  const openClass = (cls) => {
+    navigate(`/admin/class/${cls.id}`);
   };
 
   return (
-    <div
-     style={{
-        minHeight: "100vh",
-        color: "#1e2a38",
-        padding: "10px 20px",
-      }} 
-    >
-      {/* ================= Header ================= */}
-      <div className="mb-5">
-        <h1 className="fw-bold" style={{ color: "#1e2a38" }}>
-          Dashboard
-        </h1>
-        <p style={{ color: "#1e2a38" }}>Overall System Summary & Insights</p>
-      </div>
+    <div style={styles.page}>
+      <Container fluid>
+        <h1 style={styles.heading}>Welcome, Mr. Mokoena 👋</h1>
+        <p style={styles.subheading}>
+          Classes: {classes.length} | Learners: {totalLearners}
+        </p>
 
-      {/* ================= Summary Cards ================= */}
-      <Row className="g-4 mb-5">
-        {stats.map((item, i) => (
-          <Col md={3} sm={6} xs={12} key={i}>
-            <Card
-              className="shadow-lg border-0 text-center"
-              style={{
-                background: "white",
-                border: "1px solid #cbd5e1",
-                borderRadius: "20px",
-                transition: "0.3s",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.background = "rgba(126, 58, 242, 0.1)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.background = "white")
-              }
-            >
-              <Card.Body>
-                <div
-                  style={{
-                    fontSize: "2rem",
-                    color: item.color,
-                    background: "rgba(126, 58, 242, 0.1)",
-                    width: "70px",
-                    height: "70px",
-                    margin: "0 auto 15px",
-                    borderRadius: "50%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {item.icon}
-                </div>
-                <h5 style={{ color: "#1e2a38" }}>{item.title}</h5>
-                <h3 style={{ color: "#1e2a38" }}>{item.value}</h3>
-              </Card.Body>
+        {/* Summary Row */}
+        <Row className="g-3 mb-4">
+          <Col xs={12} md={6} lg={3}>
+            <Card style={styles.card}>
+              <FaChalkboardTeacher style={styles.icon} />
+              <h5 style={{ color: "#1e2a38" }}>My Classes</h5>
+              <p style={{ color: "#7e3af2", fontWeight: "600" }}>{classes.length}</p>
             </Card>
           </Col>
-        ))}
-      </Row>
+          <Col xs={12} md={6} lg={3}>
+            <Card style={styles.card}>
+              <FaUsers style={styles.icon} />
+              <h5 style={{ color: "#1e2a38" }}>Total Learners</h5>
+              <p style={{ color: "#7e3af2", fontWeight: "600" }}>{totalLearners}</p>
+            </Card>
+          </Col>
+          <Col xs={12} md={6} lg={3}>
+            <Card style={styles.card}>
+              <FaBookOpen style={styles.icon} />
+              <h5 style={{ color: "#1e2a38" }}>Marks Entry</h5>
+              <p style={{ color: "#7e3af2", fontWeight: "600" }}>Accessible inside class</p>
+            </Card>
+          </Col>
+          <Col xs={12} md={6} lg={3}>
+            <Card style={styles.card}>
+              <FaChartBar style={styles.icon} />
+              <h5 style={{ color: "#1e2a38" }}>Analysis</h5>
+              <p style={{ color: "#7e3af2", fontWeight: "600" }}>Ready</p>
+            </Card>
+          </Col>
+        </Row>
 
-      {/* ================= Chart / Progress Overview ================= */}
-      <Row className="g-4">
-        <Col lg={8}>
-          <Card
-            className="border-0 shadow-lg"
-            style={{
-              background: "white",
-              border: "1px solid #cbd5e1",
-              borderRadius: "20px",
-              color: "#1e2a38",
-            }}
-          >
-            <Card.Body>
-              <h5 className="mb-4">
-                <FaChartLine className="me-2" style={{ color: "#7e3af2" }} />
-                Subject Performance Overview
-              </h5>
-              {performance.map((item, index) => (
-                <div key={index} className="mb-3">
-                  <div className="d-flex justify-content-between">
-                    <span>{item.subject}</span>
-                    <span>{item.progress}%</span>
-                  </div>
-                  <div
-                    style={{
-                      background: "#e2e8f0",
-                      height: "10px",
-                      borderRadius: "10px",
-                      overflow: "hidden",
-                      marginTop: "4px",
-                    }}
+        {/* Classes Section */}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h4 style={{ color: "#1e2a38", marginBottom: "0" }}>My Classes</h4>
+          <Button style={styles.primaryBtn} onClick={() => setShowModal(true)}>
+            + Add Class
+          </Button>
+        </div>
+
+        <Row className="g-3">
+          {classes.map((cls) => (
+            <Col xs={12} md={6} lg={4} key={cls.id}>
+              <Card style={styles.card}>
+                <h5 style={{ color: "#1e2a38" }}>
+                  Grade {cls.grade}{cls.section ? ` ${cls.section}` : ""}
+                </h5>
+                <p style={{ color: "#555" }}>Learners: {cls.learners.length}</p>
+                <div className="d-flex justify-content-center gap-2">
+                  <Button
+                    style={styles.primaryBtn}
+                    onClick={() => openClass(cls)}
+                    onMouseOver={(e) => (e.target.style.backgroundColor = "#6931cc")}
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "#7e3af2")}
                   >
-                    <div
-                      style={{
-                        width: `${item.progress}%`,
-                        height: "100%",
-                        backgroundColor: getProgressColor(item.progress),
-                        borderRadius: "10px",
-                      }}
-                    />
-                  </div>
+                    Open
+                  </Button>
+                  <Button
+                    style={styles.secondaryBtn}
+                    onClick={() => handleDeleteClick(cls)}
+                  >
+                    <FaTrashAlt /> Delete
+                  </Button>
                 </div>
-              ))}
-            </Card.Body>
-          </Card>
-        </Col>
+              </Card>
+            </Col>
+          ))}
+          {classes.length === 0 && (
+            <Col>
+              <Card style={styles.card}>
+                <p>No classes yet — click "+ Add Class" to create your first class.</p>
+              </Card>
+            </Col>
+          )}
+        </Row>
+      </Container>
 
-        {/* ================== Recent Activities ================== */}
-        <Col lg={4}>
-          <Card
-            className="border-0 shadow-lg"
-            style={{
-              background: "white",
-              border: "1px solid #cbd5e1",
-              borderRadius: "20px",
-              color: "#1e2a38",
-            }}
-          >
-            <Card.Body>
-              <h5 className="mb-4">
-                <FaBell className="me-2" style={{ color: "#7e3af2" }} />
-                Recent Activity
-              </h5>
-              <ul className="list-unstyled">
-                {activities.map((act) => (
-                  <li
-                    key={act.id}
-                    className="mb-3 p-3 rounded"
-                    style={{
-                      background: "rgba(126, 58, 242, 0.1)",
-                    }}
-                  >
-                    <p className="mb-1">{act.msg}</p>
-                    <small style={{ color: "#1e2a38" }}>{act.time}</small>
-                  </li>
+      {/* Add Class Modal (Grade + optional Section) */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Class</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formGrade" className="mb-3">
+              <Form.Label>Grade</Form.Label>
+              <Form.Select
+                value={newClass.grade}
+                onChange={(e) => setNewClass({ ...newClass, grade: e.target.value })}
+              >
+                <option value="">Select Grade</option>
+                {[7, 8, 9, 10, 11, 12].map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
                 ))}
-              </ul>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+              </Form.Select>
+            </Form.Group>
 
-      {/* ================== Class Summary Table ================== */}
-      <div className="mt-5">
-        <Card
-          className="border-0 shadow-lg"
-          style={{
-            background: "white",
-            border: "1px solid #cbd5e1",
-            borderRadius: "20px",
-            color: "#1e2a38",
-          }}
-        >
-          <Card.Body>
-            <h5 className="mb-4">
-              <FaChalkboardTeacher className="me-2" style={{ color: "#7e3af2" }} />
-              Class Summary
-            </h5>
-            <Table hover responsive bordered style={{ color: "#1e2a38" }}>
-              <thead style={{ background: "rgba(126, 58, 242, 0.1)" }}>
-                <tr>
-                  <th>Class</th>
-                  <th>Section</th>
-                  <th>Students</th>
-                  <th>Class Teacher</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>10</td>
-                  <td>A</td>
-                  <td>45</td>
-                  <td>Mr. Sharma</td>
-                  <td style={{ color: "#7e3af2" }}>Active</td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>B</td>
-                  <td>42</td>
-                  <td>Mrs. Rao</td>
-                  <td style={{ color: "#7e3af2" }}>Active</td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>A</td>
-                  <td>50</td>
-                  <td>Mr. Singh</td>
-                  <td style={{ color: "#7e3af2" }}>Active</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Card.Body>
-        </Card>
-      </div>
+            <Form.Group controlId="formSection" className="mb-3">
+              <Form.Label>Section (optional)</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="e.g. A, B"
+                value={newClass.section}
+                onChange={(e) => setNewClass({ ...newClass, section: e.target.value })}
+              />
+              <Form.Text className="text-muted">Optional — e.g., A, B, C</Form.Text>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button style={styles.primaryBtn} onClick={handleCreateClass}>
+            Create Class
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {classToDelete && (
+            <p>
+              Are you sure you want to delete Grade {classToDelete.grade}
+              {classToDelete.section ? ` ${classToDelete.section}` : ""} class?
+              This will remove all learners and subjects associated with this class.
+            </p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button onClick={confirmDelete} style={{backgroundColor: "#7e3af2", borderColor: "#7e3af2"}}>
+            Delete Class
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
 
-export default DashboardSummary;
+export default AdminDashboard;

@@ -13,7 +13,7 @@ const CAPS_SUBJECTS = [
   { id: "life", name: "Life Sciences", code: "LIFE" },
 ];
 
-const AdminSubjects = () => {
+const SubjectList = () => {
   const [subjects] = useState(CAPS_SUBJECTS);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
@@ -49,8 +49,8 @@ const AdminSubjects = () => {
                   <Card.Text style={{ color: "#64748b" }}>Code: {subject.code}</Card.Text>
 
                   <div style={{ display: "flex", justifyContent: "center", gap: 8 }}>
-                    <Button style={styles.btnPrimary} onClick={() => openModal("view", subject)}><FaEye className="me-1" /> View</Button>
-                    <Button style={styles.btnSecondary} onClick={() => openModal("edit", subject)}><FaEdit className="me-1" /> Edit</Button>
+                    <Button style={styles.btnPrimary} onClick={() => openModal("view", subject)} className="d-flex justify-content-center align-items-center"><FaEye className="me-1" /> View</Button>
+                    <Button style={styles.btnSecondary} onClick={() => openModal("edit", subject)} className="d-flex justify-content-center align-items-center"><FaEdit className="me-1" /> Edit</Button>
                   </div>
                 </Card.Body>
               </Card>
@@ -81,4 +81,4 @@ const AdminSubjects = () => {
   );
 };
 
-export default AdminSubjects;
+export default SubjectList;

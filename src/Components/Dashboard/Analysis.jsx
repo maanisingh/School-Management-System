@@ -16,12 +16,11 @@ import html2canvas from "html2canvas";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement, Tooltip, Legend);
 
-const TeacherAnalysis = () => {
+const Analysis = () => {
   const reportRef = useRef(); // for PDF capture
   const [showModal, setShowModal] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
 
-  // ✅ Chart Data (memoized)
   const subjectPerformance = useMemo(
     () => ({
       labels: ["Math", "Science", "English", "History", "Computer"],
@@ -55,49 +54,17 @@ const TeacherAnalysis = () => {
     []
   );
 
-  // ✅ Inline Styles
   const styles = {
-    page: {minHeight: "100vh", padding: "20px" },
-    heading: {
-      color: "#1e2a38",
-      fontWeight: "bold",
-      marginBottom: "20px",
-      display: "flex",
-      alignItems: "center",
-      gap: "10px",
-    },
-    card: {
-      border: "1px solid #cbd5e1",
-      borderRadius: "16px",
-      padding: "15px",
-      backgroundColor: "white",
-      transition: "all 0.3s ease",
-    },
+    page: { minHeight: "100vh", padding: "20px" },
+    heading: { color: "#1e2a38", fontWeight: "bold", marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" },
+    card: { border: "1px solid #cbd5e1", borderRadius: "16px", padding: "15px", backgroundColor: "white", transition: "all 0.3s ease" },
     iconActive: { color: "#7e3af2", fontSize: "24px", marginRight: "10px" },
-    primaryButton: {
-      backgroundColor: "#7e3af2",
-      color: "white",
-      border: "none",
-      borderRadius: "8px",
-      padding: "8px 16px",
-      marginRight: "8px",
-    },
-    secondaryButton: {
-      border: "1px solid #7e3af2",
-      color: "#7e3af2",
-      backgroundColor: "transparent",
-      borderRadius: "8px",
-      padding: "8px 16px",
-    },
+    primaryButton: { backgroundColor: "#7e3af2", color: "white", border: "none", borderRadius: "8px", padding: "8px 16px", marginRight: "8px" },
+    secondaryButton: { border: "1px solid #7e3af2", color: "#7e3af2", backgroundColor: "transparent", borderRadius: "8px", padding: "8px 16px" },
   };
 
-  const getCardStyle = (index) => ({
-    ...styles.card,
-    backgroundColor:
-      hoveredCard === index ? "rgba(126, 58, 242, 0.05)" : "white",
-  });
+  const getCardStyle = (index) => ({ ...styles.card, backgroundColor: hoveredCard === index ? "rgba(126, 58, 242, 0.05)" : "white" });
 
-  // ✅ PDF Download Logic
   const handleDownloadPDF = async () => {
     const input = reportRef.current;
     const canvas = await html2canvas(input, { scale: 2 });
@@ -118,7 +85,6 @@ const TeacherAnalysis = () => {
           Analysis Dashboard
         </h2>
 
-        {/* Summary Cards */}
         <Row xs={1} sm={2} md={3} className="g-3 mb-4">
           {[
             { icon: <FaUserGraduate style={styles.iconActive} />, title: "Total Learners", value: "170" },
@@ -126,24 +92,12 @@ const TeacherAnalysis = () => {
             { icon: <FaChartBar style={styles.iconActive} />, title: "Average Score", value: "78%" },
           ].map((item, index) => (
             <Col key={index}>
-              <Card
-                style={getCardStyle(index)}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
+              <Card style={getCardStyle(index)} onMouseEnter={() => setHoveredCard(index)} onMouseLeave={() => setHoveredCard(null)}>
                 <Card.Body className="d-flex align-items-center">
                   {item.icon}
                   <div>
                     <h5 style={{ color: "#1e2a38", margin: 0 }}>{item.title}</h5>
-                    <p
-                      style={{
-                        margin: 0,
-                        fontWeight: "bold",
-                        color: "#7e3af2",
-                      }}
-                    >
-                      {item.value}
-                    </p>
+                    <p style={{ margin: 0, fontWeight: "bold", color: "#7e3af2" }}>{item.value}</p>
                   </div>
                 </Card.Body>
               </Card>
@@ -151,38 +105,21 @@ const TeacherAnalysis = () => {
           ))}
         </Row>
 
-        {/* Graphs Section */}
         <Row xs={1} md={2} className="g-4">
           <Col>
             <Card style={styles.card}>
               <Card.Body>
                 <h5 style={{ color: "#1e2a38", marginBottom: "10px" }}>Subject-wise Performance</h5>
                 <div style={{ width: "100%", height: "300px" }}>
-                  <Bar
-                    data={subjectPerformance}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      layout: { padding: 10 },
-                      scales: {
-                        x: {
-                          ticks: { color: "#1e2a38" },
-                          grid: { display: false },
-                        },
-                        y: {
-                          ticks: { color: "#1e2a38" },
-                          beginAtZero: true,
-                          grid: { color: "rgba(203,213,225,0.3)" },
-                        },
-                      },
-                      plugins: {
-                        legend: {
-                          display: true,
-                          labels: { color: "#1e2a38" },
-                        },
-                      },
-                    }}
-                  />
+                  <Bar data={subjectPerformance} options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                      x: { ticks: { color: "#1e2a38" }, grid: { display: false } },
+                      y: { ticks: { color: "#1e2a38" }, beginAtZero: true, grid: { color: "rgba(203,213,225,0.3)" } },
+                    },
+                    plugins: { legend: { display: true, labels: { color: "#1e2a38" } } },
+                  }} />
                 </div>
               </Card.Body>
             </Card>
@@ -193,47 +130,30 @@ const TeacherAnalysis = () => {
               <Card.Body>
                 <h5 style={{ color: "#1e2a38", marginBottom: "10px" }}>Class Distribution</h5>
                 <div style={{ width: "100%", height: "300px" }}>
-                  <Pie
-                    data={classDistribution}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      plugins: {
-                        legend: {
-                          position: "bottom",
-                          labels: { color: "#1e2a38" },
-                        },
-                      },
-                    }}
-                  />
+                  <Pie data={classDistribution} options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: "bottom", labels: { color: "#1e2a38" } } },
+                  }} />
                 </div>
               </Card.Body>
             </Card>
           </Col>
         </Row>
 
-        {/* Action Buttons */}
         <div className="mt-4 d-flex flex-wrap">
-          <Button style={styles.primaryButton} onClick={() => setShowModal(true)}>
-            View Detailed Report
-          </Button>
-          <Button style={styles.secondaryButton} onClick={handleDownloadPDF}>
-            Download PDF
-          </Button>
+          <Button style={styles.primaryButton} onClick={() => setShowModal(true)}>View Detailed Report</Button>
+          <Button style={styles.secondaryButton} onClick={handleDownloadPDF}>Download PDF</Button>
         </div>
       </Container>
 
-      {/* ✅ Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Detailed Report</Modal.Title>
-        </Modal.Header>
+        <Modal.Header closeButton><Modal.Title>Detailed Report</Modal.Title></Modal.Header>
         <Modal.Body>
           <h5 style={{ color: "#1e2a38" }}>Class 12C - Performance Overview</h5>
           <p style={{ color: "#1e2a38" }}>
             The average performance across all subjects shows consistent improvement.
-            Math and Computer Science remain the strongest areas, while History needs
-            additional focus.
+            Math and Computer Science remain the strongest areas.
           </p>
           <ul style={{ color: "#1e2a38" }}>
             <li>Top Performer: Learner A (92%)</li>
@@ -242,13 +162,11 @@ const TeacherAnalysis = () => {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 };
 
-export default TeacherAnalysis;
+export default Analysis;

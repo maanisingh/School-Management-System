@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 import { FaUserCog, FaSignOutAlt, FaUser } from "react-icons/fa";
 
-const AdminSettings = () => {
+const Settings = () => {
   const [formData, setFormData] = useState({
     name: "Mr. Mokoena",
     email: "mokoena@example.com",
@@ -73,4 +73,4 @@ const AdminSettings = () => {
   );
 };
 
-export default AdminSettings;
+export default Settings;

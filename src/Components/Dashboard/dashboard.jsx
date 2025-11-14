@@ -84,7 +84,7 @@ const TeacherDashboard = () => {
 
   // Navigate to class workspace (open)
   const openClass = (cls) => {
-    navigate(`/teacher/class/${cls.id}`);
+    navigate(`/class/${cls.id}`);
   };
 
   return (
