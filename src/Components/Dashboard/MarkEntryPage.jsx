@@ -4,37 +4,26 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Table, FormControl, Modal, Alert } from "react-bootstrap";
 import { FaArrowLeft } from "react-icons/fa";
+import { getClassById, sortLearnersBySurname } from "../../utils/classStorage";
 
 const MarkEntryPage = () => {
     const { classId, subjectId, taskName } = useParams();
     const navigate = useNavigate();
 
-    // Get class and subject data from localStorage
-    const storageKey = `fundisa_class_${classId}`;
-    const [store, setStore] = useState(() => {
-        try {
-            const raw = localStorage.getItem(storageKey);
-            if (raw) return JSON.parse(raw);
-        } catch { }
-        
-        // Return dummy data if no data in localStorage
-        return { 
-            id: classId, 
-            grade: "12", 
-            section: "A", 
-            learners: [
-                { id: "learner1", name: "Nqobile", surname: "Njoko" },
-                { id: "learner2", name: "Ziyanda", surname: "Ndlovu" }
-            ], 
-            subjects: [
-                {
-                    id: subjectId,
-                    name: "Mathematics",
-                    enrolledLearnerIds: ["learner1", "learner2"]
-                }
-            ] 
-        };
-    });
+    // FIXED: Load from global storage (Issue #2, data consistency)
+    const [store, setStore] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const data = getClassById(classId);
+        if (data) {
+            setStore(data);
+            setLoading(false);
+        } else {
+            alert("Class not found!");
+            navigate("/admin-dashboard");
+        }
+    }, [classId, navigate]);
 
     const [subject, setSubject] = useState(null);
     const [task, setTask] = useState(null);
@@ -46,7 +35,7 @@ const MarkEntryPage = () => {
 
     // Find the subject and initialize learner marks
     useEffect(() => {
-        if (store.subjects && subjectId) {
+        if (store && store.subjects && subjectId) {
             const foundSubject = store.subjects.find(s => s.id === subjectId);
             setSubject(foundSubject || null);
 
@@ -56,10 +45,13 @@ const MarkEntryPage = () => {
                     foundSubject.enrolledLearnerIds.includes(learner.id)
                 );
 
+                // FIXED: Sort learners alphabetically by surname (Issue #6)
+                const sortedEnrolledLearners = sortLearnersBySurname(enrolledLearners);
+
                 // Initialize learner marks with default values
-                const initialMarks = enrolledLearners.map(learner => ({
+                const initialMarks = sortedEnrolledLearners.map(learner => ({
                     learnerId: learner.id,
-                    learnerName: `${learner.surname} ${learner.name}`,
+                    learnerName: `${learner.surname} ${learner.name}`, // Already correct format
                     mark: -1, // -1 indicates not entered/absent
                     percentage: 0,
                     level: 0,
@@ -216,6 +208,15 @@ const MarkEntryPage = () => {
         setErrorMessage("");
         setErrorLearnerId(null);
     };
+
+    // Show loading or error states
+    if (loading || !store) {
+        return (
+            <Container fluid style={{ minHeight: "100vh", padding: "10px", backgroundColor: "#e2e8f0" }}>
+                <h2 style={{ color: "#1e2a38" }}>Loading...</h2>
+            </Container>
+        );
+    }
 
     if (!subject || !task) {
         return (
