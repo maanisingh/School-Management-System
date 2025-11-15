@@ -59,7 +59,7 @@ const MarkEntryPage = () => {
                 // Initialize learner marks with default values
                 const initialMarks = enrolledLearners.map(learner => ({
                     learnerId: learner.id,
-                    learnerName: `${learner.name} ${learner.surname}`,
+                    learnerName: `${learner.surname} ${learner.name}`,
                     mark: -1, // -1 indicates not entered/absent
                     percentage: 0,
                     level: 0,
