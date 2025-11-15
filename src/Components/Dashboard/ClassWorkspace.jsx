@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Modal, Form, Table, InputGroup, FormControl } from "react-bootstrap";
 import { FaUsers, FaPlus, FaTrashAlt, FaEdit } from "react-icons/fa";
-import { v4 as uuidv4 } from "uuid";
+import {
+  getClassById,
+  saveClass,
+  addLearnerToClass,
+  addSubjectToClass,
+  sortLearnersBySurname,
+  formatLearnerName
+} from "../../utils/classStorage";
 
 /**
  * ClassWorkspace
@@ -25,22 +32,20 @@ const ClassWorkspace = () => {
     const { classId } = useParams();
     const navigate = useNavigate();
 
-    // Load class store from localStorage or create an empty structure for this class id
-    const storageKey = `fundisa_class_${classId}`;
-    const [store, setStore] = useState(() => {
-        try {
-            const raw = localStorage.getItem(storageKey);
-            if (raw) return JSON.parse(raw);
-        } catch { }
-        // default structure
-        return {
-            id: classId,
-            grade: "12",
-            section: "",
-            learners: [], // {id, surname, name, progressed}
-            subjects: [], // {id, phase, grade, subjectKey, name, enrolledLearnerIds: []}
-        };
-    });
+    // FIXED: Load from global storage (Issues #2, #3)
+    const [store, setStore] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const loadClassData = () => {
+        const data = getClassById(classId);
+        if (data) {
+            setStore(data);
+            setLoading(false);
+        } else {
+            alert("Class not found!");
+            navigate("/admin-dashboard");
+        }
+    };
 
     // Modals
     const [showAddLearner, setShowAddLearner] = useState(false);
@@ -51,28 +56,40 @@ const ClassWorkspace = () => {
     const [showEditLearnersForSubject, setShowEditLearnersForSubject] = useState(false);
     const [subjectToEditLearners, setSubjectToEditLearners] = useState(null);
 
+    // FIXED: Load data on mount, save to global storage on changes
     useEffect(() => {
-        localStorage.setItem(storageKey, JSON.stringify(store));
-    }, [store, storageKey]);
+        loadClassData();
+    }, [classId]);
 
-    // Helpers
-    const sortedLearners = [...store.learners].sort((a, b) => a.surname.localeCompare(b.surname));
+    useEffect(() => {
+        if (store) {
+            saveClass(store);
+        }
+    }, [store]);
 
-    // Add learner popup behavior per spec
+    // FIXED: Apply sorting utility (Issue #6)
+    const sortedLearners = store ? sortLearnersBySurname(store.learners || []) : [];
+
+    // FIXED: Add learner with duplicate validation (Issue #4)
     const handleSaveLearner = () => {
         const { surname, name } = addLearnerForm;
         if (!surname.trim() || !name.trim()) return alert("Please enter surname and name.");
-        const newLearner = { id: uuidv4(), surname: surname.trim(), name: name.trim(), progressed: !!addLearnerForm.progressed };
-        // When added: automatically enrolled in all subjects by default
-        const updatedSubjects = store.subjects.map((s) => ({
-            ...s,
-            enrolledLearnerIds: Array.from(new Set([...s.enrolledLearnerIds, newLearner.id])),
-        }));
-        setStore((prev) => ({
-            ...prev,
-            learners: [...prev.learners, newLearner],
-            subjects: updatedSubjects,
-        }));
+
+        // Use global storage utility with cross-class validation
+        const result = addLearnerToClass(classId, {
+            surname: surname.trim(),
+            name: name.trim(),
+            progressed: !!addLearnerForm.progressed
+        });
+
+        if (result.error) {
+            alert(result.message);
+            return;
+        }
+
+        // Reload class data to get updated learners
+        loadClassData();
+
         // confirmation flow
         if (window.confirm("Learner added successfully. Do you want to add another learner?")) {
             setAddLearnerForm({ surname: "", name: "", progressed: false });
@@ -88,24 +105,26 @@ const ClassWorkspace = () => {
         navigate(`/class/${classId}/learners`);
     };
 
-    // Add Subject modal behavior
+    // FIXED: Add Subject using global storage utility
     const handleAddSubject = () => {
         const { phase, grade, subject } = addSubjectForm;
         if (!phase || !grade || !subject) return alert("Please select phase, grade and subject.");
-        // prevent duplicate subject for this class
-        const exists = store.subjects.some((s) => s.phase === phase && s.grade === grade && s.subjectKey === subject);
-        if (exists) return alert("Subject already added to this class.");
-        // Enroll all existing learners by default
-        const enrollIds = store.learners.map((l) => l.id);
-        const newSubject = {
-            id: uuidv4(),
+
+        // Use global storage utility
+        const result = addSubjectToClass(classId, {
             phase,
             grade,
             subjectKey: subject,
-            name: subject,
-            enrolledLearnerIds: enrollIds,
-        };
-        setStore((prev) => ({ ...prev, subjects: [...prev.subjects, newSubject] }));
+            name: subject
+        });
+
+        if (result.error) {
+            alert(result.message);
+            return;
+        }
+
+        // Reload class data
+        loadClassData();
         setShowAddSubject(false);
         setAddSubjectForm({ phase: "GET", grade: "", subject: "" });
     };
@@ -132,9 +151,9 @@ const ClassWorkspace = () => {
         setSubjectToEditLearners(null);
     };
 
-    // Footer counters
-    const totalLearners = store.learners.length;
-    const progressedCount = store.learners.filter((l) => l.progressed).length;
+    // Footer counters - handle null store
+    const totalLearners = store?.learners?.length || 0;
+    const progressedCount = store?.learners?.filter((l) => l.progressed).length || 0;
 
     // Manage delete learner globally (used by manage learners page)
     const deleteLearnerGlobally = (learnerId) => {
@@ -150,13 +169,21 @@ const ClassWorkspace = () => {
         setStore((prev) => ({ ...prev, learners: prev.learners.map((l) => (l.id === updatedLearner.id ? updatedLearner : l)) }));
     };
 
-    // Small helpers to compute class name
-    const classNameDisplay = `Grade ${store.grade}${store.section ? ` ${store.section}` : ""}`;
+    // FIXED: Compute class name from actual data (Issue #3)
+    const classNameDisplay = store ? `Grade ${store.grade}${store.section ? ` ${store.section}` : ""}` : "Loading...";
 
     const goToAnalysisSelection = (subjectId, taskType) => {
         navigate(`/analysis/${taskType}/${subjectId}/select`);
     };
 
+    // Show loading state
+    if (loading || !store) {
+        return (
+            <Container fluid style={{ minHeight: "100vh", padding: "20px", backgroundColor: "#e2e8f0" }}>
+                <h2 style={{ color: "#1e2a38" }}>Loading class data...</h2>
+            </Container>
+        );
+    }
 
     return (
         <Container fluid style={{ minHeight: "100vh", padding: "20px", backgroundColor: "#e2e8f0" }}>
