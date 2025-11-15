@@ -288,7 +288,7 @@ function App() {
                 />
                 {/* ✅ Class Workspace (teacher) */}
                 <Route path="/class/:id" element={<TeacherClassWorkspace />} />
-
+                 
               </Routes>
             </div>
           </div>

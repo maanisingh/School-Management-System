@@ -125,6 +125,11 @@ const TeacherDashboard = () => {
     setShowWorkspace(true);
   };
 
+  if (showWorkspace) {
+    return <TeacherClassWorkspace />;
+  }
+
+
   return (
     <div style={styles.page}>
       <Container fluid>
@@ -204,8 +209,6 @@ const TeacherDashboard = () => {
                       Open
                     </button>
                   )}
-
-                  {showWorkspace && <TeacherClassWorkspace />}
                   <Button
                     style={styles.secondaryBtn}
                     onClick={() => handleDeleteClick(cls)}
