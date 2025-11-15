@@ -1,22 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap";
 import { FaChalkboardTeacher, FaUsers, FaBookOpen, FaChartBar, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import {
+  getAllClasses,
+  createClass,
+  deleteClass,
+  initializeDemoData
+} from "../../utils/classStorage";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
-  // classes: each class has id, grade, section (optional), learners: []
-  const [classes, setClasses] = useState([
-    { id: uuidv4(), grade: "12", section: "B", learners: [ /* learner objects */ ] },
-    { id: uuidv4(), grade: "10", section: "A", learners: [] },
-  ]);
-
+  // Load classes from global storage (FIXED: Issue #1, #2)
+  const [classes, setClasses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
   const [newClass, setNewClass] = useState({ grade: "", section: "" });
+
+  // Load classes from global storage
+  const loadClasses = () => {
+    const allClasses = getAllClasses();
+    setClasses(allClasses);
+  };
+
+  useEffect(() => {
+    // Initialize demo data if needed
+    initializeDemoData();
+    loadClasses();
+
+    // Refresh when window gains focus
+    const handleFocus = () => loadClasses();
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('storage', handleFocus);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('storage', handleFocus);
+    };
+  }, []);
 
   const styles = {
     page: { minHeight: "100vh", padding: "20px", fontFamily: "Segoe UI, sans-serif" },
@@ -51,24 +74,20 @@ const AdminDashboard = () => {
     icon: { fontSize: "2rem", color: "#1e2a38", marginBottom: "10px" },
   };
 
-  const totalLearners = classes.reduce((sum, c) => sum + (c.learners?.length || 0), 0);
+  const totalLearners = classes.reduce((sum, c) => sum + (c.learnerCount || 0), 0);
 
-  // Create class — per spec only Grade + optional Section in popup
+  // Create class using global storage (FIXED: Issue #2)
   const handleCreateClass = () => {
     if (!newClass.grade) return alert("Please select a Grade.");
-    const created = {
-      id: uuidv4(),
-      grade: newClass.grade,
-      section: newClass.section?.trim() || "",
-      learners: [], // empty initially — learners will be added inside class workspace
-      subjects: [], // subjects linked to class
-    };
-    setClasses((prev) => [...prev, created]);
-    setNewClass({ grade: "", section: "" });
-    setShowModal(false);
+    const created = createClass(newClass.grade, newClass.section);
+    if (created) {
+      loadClasses(); // Refresh the list
+      setNewClass({ grade: "", section: "" });
+      setShowModal(false);
+    }
   };
 
-  // Delete class with confirmation modal
+  // Delete class with confirmation modal (FIXED: Issue #2)
   const handleDeleteClick = (cls) => {
     setClassToDelete(cls);
     setShowDeleteModal(true);
@@ -76,7 +95,8 @@ const AdminDashboard = () => {
 
   const confirmDelete = () => {
     if (classToDelete) {
-      setClasses((prev) => prev.filter((c) => c.id !== classToDelete.id));
+      deleteClass(classToDelete.id);
+      loadClasses(); // Refresh the list
       setShowDeleteModal(false);
       setClassToDelete(null);
     }
@@ -142,7 +162,7 @@ const AdminDashboard = () => {
                 <h5 style={{ color: "#1e2a38" }}>
                   Grade {cls.grade}{cls.section ? ` ${cls.section}` : ""}
                 </h5>
-                <p style={{ color: "#555" }}>Learners: {cls.learners.length}</p>
+                <p style={{ color: "#555" }}>Learners: {cls.learnerCount || 0}</p>
                 <div className="d-flex justify-content-center gap-2">
                   <Button
                     style={styles.primaryBtn}
