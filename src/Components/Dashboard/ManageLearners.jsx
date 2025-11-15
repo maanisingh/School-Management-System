@@ -1,59 +1,88 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Table, Button, Modal, Form, InputGroup, FormControl } from "react-bootstrap";
+import {
+  getClassById,
+  saveClass,
+  removeLearnerFromClass,
+  updateLearner,
+  sortLearnersBySurname,
+  formatLearnerName
+} from "../../utils/classStorage";
 
 /**
- * ManageLearners page reads/writes to the same localStorage key as ClassWorkspace
+ * ManageLearners page - manages learners for a class
  * Route: /teacher/class/:classId/learners
  *
- * NOTE: When integrating with backend, replace localStorage read/write with API calls.
+ * FIXED: Now uses global storage utilities
  */
 
 const ManageLearners = () => {
   const { classId } = useParams();
   const navigate = useNavigate();
-  const storageKey = `fundisa_class_${classId}`;
-  const [store, setStore] = useState(() => {
-    try { return JSON.parse(localStorage.getItem(storageKey)) || { learners: [] }; } catch { return { learners: [] }; }
-  });
+
+  // FIXED: Load from global storage
+  const [store, setStore] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [editModal, setEditModal] = useState({ show: false, learner: null });
 
+  const loadClassData = () => {
+    const data = getClassById(classId);
+    if (data) {
+      setStore(data);
+      setLoading(false);
+    } else {
+      alert("Class not found!");
+      navigate("/admin-dashboard");
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(store));
-  }, [store, storageKey]);
+    loadClassData();
+  }, [classId]);
 
-  const filtered = store.learners
-  .filter((l) => (l.surname + " " + l.name).toLowerCase().includes(search.toLowerCase()))
-  .sort((a, b) => a.surname.localeCompare(b.surname));
-
+  // FIXED: Use sorting utility (Issue #6)
+  const filtered = store
+    ? sortLearnersBySurname(
+        store.learners.filter((l) =>
+          (l.surname + " " + l.name).toLowerCase().includes(search.toLowerCase())
+        )
+      )
+    : [];
 
   const openEdit = (learner) => setEditModal({ show: true, learner });
   const closeEdit = () => setEditModal({ show: false, learner: null });
 
+  // FIXED: Use global storage utility (Issue #5)
   const saveEdit = (updated) => {
-    setStore((prev) => ({ ...prev, learners: prev.learners.map((l) => (l.id === updated.id ? updated : l)) }));
+    updateLearner(classId, updated);
+    loadClassData(); // Reload to get updated data
     closeEdit();
   };
 
+  // FIXED: Use global storage utility
   const confirmDelete = (id) => {
     if (!window.confirm("Are you sure you want to delete this learner? This will remove all their marks and analysis data from this class.")) return;
-    setStore((prev) => ({
-      ...prev,
-      learners: prev.learners.filter((l) => l.id !== id),
-      // Also remove from any subject enrollments
-      subjects: prev.subjects ? prev.subjects.map((s) => ({ ...s, enrolledLearnerIds: s.enrolledLearnerIds.filter((x) => x !== id) })) : [],
-    }));
+    removeLearnerFromClass(classId, id);
+    loadClassData(); // Reload to get updated data
   };
 
-  
+  // Show loading state
+  if (loading || !store) {
+    return (
+      <Container fluid style={{ padding: "20px", backgroundColor: "#e2e8f0" }}>
+        <h2 style={{ color: "#1e2a38" }}>Loading...</h2>
+      </Container>
+    );
+  }
 
   return (
     <Container fluid style={{ padding: "20px", backgroundColor: "#e2e8f0" }}>
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
           <h3 style={{ color: "#1e2a38" }}>Manage Learners</h3>
-          <p className="text-muted">Class: {store.grade} {store.section}</p>
+          <p className="text-muted">Class: Grade {store.grade} {store.section}</p>
         </div>
         <div>
           <Button 
