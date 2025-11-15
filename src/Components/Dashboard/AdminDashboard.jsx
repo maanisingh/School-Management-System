@@ -4,7 +4,7 @@ import { FaChalkboardTeacher, FaUsers, FaBookOpen, FaChartBar, FaTrashAlt } from
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-const TeacherDashboard = () => {
+const AdminDashboard = () => {
   const navigate = useNavigate();
 
   // classes: each class has id, grade, section (optional), learners: []
@@ -243,4 +243,4 @@ const TeacherDashboard = () => {
   );
 };
 
-export default TeacherDashboard;
+export default AdminDashboard;

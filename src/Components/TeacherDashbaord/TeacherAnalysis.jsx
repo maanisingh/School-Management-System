@@ -16,7 +16,7 @@ import html2canvas from "html2canvas";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement, Tooltip, Legend);
 
-const Analysis = () => {
+const TeacherAnalysis = () => {
   const reportRef = useRef(); // for PDF capture
   const [showModal, setShowModal] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -169,4 +169,4 @@ const Analysis = () => {
   );
 };
 
-export default Analysis;
+export default TeacherAnalysis;
