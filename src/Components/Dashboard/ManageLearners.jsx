@@ -23,7 +23,10 @@ const ManageLearners = () => {
     localStorage.setItem(storageKey, JSON.stringify(store));
   }, [store, storageKey]);
 
-  const filtered = store.learners.filter((l) => (l.surname + " " + l.name).toLowerCase().includes(search.toLowerCase()));
+  const filtered = store.learners
+  .filter((l) => (l.surname + " " + l.name).toLowerCase().includes(search.toLowerCase()))
+  .sort((a, b) => a.surname.localeCompare(b.surname));
+
 
   const openEdit = (learner) => setEditModal({ show: true, learner });
   const closeEdit = () => setEditModal({ show: false, learner: null });
@@ -42,6 +45,8 @@ const ManageLearners = () => {
       subjects: prev.subjects ? prev.subjects.map((s) => ({ ...s, enrolledLearnerIds: s.enrolledLearnerIds.filter((x) => x !== id) })) : [],
     }));
   };
+
+  
 
   return (
     <Container fluid style={{ padding: "20px", backgroundColor: "#e2e8f0" }}>
@@ -84,61 +89,61 @@ const ManageLearners = () => {
           borderRadius: "4px"
         }}
       >
-        <thead>
-          <tr style={{ color: "#1e2a38" }}>
-            <th style={{ borderColor: "#cbd5e1" }}>Name</th>
-            <th style={{ borderColor: "#cbd5e1" }}>Surname</th>
-            <th style={{ borderColor: "#cbd5e1" }}>Progressed</th>
-            <th style={{ width: 160, borderColor: "#cbd5e1" }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filtered.length === 0 ? (
-            <tr><td colSpan="4" style={{ borderColor: "#cbd5e1" }}>No learners found.</td></tr>
-          ) : (
-            filtered.map((l) => (
-              <tr 
-                key={l.id} 
-                style={{ 
-                  borderColor: "#cbd5e1",
-                  transition: "background-color 0.2s"
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(126, 58, 242, 0.1)"}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ""}
-              >
-                <td style={{ borderColor: "#cbd5e1" }}>{l.name}</td>
-                <td style={{ borderColor: "#cbd5e1" }}>{l.surname}</td>
-                <td style={{ borderColor: "#cbd5e1" }}>{l.progressed ? "Yes" : "No"}</td>
-                <td style={{ borderColor: "#cbd5e1" }}>
-                  <Button 
-                    size="sm" 
-                    onClick={() => openEdit(l)} 
-                    className="me-2"
-                    style={{ 
-                      backgroundColor: "#7e3af2", 
-                      border: "none",
-                      color: "white"
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="danger" 
-                    onClick={() => confirmDelete(l.id)}
-                    style={{ 
-                      backgroundColor: "#7e3af2", 
-                      border: "none",
-                      color: "white"
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
+       <thead>
+  <tr style={{ color: "#1e2a38" }}>
+    <th style={{ borderColor: "#cbd5e1" }}>Surname</th>
+    <th style={{ borderColor: "#cbd5e1" }}>Name</th>
+    <th style={{ borderColor: "#cbd5e1" }}>Progressed</th>
+    <th style={{ width: 160, borderColor: "#cbd5e1" }}>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {filtered.length === 0 ? (
+    <tr><td colSpan="4" style={{ borderColor: "#cbd5e1" }}>No learners found.</td></tr>
+  ) : (
+    filtered.map((l) => (
+      <tr 
+        key={l.id} 
+        style={{ 
+          borderColor: "#cbd5e1",
+          transition: "background-color 0.2s"
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "rgba(126, 58, 242, 0.1)"}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ""}
+      >
+        <td style={{ borderColor: "#cbd5e1" }}>{l.surname}</td>
+        <td style={{ borderColor: "#cbd5e1" }}>{l.name}</td>
+        <td style={{ borderColor: "#cbd5e1" }}>{l.progressed ? "Yes" : "No"}</td>
+        <td style={{ borderColor: "#cbd5e1" }}>
+          <Button 
+            size="sm" 
+            onClick={() => openEdit(l)} 
+            className="me-2"
+            style={{ 
+              backgroundColor: "#7e3af2", 
+              border: "none",
+              color: "white"
+            }}
+          >
+            Edit
+          </Button>
+          <Button 
+            size="sm" 
+            variant="danger" 
+            onClick={() => confirmDelete(l.id)}
+            style={{ 
+              backgroundColor: "#7e3af2", 
+              border: "none",
+              color: "white"
+            }}
+          >
+            Delete
+          </Button>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
       </Table>
 
       <EditLearnerModal show={editModal.show} learner={editModal.learner} onHide={closeEdit} onSave={saveEdit} />

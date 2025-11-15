@@ -13,7 +13,7 @@ const CAPS_SUBJECTS = [
   { id: "life", name: "Life Sciences", code: "LIFE" },
 ];
 
-const SubjectList = () => {
+const AdminSubjectList = () => {
   const [subjects] = useState(CAPS_SUBJECTS);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
@@ -81,4 +81,4 @@ const SubjectList = () => {
   );
 };
 
-export default SubjectList;
+export default AdminSubjectList;

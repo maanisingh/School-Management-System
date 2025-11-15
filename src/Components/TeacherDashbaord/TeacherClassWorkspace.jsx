@@ -21,7 +21,7 @@ const CAPS_SUBJECTS = {
     FET: { label: "FET (Grades 10–12)", grades: ["10", "11", "12"], subjects: ["Mathematics", "Physical Sciences", "Life Sciences"] },
 };
 
-const ClassWorkspace = () => {
+const TeacherClassWorkspace = () => {
     const { classId } = useParams();
     const navigate = useNavigate();
 
@@ -585,4 +585,4 @@ const EditLearnersModal = ({ show, onHide, subject, learners = [], onSave }) => 
     );
 };
 
-export default ClassWorkspace;
+export default TeacherClassWorkspace;

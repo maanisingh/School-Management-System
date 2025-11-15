@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Table, Spinner, Alert } from "react-bootstrap"; // FIXED: Added Spinner and Alert
+import { Container, Row, Col, Card, Button, Table, Spinner, Alert } from "react-bootstrap";
 import { FaArrowLeft, FaFilePdf, FaFileCsv } from "react-icons/fa";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
@@ -87,6 +87,7 @@ const SingleTaskAnalysisPage = () => {
     };
     const levelChartOptions = { 
         responsive: true, 
+        maintainAspectRatio: false,
         plugins: { 
             legend: { position: 'top' }, 
             title: { display: true, text: 'Performance by CAPS Level' } 
@@ -120,6 +121,7 @@ const SingleTaskAnalysisPage = () => {
     };
     const markRangeChartOptions = { 
         responsive: true, 
+        maintainAspectRatio: false,
         plugins: { 
             legend: { position: 'top' }, 
             title: { display: true, text: 'Mark Range Distribution' } 
@@ -140,85 +142,133 @@ const SingleTaskAnalysisPage = () => {
     if (!analysisData) return null;
 
     return (
-        <Container fluid style={{ minHeight: "100vh", padding: "20px", backgroundColor: "#e2e8f0" }}>
+        <Container fluid style={{ minHeight: "100vh", padding: "10px", backgroundColor: "#e2e8f0" }}>
             {/* Header */}
-            <Row className="mb-4 align-items-center">
-                <Col>
+            <Row className="mb-3 align-items-center">
+                <Col xs={12} sm={8} md={8}>
                     <Button variant="link" onClick={handleGoBack} className="p-0 me-3" style={{ color: "#7e3af2" }}>
                         <FaArrowLeft /> Back
                     </Button>
-                    <h2 style={{ color: "#1e2a38", display: "inline-block" }}>
+                    <h2 style={{ color: "#1e2a38", display: "inline-block", fontSize: "1.5rem" }}>
                         {analysisData.subject} Grade {analysisData.grade} - {analysisData.term}
                     </h2>
-                    <p style={{ color: "#64748b", marginTop: "5px" }}>
+                    <p style={{ color: "#64748b", marginTop: "5px", fontSize: "0.9rem" }}>
                         Analysis for: <strong>{analysisData.taskName}</strong>
                     </p>
                 </Col>
-                <Col xs="auto">
-                    <Button variant="outline-secondary" className="me-2" onClick={() => handleExport('pdf')} style={{ border: "#7e3af2", color: "#7e3af2" }}>
-                        <FaFilePdf /> Export PDF
-                    </Button>
-                    <Button variant="outline-secondary" onClick={() => handleExport('csv')} style={{ border: "#7e3af2", color: "#7e3af2" }}>
-                        <FaFileCsv /> Export CSV
-                    </Button>
+                <Col xs={12} sm={4} md={4} className="text-end mt-2 mt-sm-0">
+                    <div className="d-flex flex-sm-row flex-column gap-2 justify-content-sm-end">
+                        <Button variant="outline-secondary" onClick={() => handleExport('pdf')} style={{ border: "#7e3af2", color: "#7e3af2" }} className="flex-grow-1 flex-sm-grow-0">
+                            <FaFilePdf /> Export PDF
+                        </Button>
+                        <Button variant="outline-secondary" onClick={() => handleExport('csv')} style={{ border: "#7e3af2", color: "#7e3af2" }} className="flex-grow-1 flex-sm-grow-0">
+                            <FaFileCsv /> Export CSV
+                        </Button>
+                    </div>
                 </Col>
             </Row>
 
-            {/* Overall Stats */}
-            <Row className="mb-4">
-                <Col md={3}><Card className="text-center p-3"><h5>{analysisData.totalLearners}</h5><p>Learners</p></Card></Col>
-                <Col md={3}><Card className="text-center p-3"><h5>{analysisData.averagePercentage}%</h5><p>Average Mark</p></Card></Col>
-                <Col md={3}><Card className="text-center p-3"><h5>{analysisData.passCount}</h5><p>Passed (≥{analysisData.passCriteria}%)</p></Card></Col>
-                <Col md={3}><Card className="text-center p-3"><h5>{analysisData.passRate}%</h5><p>Pass Rate</p></Card></Col>
+            {/* Overall Stats - Now with 5 cards and better alignment */}
+            <Row className="mb-4 justify-content-between">
+                <Col xs={6} sm={4} md className="mb-3">
+                    <Card className="text-center p-3 h-100">
+                        <h5>{analysisData.totalLearners}</h5>
+                        <p className="mb-0">Learners</p>
+                    </Card>
+                </Col>
+                <Col xs={6} sm={4} md className="mb-3">
+                    <Card className="text-center p-3 h-100">
+                        <h5>{analysisData.totalMarks}</h5>
+                        <p className="mb-0">Total Sum of Marks</p>
+                    </Card>
+                </Col>
+                <Col xs={6} sm={4} md className="mb-3">
+                    <Card className="text-center p-3 h-100">
+                        <h5>{analysisData.averagePercentage}%</h5>
+                        <p className="mb-0">Average Mark</p>
+                    </Card>
+                </Col>
+                <Col xs={6} sm={4} md className="mb-3">
+                    <Card className="text-center p-3 h-100">
+                        <h5>{analysisData.passCount}</h5>
+                        <p className="mb-0">Passed (≥{analysisData.passCriteria}%)</p>
+                    </Card>
+                </Col>
+                <Col xs={6} sm={4} md className="mb-3">
+                    <Card className="text-center p-3 h-100">
+                        <h5>{analysisData.passRate}%</h5>
+                        <p className="mb-0">Pass Rate</p>
+                    </Card>
+                </Col>
             </Row>
 
             {/* Charts Section */}
-            <Card className="mb-4 p-4">
+            <Card className="mb-4 p-3 p-md-4">
                 <h5 style={{ color: "#1e2a38", marginBottom: "20px" }}>Performance Visualisation</h5>
                 <Row>
-                    <Col md={6}>
-                        <Bar data={levelChartData} options={levelChartOptions} />
+                    <Col xs={12} md={6} className="mb-4 mb-md-0">
+                        <div style={{ height: "300px" }}>
+                            <Bar data={levelChartData} options={levelChartOptions} />
+                        </div>
                     </Col>
-                    <Col md={6}>
-                        <Bar data={markRangeChartData} options={markRangeChartOptions} />
+                    <Col xs={12} md={6}>
+                        <div style={{ height: "300px" }}>
+                            <Bar data={markRangeChartData} options={markRangeChartOptions} />
+                        </div>
                     </Col>
                 </Row>
             </Card>
 
             {/* Detailed Tables */}
             <Row>
-                <Col md={6}>
-                    <Card className="p-4">
+                <Col xs={12} lg={6} className="mb-4 mb-lg-0">
+                    <Card className="p-3 p-md-4 h-100">
                         <h5 style={{ color: "#1e2a38", marginBottom: "15px" }}>Level Distribution</h5>
-                        <Table striped bordered hover>
-                            <thead><tr><th>Level</th><th>Learners</th><th>Class %</th></tr></thead>
-                            <tbody>
-                                {Object.entries(analysisData.levelDistribution).map(([level, count]) => (
-                                    <tr key={level}>
-                                        <td>{level}</td>
-                                        <td>{count}</td>
-                                        <td>{((count / analysisData.totalLearners) * 100).toFixed(1)}%</td>
+                        <div className="table-responsive">
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Level</th>
+                                        <th>Learners</th>
+                                        <th>Class %</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                                </thead>
+                                <tbody>
+                                    {Object.entries(analysisData.levelDistribution).map(([level, count]) => (
+                                        <tr key={level}>
+                                            <td>{level}</td>
+                                            <td>{count}</td>
+                                            <td>{((count / analysisData.totalLearners) * 100).toFixed(1)}%</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
                     </Card>
                 </Col>
-                <Col md={6}>
-                    <Card className="p-4">
+                <Col xs={12} lg={6}>
+                    <Card className="p-3 p-md-4 h-100">
                         <h5 style={{ color: "#1e2a38", marginBottom: "15px" }}>Mark Range Distribution</h5>
-                        <Table striped bordered hover>
-                            <thead><tr><th>Mark Range</th><th>Learners</th><th>Class %</th></tr></thead>
-                            <tbody>
-                                {Object.entries(analysisData.markRangeDistribution).map(([range, count]) => (
-                                    <tr key={range}>
-                                        <td>{range}%</td>
-                                        <td>{count}</td>
-                                        <td>{((count / analysisData.totalLearners) * 100).toFixed(1)}%</td>
+                        <div className="table-responsive">
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Mark Range</th>
+                                        <th>Learners</th>
+                                        <th>Class %</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                                </thead>
+                                <tbody>
+                                    {Object.entries(analysisData.markRangeDistribution).map(([range, count]) => (
+                                        <tr key={range}>
+                                            <td>{range}%</td>
+                                            <td>{count}</td>
+                                            <td>{((count / analysisData.totalLearners) * 100).toFixed(1)}%</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
                     </Card>
                 </Col>
             </Row>
