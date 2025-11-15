@@ -14,29 +14,35 @@ import {
   Form,
 } from "react-bootstrap";
 import { FaArrowLeft, FaPlus, FaTrashAlt } from "react-icons/fa";
+import { getClassById } from "../../utils/classStorage";
 
 const InformalTaskMarkEntry = () => {
   const { classId, subjectId } = useParams();
   const navigate = useNavigate();
 
-  // Load class data
-  const storageKey = `fundisa_class_${classId}`;
-  const [store, setStore] = useState(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (raw) return JSON.parse(raw);
-    } catch {}
-    return { id: classId, grade: "12", section: "", learners: [], subjects: [] };
-  });
+  // FIXED: Load class data from global storage (data consistency)
+  const [store, setStore] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const data = getClassById(classId);
+    if (data) {
+      setStore(data);
+      setLoading(false);
+    } else {
+      alert("Class not found!");
+      navigate("/admin-dashboard");
+    }
+  }, [classId, navigate]);
 
   // Find subject
   const [subject, setSubject] = useState(null);
   useEffect(() => {
-    if (store.subjects && subjectId) {
+    if (store && store.subjects && subjectId) {
       const found = store.subjects.find((s) => s.id === subjectId);
       setSubject(found || null);
     }
-  }, [store.subjects, subjectId]);
+  }, [store, subjectId]);
 
   // Manage informal tasks per term
   const tasksStorageKey = `fundisa_informal_tasks_${classId}_${subjectId}`;
@@ -109,6 +115,15 @@ const handleAnalyseTask = (taskName) => {
   navigate(`/class/${classId}/subject/${subjectId}/task/${encoded}/analysis`);
 };
 
+
+  // Show loading state
+  if (loading || !store) {
+    return (
+      <Container fluid style={{ minHeight: "100vh", padding: "20px", backgroundColor: "#e2e8f0" }}>
+        <h2 style={{ color: "#1e2a38" }}>Loading...</h2>
+      </Container>
+    );
+  }
 
   if (!subject) {
     return (
