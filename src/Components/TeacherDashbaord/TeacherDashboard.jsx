@@ -39,7 +39,7 @@ const TeacherDashboard = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
   const [newClass, setNewClass] = useState({ grade: "", section: "" });
-  const [showWorkspace, setShowWorkspace] = useState(false);
+  // const [showWorkspace, setShowWorkspace] = useState(false);
   const styles = {
     page: {
       minHeight: "100vh",
@@ -117,18 +117,13 @@ const TeacherDashboard = () => {
   };
 
   // Navigate to class workspace (open)
-  //   const openClass = (cls) => {
-  //     navigate(`/class/${cls.id}`);
-  //   };
+    const openClass = (cls) => {
+      navigate(`/class/${cls.id}`);
+    };
 
-  const openClass = () => {
-    setShowWorkspace(true);
-  };
-
-  if (showWorkspace) {
-    return <TeacherClassWorkspace />;
-  }
-
+  // const openClass = () => {
+  //   setShowWorkspace(true);
+  // };
 
   return (
     <div style={styles.page}>
@@ -195,7 +190,7 @@ const TeacherDashboard = () => {
                 <p style={{ color: "#555" }}>Learners: {cls.learners.length}</p>
                 <div className="d-flex justify-content-center gap-2">
 
-                  {!showWorkspace && (
+                  
                     <button
                       style={styles.primaryBtn}
                       onMouseOver={(e) =>
@@ -208,7 +203,9 @@ const TeacherDashboard = () => {
                     >
                       Open
                     </button>
-                  )}
+                
+
+                  
                   <Button
                     style={styles.secondaryBtn}
                     onClick={() => handleDeleteClick(cls)}

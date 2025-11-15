@@ -168,7 +168,7 @@ import TeacherAnalysis from "./Components/TeacherDashbaord/TeacherAnalysis";
 import TeacherSettings from "./Components/TeacherDashbaord/TeacherSettings";
 
 //Class Workspace (teacher)
-import TeacherClassWorkspace from "./Components/TeacherDashbaord/TeacherClassWorkspace";
+// import TeacherClassWorkspace from "./Components/TeacherDashbaord/TeacherClassWorkspace";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -287,7 +287,7 @@ function App() {
                   element={<TeacherSettings />}
                 />
                 {/* ✅ Class Workspace (teacher) */}
-                <Route path="/class/:id" element={<TeacherClassWorkspace />} />
+                {/* <Route path="/class/:id" element={<TeacherClassWorkspace />} /> */}
                  
               </Routes>
             </div>
