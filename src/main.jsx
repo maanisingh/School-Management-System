@@ -6,9 +6,10 @@ import App from "./App.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // Temporarily disabled StrictMode to prevent duplicate class creation in development
+  // <StrictMode>
     <BrowserRouter>  {/* ✅ Wrap App inside BrowserRouter */}
       <App />
     </BrowserRouter>
-  </StrictMode>
+  // </StrictMode>
 );

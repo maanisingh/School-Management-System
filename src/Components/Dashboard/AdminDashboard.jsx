@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
   const [newClass, setNewClass] = useState({ grade: "", section: "" });
+  const [isCreating, setIsCreating] = useState(false); // Prevent duplicate creation
 
   // Load classes from global storage
   const loadClasses = () => {
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     // Initialize demo data if needed
-    initializeDemoData();
+    // initializeDemoData(); // Disabled - client will create classes manually
     loadClasses();
 
     // Refresh when window gains focus
@@ -76,15 +77,23 @@ const AdminDashboard = () => {
 
   const totalLearners = classes.reduce((sum, c) => sum + (c.learnerCount || 0), 0);
 
-  // Create class using global storage (FIXED: Issue #2)
+  // Create class using global storage (FIXED: Issue #2 + Duplicate Prevention)
   const handleCreateClass = () => {
     if (!newClass.grade) return alert("Please select a Grade.");
+
+    // Prevent duplicate submission (double-click protection)
+    if (isCreating) return;
+
+    setIsCreating(true);
+
     const created = createClass(newClass.grade, newClass.section);
     if (created) {
       loadClasses(); // Refresh the list
       setNewClass({ grade: "", section: "" });
       setShowModal(false);
     }
+
+    setIsCreating(false);
   };
 
   // Delete class with confirmation modal (FIXED: Issue #2)
@@ -227,11 +236,11 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button variant="secondary" onClick={() => setShowModal(false)} disabled={isCreating}>
             Cancel
           </Button>
-          <Button style={styles.primaryBtn} onClick={handleCreateClass}>
-            Create Class
+          <Button style={styles.primaryBtn} onClick={handleCreateClass} disabled={isCreating}>
+            {isCreating ? 'Creating...' : 'Create Class'}
           </Button>
         </Modal.Footer>
       </Modal>
